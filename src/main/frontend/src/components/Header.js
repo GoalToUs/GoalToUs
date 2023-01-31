@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import {ProfileIcon} from "../assets";
 
-function Header() {
+function Header({noRightSection}) {
     const isLogined = false;
     return (
         <Styled.Container>
            <Styled.Name>GoalToUs</Styled.Name>
-            {isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton>로그인/회원가입</Styled.loginJoinButton>}
+            {!noRightSection && (isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton href={"/login"}>로그인/회원가입</Styled.loginJoinButton>)}
         </Styled.Container>
     );
 }
@@ -31,7 +31,7 @@ const Styled = {
     font-size: 30px;
     font-weight: bold;
     `,
-    loginJoinButton : styled.button`
+    loginJoinButton : styled.a`
     display: flex;
     justify-content: center;
     align-items: center;

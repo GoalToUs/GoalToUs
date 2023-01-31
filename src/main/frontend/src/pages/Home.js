@@ -90,8 +90,7 @@ const Styled = {
     
     top : -28px;
     left: 25px;    
-    
-    font-family: 'Inter';
+
     font-style: normal;
     font-weight: 800;
     font-size: 26px;
@@ -164,9 +163,8 @@ const Styled = {
     left: 0;
     top: 0;
     
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 800;
+    font-family: 'InterRegular';
+    
     font-size: 22px;
     `,
     matchList : styled.div`
@@ -191,13 +189,11 @@ const Styled = {
     }
     `,
     teamName : styled.h2`
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 800;
     font-size: 23px;
     `,
     matchInfo: styled.span`
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -216,8 +212,7 @@ const Styled = {
     background: #D5441C;
     border-radius: 10px;
     border: none;
-    
-    font-family: 'Inter';
+
     font-weight: 800;
     font-size: 20px;
     
@@ -252,9 +247,6 @@ const Styled = {
     
     cursor: pointer;
     
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 600;
     font-size: 25px;
     
     &:nth-child(1) {
