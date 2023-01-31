@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Header from "../components/Header";
-import {TeamProfileImg} from "../assets";
+import {createMatchIcon, TeamProfileImg} from "../assets";
 
 function Home() {
     return (
@@ -9,6 +9,8 @@ function Home() {
             <Styled.Container>
                 <Styled.pendingMatchTitle>매칭 대기 경기</Styled.pendingMatchTitle>
                 <Styled.pendingMatchContainer>
+                    <a href="/" target={"_self"}><img src={createMatchIcon} width={"120px"}/></a>
+                    <Styled.scrollContainer>
                     <Styled.matchListContainer>
                         <Styled.matchDay>11.02</Styled.matchDay>
                         <Styled.matchList>
@@ -56,6 +58,7 @@ function Home() {
                             </div>
                             <Styled.matchButton>매칭 신청</Styled.matchButton></Styled.matchList>
                     </Styled.matchListContainer>
+                    </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
                     <Styled.button>내 팀 홈 가기</Styled.button>
@@ -73,7 +76,6 @@ const Styled = {
     width: 1500px;
     height: 100vh;
     margin : 0 auto;
-    border: 1px solid black;
     `,
     Container : styled.div`
     display: flex;
@@ -99,16 +101,51 @@ const Styled = {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
     
     width: 960px;
-    height: 640px;
+    height: 600px;
+    
     
     background-color: rgba(122, 198, 161, 0.4);
-    border-radius: 15px 15px 0px 0px;
+    border-radius: 15px;
     
     padding-top: 20px;
+    
+    & > a{
+    position: absolute;
+    z-index:2;
+    
+    right: 45px;
+    top: -22px;
+    }
+  }
     `,
-    createMatchButton : styled.button`
+    scrollContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    
+    width: 920px;
+    height: 570px;
+    
+    overflow-y: scroll;
+    
+    &::-webkit-scrollbar {
+        width: 15px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(66, 65, 65, 0.8);
+        border-radius: 10px;
+        background-clip: padding-box;
+        border: 2px solid transparent;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: rgba(66, 65, 65, 0.4);
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 5px white;
+    }
     `,
     matchListContainer : styled.div`
     display: flex;
@@ -126,8 +163,11 @@ const Styled = {
     position: absolute;
     left: 0;
     top: 0;
+    
+    font-family: 'Inter';
+    font-style: normal;
     font-weight: 800;
-    font-size: 24px;
+    font-size: 22px;
     `,
     matchList : styled.div`
     position: relative;
@@ -198,10 +238,11 @@ const Styled = {
     background-color:  rgba(66, 65, 65, 0.4);
     border-radius: 15px;
     
-    margin: auto 48px;
+    margin: auto 0;
+    margin-right: 30px;
     `,
     button: styled.button`
-    width: 260px;
+    width: 240px;
     height: 86px;
     
     border-radius: 10px;
@@ -218,6 +259,7 @@ const Styled = {
     
     &:nth-child(1) {
     background: #F9D7A4;
+    color: #494949;
     }
     &:nth-child(2) {
     background : #274C72;

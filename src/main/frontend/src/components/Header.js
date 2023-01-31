@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import {ProfileIcon} from "../assets";
 
 function Header() {
+    const isLogined = false;
     return (
         <Styled.Container>
-            <Styled.Name>GoalToUs</Styled.Name>
-           <img src={ProfileIcon}/>
+           <Styled.Name>GoalToUs</Styled.Name>
+            {isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton>로그인/회원가입</Styled.loginJoinButton>}
         </Styled.Container>
     );
 }
@@ -29,5 +30,26 @@ const Styled = {
     Name : styled.h1`
     font-size: 30px;
     font-weight: bold;
+    `,
+    loginJoinButton : styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: none;
+    border: none;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 19px;
+    color: #494949;
+    
+    cursor: pointer;
+    
+    &:hover {
+        text-decoration: underline;
+    }
     `
 }
