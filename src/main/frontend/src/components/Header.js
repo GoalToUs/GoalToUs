@@ -5,7 +5,7 @@ function Header({noRightSection}) {
     const isLogined = false;
     return (
         <Styled.Container>
-           <Styled.Name>GoalToUs</Styled.Name>
+           <Styled.Logo href={"/"}>GoalToUs</Styled.Logo>
             {!noRightSection && (isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton href={"/login"}>로그인/회원가입</Styled.loginJoinButton>)}
         </Styled.Container>
     );
@@ -26,10 +26,13 @@ const Styled = {
     width : 40px;
     height: 40px;
     cursor : pointer;
+    }
     `,
-    Name : styled.h1`
+    Logo : styled.a`
     font-size: 30px;
     font-weight: bold;
+    
+    cursor : pointer
     `,
     loginJoinButton : styled.a`
     display: flex;

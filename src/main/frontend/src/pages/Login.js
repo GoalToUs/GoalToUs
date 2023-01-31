@@ -16,6 +16,7 @@ function Login() {
                         <Styled.inputTitle>비밀번호</Styled.inputTitle>
                         <Styled.loginInput/>
                     </Styled.InputContainer>
+                    <Styled.loginButton type={"submit"} value={"로그인"}/>
                     <span className={"forJoin"}>골투더퓨처가 처음이신가요? <Styled.joinButton href={"/join"}>회원가입</Styled.joinButton></span>
                 </Styled.loginContainer>
             </Styled.loginSection>
@@ -48,11 +49,11 @@ const Styled = {
     flex-direction: column;
     align-items: center;
     
-    width: 550px;
+    width: 500px;
     height: 460px;
     
     margin-top: 30px;
-    padding-top: 70px;
+    padding-top: 60px;
     
     background: rgba(122, 198, 161, 0.4);
     border-radius: 15px;
@@ -61,7 +62,7 @@ const Styled = {
     font-size: 15px;
     font-weight: bold;
     
-    margin-top: 70px;
+    margin-top: 55px;
     }
     `,
     InputContainer : styled.div`
@@ -92,7 +93,23 @@ const Styled = {
     outline:none;
     }
     `,
-
+    loginButton : styled.input`
+    width: 100px;
+    height: 40px;
+    
+    cursor : pointer;
+    
+    background: #013C4D;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: none;
+    
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    
+    margin-top: 15px;
+    `,
     joinButton : styled.a`
     color: #1C66D5;
     font-size: 15px;

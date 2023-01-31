@@ -77,13 +77,11 @@ const Styled = {
     display: flex;
     flex-direction: column;
     
-    width: 550px;
+    width: 570px;
     height: 570px;
     
     margin-top: 20px;
-    padding-top: 50px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding: 50px 50px 0;
     
     background: rgba(122, 198, 161, 0.4);
     border-radius: 15px;

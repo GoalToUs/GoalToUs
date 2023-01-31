@@ -249,6 +249,8 @@ const Styled = {
     
     font-size: 25px;
     
+    font-weight : bold;
+    
     &:nth-child(1) {
     background: #F9D7A4;
     color: #494949;
