@@ -36,7 +36,7 @@ const Styled = {
     flex-direction: column;
     align-items: center;
     
-    margin: 10px auto 0;
+    margin: 20px auto 0;
     
     & > h1 {
     font-size: 25px;
