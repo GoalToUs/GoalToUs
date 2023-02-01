@@ -62,8 +62,8 @@ function Home() {
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
                     <Styled.button>내 팀 홈 가기</Styled.button>
-                    <Styled.button>팀 등록/가입 하기</Styled.button><
-                    /Styled.buttonContainer>
+                    <Styled.button><a href={"/team"}>팀 등록/가입 하기</a></Styled.button>
+                    </Styled.buttonContainer>
             </Styled.Container>
         </Styled.Root>
     );

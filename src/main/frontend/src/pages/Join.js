@@ -5,29 +5,29 @@ function Join() {
     return (
         <Styled.Root>
             <Header noRightSection/>
-            <Styled.loginSection>
+            <Styled.joinSection>
                 <h1>회원가입</h1>
-                <Styled.loginContainer>
+                <Styled.joinContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>아이디</Styled.inputTitle>
-                        <Styled.loginInput/>
+                        <Styled.joinInput/>
                         <Styled.certificateButton>중복 확인</Styled.certificateButton>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>비밀번호</Styled.inputTitle>
-                        <Styled.loginInput type={"password"}/>
+                        <Styled.joinInput type={"password"}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>비밀번호<br/> 확인</Styled.inputTitle>
-                        <Styled.loginInput type={"password"}/>
+                        <Styled.joinInput type={"password"}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>이름</Styled.inputTitle>
-                        <Styled.loginInput/>
+                        <Styled.joinInput/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle type={"email"}>이메일</Styled.inputTitle>
-                        <Styled.loginInput/>
+                        <Styled.joinInput/>
                         <Styled.certificateButton>본인 확인</Styled.certificateButton>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
@@ -47,8 +47,8 @@ function Join() {
                         </select>
                     </Styled.InputContainer>
                     <Styled.submitButton type={"submit"} value={"가입하기"}/>
-                </Styled.loginContainer>
-            </Styled.loginSection>
+                </Styled.joinContainer>
+            </Styled.joinSection>
         </Styled.Root>
     );
 }
@@ -61,7 +61,7 @@ const Styled = {
     height: 100vh;
     margin : 0 auto;
      `,
-    loginSection: styled.div`
+    joinSection: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -73,15 +73,15 @@ const Styled = {
     font-weight: bold;
     }
    `,
-    loginContainer : styled.form`
+    joinContainer : styled.form`
     display: flex;
     flex-direction: column;
     
     width: 570px;
     height: 570px;
     
-    margin-top: 20px;
-    padding: 50px 50px 0;
+    margin-top: 25px;
+    padding: 40px 50px 0;
     
     background: rgba(122, 198, 161, 0.4);
     border-radius: 15px;
@@ -135,7 +135,7 @@ const Styled = {
     
     margin-right: 20px;
     `,
-    loginInput : styled.input`
+    joinInput : styled.input`
     width: 270px;
     height: 40px;
     
