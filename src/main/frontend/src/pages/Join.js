@@ -66,7 +66,7 @@ const Styled = {
     flex-direction: column;
     align-items: center;
     
-    margin: 0 auto;
+    margin: 5px auto;
     
     & > h1 {
     font-size: 23px;
