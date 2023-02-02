@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import {ProfileIcon} from "../assets";
 
-function Header() {
+function Header({noRightSection}) {
     const isLogined = false;
     return (
         <Styled.Container>
-           <Styled.Name>GoalToUs</Styled.Name>
-            {isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton>로그인/회원가입</Styled.loginJoinButton>}
+           <Styled.Logo href={"/"}>GoalToUs</Styled.Logo>
+            {!noRightSection && (isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton href={"/login"}>로그인/회원가입</Styled.loginJoinButton>)}
         </Styled.Container>
     );
 }
@@ -26,12 +26,15 @@ const Styled = {
     width : 40px;
     height: 40px;
     cursor : pointer;
+    }
     `,
-    Name : styled.h1`
+    Logo : styled.a`
     font-size: 30px;
     font-weight: bold;
+    
+    cursor : pointer
     `,
-    loginJoinButton : styled.button`
+    loginJoinButton : styled.a`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,11 +42,8 @@ const Styled = {
     background: none;
     border: none;
     
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 800;
     font-size: 14px;
-    line-height: 19px;
     color: #494949;
     
     cursor: pointer;

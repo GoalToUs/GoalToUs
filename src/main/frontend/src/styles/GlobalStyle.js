@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
         body {
         max-width: 100vw;
         overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
     }
     
     html {
