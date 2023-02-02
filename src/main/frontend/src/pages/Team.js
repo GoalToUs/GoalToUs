@@ -35,7 +35,7 @@ const Styled = {
     justify-content: space-between;
     align-items: center;
     
-    margin: 80px auto 0;
+    margin: 110px auto 0;
     
     width: 800px;
     `,
@@ -46,7 +46,8 @@ const Styled = {
     
     padding-top: 40px;
     font-size: 25px;
-    font-weight: bold;
+    font-weight: 700;
+    letter-spacing: -1px;
     
     width: 350px;
     height: 350px;

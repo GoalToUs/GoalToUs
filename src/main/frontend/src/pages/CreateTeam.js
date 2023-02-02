@@ -104,8 +104,9 @@ const Styled = {
     height: 30px;
     
     color: white;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.1px;
     
     background: #70C8C4;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -162,25 +163,10 @@ const Styled = {
     border: 0;
     }
     `,
-    certificateButton : styled.button`
-    width: 90px;
-    height: 30px;
-    
-    cursor : pointer;
-    
-    background: #013C4D;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    border: none;
-    
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    `,
     createTeamButton : styled.a`
     color: #1C66D5;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 800;
     
     cursor: pointer;
     
@@ -203,6 +189,6 @@ const Styled = {
     
     color: white;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 800;
     `
 }

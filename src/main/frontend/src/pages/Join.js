@@ -129,7 +129,7 @@ const Styled = {
     `,
     inputTitle : styled.span`
     font-size: 17px;
-    font-weight: bold;
+    font-weight: 800;
     
     width: 70px;
     
@@ -163,12 +163,13 @@ const Styled = {
     
     color: white;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: -1px;
     `,
     joinButton : styled.a`
     color: #1C66D5;
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 800;
     
     cursor: pointer;
     

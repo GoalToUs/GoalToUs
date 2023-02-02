@@ -42,11 +42,8 @@ const Styled = {
     background: none;
     border: none;
     
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 800;
     font-size: 14px;
-    line-height: 19px;
     color: #494949;
     
     cursor: pointer;

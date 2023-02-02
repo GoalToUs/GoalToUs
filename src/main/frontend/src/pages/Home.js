@@ -62,7 +62,7 @@ function Home() {
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
                     <Styled.button>내 팀 홈 가기</Styled.button>
-                    <Styled.button><a href={"/team"}>팀 등록/가입 하기</a></Styled.button>
+                    <Styled.button><a href={"/team"}>팀 등록 / 가입하기</a></Styled.button>
                     </Styled.buttonContainer>
             </Styled.Container>
         </Styled.Root>
@@ -91,8 +91,7 @@ const Styled = {
     top : -28px;
     left: 25px;    
 
-    font-style: normal;
-    font-weight: 800;
+    font-weight: 900;
     font-size: 26px;
     line-height: 44px;
     `,
@@ -163,9 +162,8 @@ const Styled = {
     left: 0;
     top: 0;
     
-    font-family: 'InterRegular';
-    
     font-size: 22px;
+    font-weight: 800;
     `,
     matchList : styled.div`
     position: relative;
@@ -189,14 +187,13 @@ const Styled = {
     }
     `,
     teamName : styled.h2`
-    font-style: normal;
     font-weight: 800;
-    font-size: 23px;
+    font-size: 20px;
     `,
     matchInfo: styled.span`
-    font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 21px;
+    line-height: 23px;
     `,
     matchButton: styled.button`
     display: flex;
@@ -214,7 +211,7 @@ const Styled = {
     border: none;
 
     font-weight: 800;
-    font-size: 20px;
+    font-size: 19px;
     
     color: white;
     
@@ -247,9 +244,9 @@ const Styled = {
     
     cursor: pointer;
     
-    font-size: 25px;
-    
-    font-weight : bold;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing : -1px;
     
     &:nth-child(1) {
     background: #F9D7A4;
