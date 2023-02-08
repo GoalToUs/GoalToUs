@@ -13,7 +13,7 @@ function Team() {
                 팀 등록하기<hr/>
                 <img src={createTeamIcon} alt={"팀 등록하기 아이콘"}/>
             </Styled.button>
-            <Styled.button href={"/"}>
+            <Styled.button href={"/team/join"}>
                 팀 가입하기<hr/>
                 <img src={teamJoinIcon} alt={"팀 가입하기 아이콘"}/>
             </Styled.button>
