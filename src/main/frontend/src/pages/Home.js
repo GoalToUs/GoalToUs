@@ -73,7 +73,7 @@ export default Home;
 
 const Styled = {
     Root: styled.div`
-    width: 1500px;
+    width: 100vw;
     height: 100vh;
     margin : 0 auto;
     `,
@@ -82,7 +82,9 @@ const Styled = {
     justify-content: space-between;
     position: relative;
     
-    margin: 30px 70px 0;
+    width: 1150px;
+    
+    margin: 30px auto 0;
     `,
     pendingMatchTitle : styled.header`
     position: absolute;
@@ -101,8 +103,8 @@ const Styled = {
     align-items: center;
     position: relative;
     
-    width: 960px;
-    height: 600px;
+    width: 800px;
+    height: 550px;
     
     
     background-color: rgba(122, 198, 161, 0.4);
@@ -125,8 +127,8 @@ const Styled = {
     
     align-items: center;
     
-    width: 920px;
-    height: 570px;
+    width: 790px;
+    height: 490px;
     
     overflow-y: scroll;
     
@@ -152,7 +154,7 @@ const Styled = {
     
     position: relative;
     
-    width: 870px;
+    width: 730px;
     
     margin-top : 20px;
     padding-top: 30px;
@@ -171,7 +173,7 @@ const Styled = {
     display: flex;
     align-items: center;
     
-    width: 820px;
+    width: 700px;
     height: 100px;
     
     border-radius: 15px;
@@ -180,7 +182,7 @@ const Styled = {
     border: none;
     
     margin : 10px 0;
-    padding: 0 50px;
+    padding: 0 30px;
     
     & > div {
     margin-left: 40px;
@@ -188,11 +190,11 @@ const Styled = {
     `,
     teamName : styled.h2`
     font-weight: 800;
-    font-size: 20px;
+    font-size: 19px;
     `,
     matchInfo: styled.span`
     font-weight: 500;
-    font-size: 21px;
+    font-size: 19px;
     line-height: 23px;
     `,
     matchButton: styled.button`
@@ -203,15 +205,15 @@ const Styled = {
     position: absolute;
     right: 50px;
     
-    width: 113px;
-    height: 46px;
+    width: 100px;
+    height: 40px;
     
     background: #D5441C;
     border-radius: 10px;
     border: none;
 
     font-weight: 800;
-    font-size: 19px;
+    font-size: 18px;
     
     color: white;
     
@@ -224,18 +226,17 @@ const Styled = {
     justify-content: center;
     align-items: center;
     
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
     
     background-color:  rgba(66, 65, 65, 0.4);
     border-radius: 15px;
     
     margin: auto 0;
-    margin-right: 30px;
     `,
     button: styled.button`
-    width: 240px;
-    height: 86px;
+    width: 200px;
+    height: 80px;
     
     border-radius: 10px;
     border: none;
@@ -245,7 +246,7 @@ const Styled = {
     cursor: pointer;
     
     font-weight: 800;
-    font-size: 24px;
+    font-size: 22px;
     letter-spacing : -1px;
     
     &:nth-child(1) {

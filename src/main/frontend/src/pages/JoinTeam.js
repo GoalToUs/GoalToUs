@@ -12,8 +12,10 @@ function JoinTeam() {
             <Header noRightSection/>
             <Styled.joinTeamSection>
                 <h1>팀 가입하기</h1>
-                <Styled.SearchButton><img src={searchIcon}/></Styled.SearchButton>
-                <Styled.SearchInput/>
+                <Styled.SearchContainer>
+                    <Styled.SearchButton><img src={searchIcon}/></Styled.SearchButton>
+                    <Styled.SearchInput/>
+                </Styled.SearchContainer>
                 <Styled.teamListContainer>
                     <Styled.teamList>
                         <img src={TeamProfileImg}/>
@@ -100,7 +102,7 @@ export default JoinTeam;
 
 const Styled = {
     Root: styled.div`
-    width: 1500px;
+    width: 100vw;
     height: 100vh;
     margin : 0 auto;
      `,
@@ -117,20 +119,36 @@ const Styled = {
     font-weight: bold;
     }
    `,
+    SearchContainer: styled.div`
+    position: relative;
+    width: 650px;
+    height: 51px;
+    
+    margin-top: 30px;
+    `,
     SearchButton : styled.button`
     position: absolute;
-    top: 60px; 
-    right: 430px;
+    z-index: 2;
+    top: 5px;
+    top: 5px;
+    right: 5px;
+    
     background: none;
     border: none;
     
     cursor: pointer;
     `,
     SearchInput : styled.input`
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    display: flex;
+    justify-content: flex-end;
+    
     width: 650px;
     height: 51px;
     
-    margin-top: 30px; 
     padding: 0 20px;
     
     background: #F5F5F5;
@@ -154,7 +172,7 @@ const Styled = {
     align-items: center;
     
     width: 750px;
-    height: 500px;
+    height: 450px;
     
     background-color: rgba(0, 0, 0, 0.5);
     

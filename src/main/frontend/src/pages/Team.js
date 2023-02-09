@@ -26,7 +26,7 @@ export default Team;
 
 const Styled = {
     Root : styled.div`
-    width: 1500px;
+    width: 100vw;
     height: 100vh;
     margin : 0 auto;
     `,
