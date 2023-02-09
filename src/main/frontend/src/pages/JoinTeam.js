@@ -3,6 +3,10 @@ import Header from "../components/Header";
 import {searchIcon, TeamProfileImg} from "../assets";
 
 function JoinTeam() {
+
+    const handleOnClick = () => {
+
+    }
     return (
         <Styled.Root>
             <Header noRightSection/>
@@ -18,7 +22,7 @@ function JoinTeam() {
                             <Styled.teamInfo className={"captain"}>주장 : 김서현</Styled.teamInfo>
                         </Styled.teamInfoContainer>
                         <Styled.goTeamHome>팀홈 보기</Styled.goTeamHome>
-                        <Styled.joinButton>가입 신청</Styled.joinButton>
+                        <Styled.joinButton onClick={handleOnClick}>가입 신청</Styled.joinButton>
                     </Styled.teamList>
                     <Styled.teamList>
                         <img src={TeamProfileImg}/>

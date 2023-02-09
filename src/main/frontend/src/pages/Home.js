@@ -9,7 +9,7 @@ function Home() {
             <Styled.Container>
                 <Styled.pendingMatchTitle>매칭 대기 경기</Styled.pendingMatchTitle>
                 <Styled.pendingMatchContainer>
-                    <a href="/" target={"_self"}><img src={createMatchIcon} width={"120px"}/></a>
+                    <a href="/match/create" target={"_self"}><img src={createMatchIcon}  width={"120px"}/></a>
                     <Styled.scrollContainer>
                     <Styled.matchListContainer>
                         <Styled.matchDay>11.02</Styled.matchDay>
