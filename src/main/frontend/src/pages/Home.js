@@ -61,7 +61,7 @@ function Home() {
                     </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
-                    <Styled.button>내 팀 홈 가기</Styled.button>
+                    <Styled.button><a href={"/team/home"}>내 팀 홈 가기</a></Styled.button>
                     <Styled.button><a href={"/team"}>팀 등록 / 가입하기</a></Styled.button>
                     </Styled.buttonContainer>
             </Styled.Container>

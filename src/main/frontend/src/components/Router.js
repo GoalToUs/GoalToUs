@@ -7,6 +7,7 @@ import CreateTeam from "../pages/CreateTeam";
 import Team from "../pages/Team";
 import JoinTeam from "../pages/JoinTeam";
 import CreateMatch from "../pages/CreateMatch";
+import TeamHome from "../pages/TeamHome";
 
 const Router = () => {
     return (
@@ -19,6 +20,7 @@ const Router = () => {
                 <Route path={"/team/join"} element={<JoinTeam/>}/>
                 <Route path={"/team/create"} element={<CreateTeam/>}/>
                 <Route path={"/match/create"} element={<CreateMatch/>}/>
+                <Route path={"/team/home"} element={<TeamHome/>}/>
             </Routes>
         </BrowserRouter>
     );
