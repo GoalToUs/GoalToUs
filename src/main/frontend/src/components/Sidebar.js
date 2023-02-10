@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import {videoIcon, arrowIcon, homeIcon} from "../assets";
+import {useLocation} from "react-router-dom";
+import {useState} from "react";
 
 function SideBar() {
+    const location = useLocation();
+
     return (
         <Styled.Container>
             <Styled.MenuTitle>Menu</Styled.MenuTitle>
             <Styled.MenuContainer>
-                <Styled.MenuButton className={"clicked"}><img src={homeIcon} alt={"집 모양 아이콘"}/>팀 홈</Styled.MenuButton>
+                <Styled.MenuButton href={"/team/home"} className={location.pathname === "/team/home" && "clicked"}><img src={homeIcon} alt={"집 모양 아이콘"}/>팀 홈</Styled.MenuButton>
                 <Styled.MenuButton><img src={arrowIcon} alt={"매칭 대기 현황 아이콘"}/>매칭 대기 현황</Styled.MenuButton>
                 <Styled.MenuButton><img src={videoIcon} alt={"경기 영상 보기 아이콘"}/>경기 영상 보기</Styled.MenuButton>
             </Styled.MenuContainer>
@@ -51,7 +55,7 @@ const Styled = {
     
     color: rgba(66, 65, 65, 0.8);
     `,
-    MenuButton : styled.button`
+    MenuButton : styled.a`
     display: flex;
     align-items: center;
     
