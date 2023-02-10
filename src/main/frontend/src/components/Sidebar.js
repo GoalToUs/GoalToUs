@@ -13,8 +13,8 @@ function SideBar() {
             <Styled.MenuTitle>Menu</Styled.MenuTitle>
             <Styled.MenuContainer>
                 <Styled.MenuButton href={"/team/home"} className={location.pathname === "/team/home" && "clicked"}><img src={homeIcon} alt={"집 모양 아이콘"}/>팀 홈</Styled.MenuButton>
-                <Styled.MenuButton><img src={arrowIcon} alt={"매칭 대기 현황 아이콘"}/>매칭 대기 현황</Styled.MenuButton>
-                <Styled.MenuButton><img src={videoIcon} alt={"경기 영상 보기 아이콘"}/>경기 영상 보기</Styled.MenuButton>
+                <Styled.MenuButton href={"/team/match/pending"} className={location.pathname === "/team/match/pending" && "clicked"}><img src={arrowIcon} alt={"매칭 대기 현황 아이콘"}/>매칭 대기 현황</Styled.MenuButton>
+                <Styled.MenuButton href={"/team/match/video"} className={location.pathname === "/team/match/video" && "clicked"}><img src={videoIcon} alt={"경기 영상 보기 아이콘"}/>경기 영상 보기</Styled.MenuButton>
             </Styled.MenuContainer>
         </Styled.Container>
     </Styled.Root>
