@@ -41,7 +41,7 @@ function TeamHome() {
                             <Styled.info className={"finish"}>서울 OO 축구장</Styled.info>
                             <Styled.info className={"finish"}>2022.11.06 17:00</Styled.info>
                         </Styled.matchInfoContainer>
-                        <Styled.recordButton>기록 & 분석 보기</Styled.recordButton>
+                        <Styled.recordButton href={"/team/match/analysis"}>기록 & 분석 보기</Styled.recordButton>
                     </Styled.Match>
                     <Styled.Match>
                         <Styled.opponentTeamContainer>
@@ -54,7 +54,7 @@ function TeamHome() {
                             <Styled.info className={"finish"}>서울 OO 축구장</Styled.info>
                             <Styled.info className={"finish"}>2022.11.06 17:00</Styled.info>
                         </Styled.matchInfoContainer>
-                        <Styled.recordButton>기록 & 분석 보기</Styled.recordButton>
+                        <Styled.recordButton >기록 & 분석 보기</Styled.recordButton>
                     </Styled.Match>
                     <Styled.Match>
                         <Styled.opponentTeamContainer>
