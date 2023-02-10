@@ -7,6 +7,8 @@ function SideBar() {
     const location = useLocation();
 
     return (
+    <Styled.Root>
+        <Styled.Logo href={"/"}>GoalToUs</Styled.Logo>
         <Styled.Container>
             <Styled.MenuTitle>Menu</Styled.MenuTitle>
             <Styled.MenuContainer>
@@ -15,16 +17,23 @@ function SideBar() {
                 <Styled.MenuButton><img src={videoIcon} alt={"경기 영상 보기 아이콘"}/>경기 영상 보기</Styled.MenuButton>
             </Styled.MenuContainer>
         </Styled.Container>
+    </Styled.Root>
     );
 }
 
 export default SideBar;
 
 const Styled = {
-    Container : styled.header`
+    Root: styled.div`
     position:fixed;
     left: 0;
     
+    display:flex;
+    flex-direction:column;
+    
+    height: 100%;
+    `,
+    Container : styled.header`
     display: flex;
     flex-direction: column;
     
@@ -33,6 +42,18 @@ const Styled = {
     
     background: rgba(217, 217, 217, 0.5);
     border-right: 4px solid rgba(217, 217, 217, 0.7);
+    `,
+    Logo : styled.a`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 30px;
+    font-weight: bold;
+    
+    height: 90px;
+    
+    cursor : pointer
     `,
     MenuContainer: styled.div`
     display: flex;
