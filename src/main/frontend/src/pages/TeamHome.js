@@ -1,28 +1,19 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 
-import {teamJoinIcon} from "../assets";
-import {createTeamIcon} from "../assets";
 
-function Team() {
+import SideBar from "../components/Sidebar";
+
+function TeamHome() {
     return(
-    <Styled.Root>
-        <Header noRightSection/>
-        <Styled.buttonContainer>
-            <Styled.button href={"/team/create"}>
-                팀 등록하기<hr/>
-                <img src={createTeamIcon} alt={"팀 등록하기 아이콘"}/>
-            </Styled.button>
-            <Styled.button href={"/team/join"}>
-                팀 가입하기<hr/>
-                <img src={teamJoinIcon} alt={"팀 가입하기 아이콘"}/>
-            </Styled.button>
-        </Styled.buttonContainer>
-    </Styled.Root>
+        <Styled.Root>
+            <Header />
+            <SideBar />
+        </Styled.Root>
     );
 }
 
-export default Team;
+export default TeamHome;
 
 const Styled = {
     Root : styled.div`

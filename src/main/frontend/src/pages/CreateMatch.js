@@ -1,38 +1,37 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 
-function CreateTeam() {
+function CreateMatch() {
     return (
         <Styled.Root>
             <Header noRightSection/>
-            <Styled.createTeamSection>
-                <h1>팀 등록하기</h1>
-                <Styled.createTeamContainer>
+            <Styled.createMatchSection>
+                <h1>경기 만들기</h1>
+                <Styled.createMatchContainer>
                     <Styled.InputContainer>
-                        <Styled.inputTitle>팀명</Styled.inputTitle>
-                        <Styled.createTeamInput/>
+                        <Styled.inputTitle>경기 날짜</Styled.inputTitle>
+                        <Styled.createMatchInput type={"date"}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
-                        <Styled.inputTitle>팀 소재지</Styled.inputTitle>
-                        <Styled.createTeamInput className={"region"}/>
+                        <Styled.inputTitle>경기 시간</Styled.inputTitle>
+                        <Styled.createMatchInput type={"time"}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
-                        <img />
-                        <label for={"file"}>사진 첨부</label>
-                        <Styled.createTeamInput type={"file"} id="file" className={"uploadImg"}/>
+                        <Styled.inputTitle>지역</Styled.inputTitle>
+                        <Styled.createMatchInput placeholder={"ex) 서울"}/>
                     </Styled.InputContainer>
-                    <Styled.InputContainer className={"introduction"}>
-                        <Styled.inputTitle className={"introduction"}>팀 소개글</Styled.inputTitle>
-                        <textarea/>
+                    <Styled.InputContainer>
+                        <Styled.inputTitle>경기 장소</Styled.inputTitle>
+                        <Styled.createMatchInput placeholder={"ex) ~~ 경기장"} className={"place"} />
                     </Styled.InputContainer>
                     <Styled.submitButton type={"submit"} value={"등록하기"}/>
-                </Styled.createTeamContainer>
-            </Styled.createTeamSection>
+                </Styled.createMatchContainer>
+            </Styled.createMatchSection>
         </Styled.Root>
     );
 }
 
-export default CreateTeam;
+export default CreateMatch;
 
 const Styled = {
     Root: styled.div`
@@ -40,25 +39,25 @@ const Styled = {
     height: 100vh;
     margin : 0 auto;
      `,
-    createTeamSection: styled.div`
+    createMatchSection: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     
-    margin: 30px auto;
+    margin: 40px auto;
     
     & > h1 {
     font-size: 23px;
     font-weight: bold;
     }
    `,
-    createTeamContainer : styled.form`
+    createMatchContainer : styled.form`
     position: relative;
     display: flex;
     flex-direction: column;
     
-    width: 750px;
-    height: 480px;
+    width: 500px;
+    height: 430px;
     
     margin-top: 25px;
     padding: 60px 50px 0;
@@ -88,9 +87,7 @@ const Styled = {
     border: none;
     }
     
-    &:focus {
-    outline : none;
-    }
+    
     
     & > label {
     display: flex;
@@ -139,8 +136,8 @@ const Styled = {
     margin-top: 10px;
     }
     `,
-    createTeamInput : styled.input`
-    width: 300px;
+    createMatchInput : styled.input`
+    width: 200px;
     height: 40px;
     
     border-radius: 12px;
@@ -148,22 +145,15 @@ const Styled = {
     
     padding: 0 15px;
     
-    &:focus{
-    outline:none;
+    &.place {
+    width: 300px;
     }
-    &.region {
-    width: 180px;
-    }
-    &.uploadImg {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
+    
+    &:focus {
+    outline : none;
     }
     `,
-    createTeamButton : styled.a`
+    createMatchButton : styled.a`
     color: #1C66D5;
     font-size: 15px;
     font-weight: 800;

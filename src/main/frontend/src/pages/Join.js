@@ -57,7 +57,7 @@ export default Join;
 
 const Styled = {
     Root: styled.div`
-    width: 1500px;
+    width: 100vw;
     height: 100vh;
     margin : 0 auto;
      `,
@@ -78,7 +78,7 @@ const Styled = {
     flex-direction: column;
     
     width: 570px;
-    height: 570px;
+    height: 530px;
     
     margin-top: 25px;
     padding: 40px 50px 0;
@@ -92,14 +92,12 @@ const Styled = {
     
     margin-top: 70px;
     }
-    
-
     `,
     InputContainer : styled.div`
     display: flex;
     align-items: center;    
 
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     
     & > label {
     font-size : 15px;

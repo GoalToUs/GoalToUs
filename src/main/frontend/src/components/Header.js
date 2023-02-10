@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {ProfileIcon} from "../assets";
 
 function Header({noRightSection}) {
-    const isLogined = false;
+    const isLogined = true;
     return (
         <Styled.Container>
            <Styled.Logo href={"/"}>GoalToUs</Styled.Logo>
