@@ -9,7 +9,7 @@ function Home() {
             <Styled.Container>
                 <Styled.pendingMatchTitle>매칭 대기 경기</Styled.pendingMatchTitle>
                 <Styled.pendingMatchContainer>
-                    <a href="/" target={"_self"}><img src={createMatchIcon} width={"120px"}/></a>
+                    <a href="/match/create" target={"_self"}><img src={createMatchIcon}  width={"120px"}/></a>
                     <Styled.scrollContainer>
                     <Styled.matchListContainer>
                         <Styled.matchDay>11.02</Styled.matchDay>
@@ -61,9 +61,9 @@ function Home() {
                     </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
-                    <Styled.button>내 팀 홈 가기</Styled.button>
-                    <Styled.button>팀 등록/가입 하기</Styled.button><
-                    /Styled.buttonContainer>
+                    <Styled.button><a href={"/team/home"}>내 팀 홈 가기</a></Styled.button>
+                    <Styled.button><a href={"/team"}>팀 등록 / 가입하기</a></Styled.button>
+                    </Styled.buttonContainer>
             </Styled.Container>
         </Styled.Root>
     );
@@ -73,7 +73,7 @@ export default Home;
 
 const Styled = {
     Root: styled.div`
-    width: 1500px;
+    width: 100vw;
     height: 100vh;
     margin : 0 auto;
     `,
@@ -82,7 +82,9 @@ const Styled = {
     justify-content: space-between;
     position: relative;
     
-    margin: 30px 70px 0;
+    width: 1150px;
+    
+    margin: 30px auto 0;
     `,
     pendingMatchTitle : styled.header`
     position: absolute;
@@ -90,10 +92,8 @@ const Styled = {
     
     top : -28px;
     left: 25px;    
-    
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 800;
+
+    font-weight: 900;
     font-size: 26px;
     line-height: 44px;
     `,
@@ -103,8 +103,8 @@ const Styled = {
     align-items: center;
     position: relative;
     
-    width: 960px;
-    height: 600px;
+    width: 800px;
+    height: 550px;
     
     
     background-color: rgba(122, 198, 161, 0.4);
@@ -127,8 +127,8 @@ const Styled = {
     
     align-items: center;
     
-    width: 920px;
-    height: 570px;
+    width: 790px;
+    height: 490px;
     
     overflow-y: scroll;
     
@@ -154,7 +154,7 @@ const Styled = {
     
     position: relative;
     
-    width: 870px;
+    width: 730px;
     
     margin-top : 20px;
     padding-top: 30px;
@@ -164,10 +164,8 @@ const Styled = {
     left: 0;
     top: 0;
     
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 800;
     font-size: 22px;
+    font-weight: 800;
     `,
     matchList : styled.div`
     position: relative;
@@ -175,7 +173,7 @@ const Styled = {
     display: flex;
     align-items: center;
     
-    width: 820px;
+    width: 700px;
     height: 100px;
     
     border-radius: 15px;
@@ -184,23 +182,20 @@ const Styled = {
     border: none;
     
     margin : 10px 0;
-    padding: 0 50px;
+    padding: 0 30px;
     
     & > div {
     margin-left: 40px;
     }
     `,
     teamName : styled.h2`
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 800;
-    font-size: 23px;
+    font-size: 19px;
     `,
     matchInfo: styled.span`
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 19px;
+    line-height: 23px;
     `,
     matchButton: styled.button`
     display: flex;
@@ -210,16 +205,15 @@ const Styled = {
     position: absolute;
     right: 50px;
     
-    width: 113px;
-    height: 46px;
+    width: 100px;
+    height: 40px;
     
     background: #D5441C;
     border-radius: 10px;
     border: none;
-    
-    font-family: 'Inter';
+
     font-weight: 800;
-    font-size: 20px;
+    font-size: 18px;
     
     color: white;
     
@@ -232,18 +226,17 @@ const Styled = {
     justify-content: center;
     align-items: center;
     
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
     
     background-color:  rgba(66, 65, 65, 0.4);
     border-radius: 15px;
     
     margin: auto 0;
-    margin-right: 30px;
     `,
     button: styled.button`
-    width: 240px;
-    height: 86px;
+    width: 200px;
+    height: 80px;
     
     border-radius: 10px;
     border: none;
@@ -252,10 +245,9 @@ const Styled = {
     
     cursor: pointer;
     
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 25px;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing : -1px;
     
     &:nth-child(1) {
     background: #F9D7A4;
