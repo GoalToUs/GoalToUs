@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import {ProfileIcon} from "../assets";
 
-function Header({noRightSection}) {
+function Header({noRightSection, noLogo}) {
     const isLogined = true;
     return (
         <Styled.Container>
-           <Styled.Logo href={"/"}>GoalToUs</Styled.Logo>
+             <Styled.Logo href={"/"}>{!noLogo && "GoalToUs"}</Styled.Logo>
             {!noRightSection && (isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton href={"/login"}>로그인/회원가입</Styled.loginJoinButton>)}
         </Styled.Container>
     );

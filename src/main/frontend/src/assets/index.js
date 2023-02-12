@@ -6,4 +6,6 @@ export { default as createTeamIcon} from './Teams.png';
 export { default as searchIcon} from './Search.png';
 export { default as homeIcon} from './homeIcon.png';
 export { default as arrowIcon} from './Compare arrows.svg';
-export { default as videoIcon} from './video.svg'
+export { default as videoIcon} from './video.svg';
+export { default as TeamProfileImg1} from './Team_Profile.png';
+export { default as OpponentTeamImg} from './opponentTeam.png';
