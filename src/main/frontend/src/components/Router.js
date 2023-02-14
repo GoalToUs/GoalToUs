@@ -8,6 +8,9 @@ import Team from "../pages/Team";
 import JoinTeam from "../pages/JoinTeam";
 import CreateMatch from "../pages/CreateMatch";
 import TeamHome from "../pages/TeamHome";
+import MatchAnalysis from "../pages/MatchAnalysis";
+import MatchPending from "../pages/MatchPending";
+import MatchVideo from "../pages/MatchVideo";
 
 const Router = () => {
     return (
@@ -21,6 +24,9 @@ const Router = () => {
                 <Route path={"/team/create"} element={<CreateTeam/>}/>
                 <Route path={"/match/create"} element={<CreateMatch/>}/>
                 <Route path={"/team/home"} element={<TeamHome/>}/>
+                <Route path={"/team/match/analysis"} element={<MatchAnalysis/>}/>
+                <Route path={"/team/match/pending"} element={<MatchPending/>}/>
+                <Route path={"/team/match/video"} element={<MatchVideo/>}/>
             </Routes>
         </BrowserRouter>
     );
