@@ -1,7 +1,43 @@
 import styled from "styled-components";
 import Header from "../components/Header";
+import {usePostUserInfo} from "../hooks/team";
+import {useState} from "react";
 
 function CreateTeam() {
+    const [teamName, setTeamName] = useState("");
+    const [teamRegion, setTeamRegion] = useState("");
+    const [teamIntro, setTeamIntro] = useState("");
+
+    const {mutate: createTeam} = usePostUserInfo();
+    const handleOnClick = () => {
+        if(!teamName || !teamRegion || !teamIntro) {
+            alert(`를 입력해주세요.`);
+            return;
+        }
+        const teamData = {
+            "teamName": teamName,
+            "region": teamRegion,
+            "intro": teamIntro,
+        }
+        console.log(teamData);
+        createTeam(teamData);
+    }
+
+    const handleOnChange = (e) => {
+        const value = e.currentTarget.value;
+        switch(e.currentTarget.id) {
+            case "teamName":
+                setTeamName(value);
+                break;
+            case "teamRegion":
+                setTeamRegion(value);
+                break;
+            case "teamIntro":
+                setTeamIntro(value);
+                break;
+        }
+    }
+
     return (
         <Styled.Root>
             <Header noRightSection/>
@@ -10,11 +46,11 @@ function CreateTeam() {
                 <Styled.createTeamContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>팀명</Styled.inputTitle>
-                        <Styled.createTeamInput/>
+                        <Styled.createTeamInput value={teamName} id={"teamName"} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>팀 소재지</Styled.inputTitle>
-                        <Styled.createTeamInput className={"region"}/>
+                        <Styled.createTeamInput className={"region"} id={"teamRegion"} value={teamRegion} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <img />
@@ -23,9 +59,9 @@ function CreateTeam() {
                     </Styled.InputContainer>
                     <Styled.InputContainer className={"introduction"}>
                         <Styled.inputTitle className={"introduction"}>팀 소개글</Styled.inputTitle>
-                        <textarea/>
+                        <textarea id={"teamIntro"} value={teamIntro} onChange={handleOnChange}/>
                     </Styled.InputContainer>
-                    <Styled.submitButton type={"submit"} value={"등록하기"}/>
+                    <Styled.submitButton type={"button"} value={"등록하기"} onClick={handleOnClick}/>
                 </Styled.createTeamContainer>
             </Styled.createTeamSection>
         </Styled.Root>
