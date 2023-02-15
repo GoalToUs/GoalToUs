@@ -1,7 +1,52 @@
 import styled from "styled-components";
 import Header from "../components/Header";
+import {usePostUserInfo} from "../hooks/user";
+import {useState} from "react";
 
 function Join() {
+    const [userId, setUserId] = useState("");
+    const [password, setPassword] = useState("");
+    const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [isCaptain, setIsCaptain] = useState(false);
+    const [position, setPosition] = useState("FW");
+
+    const {mutate : join} = usePostUserInfo();
+    const handleOnClick = () => {
+        if(!userId || !password || !userName || !email) {
+            alert(`를 입력해주세요.`);
+            return;
+        }
+        const userData = {
+            "nickname" : userId,
+            "password" : password,
+            "name" : userName,
+            "email" : email,
+            "isCaptain" : isCaptain ? 1 : 0,
+            "position" : position
+        }
+        console.log(userData);
+        join(userData);
+    }
+
+    const handleOnChange = (e) => {
+        const value = e.currentTarget.value;
+        switch(e.currentTarget.id) {
+            case "userId":
+                setUserId(value);
+                break;
+            case "password":
+                setPassword(value);
+                break;
+            case "userName":
+                setUserName(value);
+                break;
+            case "email":
+                setEmail(value);
+                break;
+        }
+    }
+
     return (
         <Styled.Root>
             <Header noRightSection/>
@@ -10,43 +55,43 @@ function Join() {
                 <Styled.joinContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>아이디</Styled.inputTitle>
-                        <Styled.joinInput/>
+                        <Styled.joinInput id={"userId"} value={userId} onChange={handleOnChange}/>
                         <Styled.certificateButton>중복 확인</Styled.certificateButton>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
-                        <Styled.inputTitle>비밀번호</Styled.inputTitle>
-                        <Styled.joinInput type={"password"}/>
+                        <Styled.inputTitle >비밀번호</Styled.inputTitle>
+                        <Styled.joinInput type={"password"} id={"password"} value={password} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>비밀번호<br/> 확인</Styled.inputTitle>
-                        <Styled.joinInput type={"password"}/>
+                        <Styled.joinInput type={"password"} onChange={() => {}}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>이름</Styled.inputTitle>
-                        <Styled.joinInput/>
+                        <Styled.joinInput value={userName} id={"userName"} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle type={"email"}>이메일</Styled.inputTitle>
-                        <Styled.joinInput/>
+                        <Styled.joinInput value={email} id={"email"} onChange={handleOnChange}/>
                         <Styled.certificateButton>본인 확인</Styled.certificateButton>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
-                        <Styled.inputTitle>주장</Styled.inputTitle>
+                        <Styled.inputTitle >주장</Styled.inputTitle>
                         <label for={"yes"}>Yes</label>
-                        <input className={"radioInput"} name="position" id={"yes"} value="yes" type={"radio"}/>
+                        <input className={"radioInput"} name="position" id={"yes"} value="yes" type={"radio"} onClick={() => setIsCaptain(true)}/>
                         <label for={"no"}>No</label>
-                        <input className={"radioInput"}  name="position" id={"no"} value="no" type={"radio"}/>
+                        <input className={"radioInput"}  name="position" id={"no"} value="no" type={"radio"} onClick={() => setIsCaptain(false)}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>포지션</Styled.inputTitle>
-                        <select>
-                            <option value={""}>공격수</option>
-                            <option value={""}>수비수</option>
-                            <option value={""}>미드필더</option>
-                            <option value={""}>골키퍼</option>
+                        <select onChange={(e) => setPosition(e.target.value)}>
+                            <option value={"FW"}>공격수</option>
+                            <option value={"DF"}>수비수</option>
+                            <option value={"MF"}>미드필더</option>
+                            <option value={"GK"}>골키퍼</option>
                         </select>
                     </Styled.InputContainer>
-                    <Styled.submitButton type={"submit"} value={"가입하기"}/>
+                    <Styled.submitButton type={"button"} value={"가입하기"} onClick={handleOnClick}/>
                 </Styled.joinContainer>
             </Styled.joinSection>
         </Styled.Root>
