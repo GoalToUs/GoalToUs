@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BASE_URL = process.env.NEXT_PUBLIC_END ?? '';
+export const BASE_URL = process.env.REACT_APP_IP ?? '';
 export default function createAxios(endpoint, config) {
     const axiosBasic = axios.create({
         baseURL: BASE_URL,
