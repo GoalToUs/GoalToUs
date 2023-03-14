@@ -8,15 +8,28 @@ function Join() {
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
-    const [isCaptain, setIsCaptain] = useState(false);
+    const [isCaptain, setIsCaptain] = useState(null);
     const [position, setPosition] = useState("FW");
 
     const {mutate : join} = usePostUserInfo();
     const handleOnClick = () => {
-        if(!userId || !password || !userName || !email) {
-            alert(`를 입력해주세요.`);
+        if(!userId) {
+            alert(`아이디를 입력해주세요.`);
+            return;
+        }else if(!password) {
+            alert(`비밀번호를 입력해주세요`);
+            return;
+        }else if(!userName) {
+            alert(`이름을 입력해주세요`);
+            return;
+        }else if(!email) {
+            alert(`이메일을 입력해주세요`);
+            return;
+        }else if(!isCaptain) {
+            alert(`주장 여부를 선택해주세요`);
             return;
         }
+
         const userData = {
             "nickname" : userId,
             "password" : password,
@@ -25,7 +38,6 @@ function Join() {
             "isCaptain" : isCaptain ? 1 : 0,
             "position" : position
         }
-        console.log(userData);
         join(userData);
     }
 
@@ -47,6 +59,14 @@ function Join() {
         }
     }
 
+    const checkPassword = (e) => {
+        if(e.currentTarget.value !== password) {
+            console.log("비밀번호와 일치하지 않습니다.");
+        } else {
+            console.log("good");
+        }
+    }
+
     return (
         <Styled.Root>
             <Header noRightSection/>
@@ -64,7 +84,7 @@ function Join() {
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>비밀번호<br/> 확인</Styled.inputTitle>
-                        <Styled.joinInput type={"password"} onChange={() => {}}/>
+                        <Styled.joinInput type={"password"} onChange={checkPassword}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>이름</Styled.inputTitle>

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import {postUserInfo} from "../apis/user";
+import {fetchUserInfo, postUserInfo} from "../apis/user";
 
 export const usePostUserInfo = () => {
     const queryClient = useQueryClient();
@@ -9,3 +9,8 @@ export const usePostUserInfo = () => {
         },
     });
 }
+
+export const useFetchUserInfo = () => {
+    const { data } = useQuery(["userInfo"], fetchUserInfo);
+    return data;
+};
