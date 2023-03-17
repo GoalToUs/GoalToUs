@@ -28,4 +28,8 @@ public class UserService {
 
         return signupResponseDto;
     }
+    public boolean checkNicknameDuplicate(String nickname){
+        return userRepository.existsByNickname(nickname);}
+
+
 }

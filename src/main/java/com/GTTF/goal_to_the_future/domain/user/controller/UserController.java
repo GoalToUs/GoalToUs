@@ -6,9 +6,8 @@ import com.GTTF.goal_to_the_future.domain.user.dto.request.SignupRequestDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.SignupResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,4 +19,8 @@ public class UserController {
         SignupResponseDto signupResponseDto = userService.signup(requestDto);
         return new BaseResponseDto<>(signupResponseDto);
     }
+    @GetMapping("/user/{nickname}/exist")
+    public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String nickname)
+    { return ResponseEntity.ok(userService.checkNicknameDuplicate(nickname));}
+
 }
