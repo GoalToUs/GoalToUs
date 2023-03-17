@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import {usePostUserInfo} from "../hooks/team";
 import {useEffect, useRef, useState} from "react";
+import {DefaultImg} from "../assets";
 
 function CreateTeam() {
     const [inputs, setInputs] = useState({
@@ -83,11 +84,11 @@ function CreateTeam() {
                         <Styled.createTeamInput className={"region"} id={"teamRegion"} value={inputs.teamRegion} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
-                        <img src={imgSrc} className={"img_box"}/>
+                        <img src={imgSrc ? imgSrc : DefaultImg} className={"img_box"}/>
                         <label for={"file"}>사진 첨부</label>
                         <Styled.createTeamInput type={"file"} id="file" className={"uploadImg"} onChange={handleFileChange}/>
                     </Styled.InputContainer>
-                    <Styled.InputContainer className={"introduction"}>
+                    <Styled.InputContainer className={"introdusction"}>
                         <Styled.inputTitle className={"introduction"}>팀 소개글</Styled.inputTitle>
                         <textarea id={"teamIntro"} value={inputs.teamIntro} onChange={handleOnChange}/>
                     </Styled.InputContainer>
