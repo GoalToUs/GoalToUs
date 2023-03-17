@@ -1,70 +1,90 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import {usePostUserInfo} from "../hooks/user";
-import {useState} from "react";
+import { useState} from "react";
+import {fetchUserDuplication} from "../apis/user";
+import {useNavigate} from "react-router-dom";
 
 function Join() {
-    const [userId, setUserId] = useState("");
-    const [password, setPassword] = useState("");
-    const [userName, setUserName] = useState("");
-    const [email, setEmail] = useState("");
-    const [isCaptain, setIsCaptain] = useState(null);
-    const [position, setPosition] = useState("FW");
+    const [inputs, setInputs] = useState({
+        userId: '',
+        password: '',
+        passwordCheck: '',
+        userName: '',
+        email: '',
+        isCaptain: null,
+        position: "FW"
+    });
 
+    const [checkPW, setCheckPW] = useState(false);
+    const [checkDuplication, setCheckDuplication] = useState(true);
+
+    const navigate = useNavigate();
     const {mutate : join} = usePostUserInfo();
+    // else if(checkDuplication) {
+    //     alert(`아이디 중복 확인을 해주세요.`);
+    // }
     const handleOnClick = () => {
-        if(!userId) {
+        if(!inputs.userId) {
             alert(`아이디를 입력해주세요.`);
             return;
-        }else if(!password) {
+        }else if(!inputs.password) {
             alert(`비밀번호를 입력해주세요`);
             return;
-        }else if(!userName) {
+        }else if(!inputs.passwordCheck) {
+            alert(`비밀번호 확인을 입력해주세요.`);
+        }else if(!checkPW) {
+            alert(`비밀번호가 일치하지 않습니다. 올바르게 입력해주세요.`);
+            return;
+        }else if(!inputs.userName) {
             alert(`이름을 입력해주세요`);
             return;
-        }else if(!email) {
+        }else if(!inputs.email) {
             alert(`이메일을 입력해주세요`);
             return;
-        }else if(!isCaptain) {
+        }else if(inputs.isCaptain === null) {
             alert(`주장 여부를 선택해주세요`);
             return;
         }
 
         const userData = {
-            "nickname" : userId,
-            "password" : password,
-            "name" : userName,
-            "email" : email,
-            "isCaptain" : isCaptain ? 1 : 0,
-            "position" : position
+            "nickname" : inputs.userId,
+            "password" : inputs.password,
+            "name" : inputs.userName,
+            "email" : inputs.email,
+            "isCaptain" : inputs.isCaptain ? 1 : 0,
+            "position" : inputs.position
         }
         join(userData);
     }
 
     const handleOnChange = (e) => {
-        const value = e.currentTarget.value;
-        switch(e.currentTarget.id) {
-            case "userId":
-                setUserId(value);
-                break;
-            case "password":
-                setPassword(value);
-                break;
-            case "userName":
-                setUserName(value);
-                break;
-            case "email":
-                setEmail(value);
-                break;
-        }
+        const {value, id} = e.currentTarget;
+        setCheckDuplication(false);
+        setInputs({
+            ...inputs,
+            [id]: value
+        });
     }
 
     const checkPassword = (e) => {
-        if(e.currentTarget.value !== password) {
-            console.log("비밀번호와 일치하지 않습니다.");
+        setInputs({
+            ...inputs,
+            passwordCheck: e.currentTarget.value
+        })
+        if(e.currentTarget.value !== inputs.password) {
+            setCheckPW(false);
         } else {
-            console.log("good");
+            setCheckPW(true);
         }
+    }
+
+
+    const CheckDuplication = () => {
+        const { data : checkDuplication } = fetchUserDuplication(inputs.userId);
+        console.log(checkDuplication);
+        // true면 중복, false면 통과
+        setCheckDuplication(checkDuplication);
     }
 
     return (
@@ -75,36 +95,40 @@ function Join() {
                 <Styled.joinContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>아이디</Styled.inputTitle>
-                        <Styled.joinInput id={"userId"} value={userId} onChange={handleOnChange}/>
-                        <Styled.certificateButton>중복 확인</Styled.certificateButton>
+                        <Styled.joinInput id={"userId"} value={inputs.userId} onChange={handleOnChange}/>
+                        <Styled.certificateButton onClick={CheckDuplication}>중복 확인</Styled.certificateButton>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle >비밀번호</Styled.inputTitle>
-                        <Styled.joinInput type={"password"} id={"password"} value={password} onChange={handleOnChange}/>
+                        <Styled.joinInput type={"password"} id={"password"} value={inputs.password} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>비밀번호<br/> 확인</Styled.inputTitle>
-                        <Styled.joinInput type={"password"} onChange={checkPassword}/>
+                        <Styled.joinInput type={"password"} value={inputs.passwordCheck} onChange={checkPassword}/>
                     </Styled.InputContainer>
+                    {inputs.passwordCheck && !checkPW && <div id={"errorMsg"}>비밀번호가 일치하지 않습니다.</div>}
                     <Styled.InputContainer>
                         <Styled.inputTitle>이름</Styled.inputTitle>
-                        <Styled.joinInput value={userName} id={"userName"} onChange={handleOnChange}/>
+                        <Styled.joinInput value={inputs.userName} id={"userName"} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle type={"email"}>이메일</Styled.inputTitle>
-                        <Styled.joinInput value={email} id={"email"} onChange={handleOnChange}/>
+                        <Styled.joinInput value={inputs.email} id={"email"} onChange={handleOnChange}/>
                         <Styled.certificateButton>본인 확인</Styled.certificateButton>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle >주장</Styled.inputTitle>
                         <label for={"yes"}>Yes</label>
-                        <input className={"radioInput"} name="position" id={"yes"} value="yes" type={"radio"} onClick={() => setIsCaptain(true)}/>
+                        <input className={"radioInput"} name="position" id={"yes"} value="yes" type={"radio"} onClick={() => setInputs({...inputs, isCaptain: true})}/>
                         <label for={"no"}>No</label>
-                        <input className={"radioInput"}  name="position" id={"no"} value="no" type={"radio"} onClick={() => setIsCaptain(false)}/>
+                        <input className={"radioInput"}  name="position" id={"no"} value="no" type={"radio"} onClick={() => setInputs({...inputs, isCaptain: false})}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>포지션</Styled.inputTitle>
-                        <select onChange={(e) => setPosition(e.target.value)}>
+                        <select onChange={(e) => setInputs({
+                            ...inputs,
+                            position: e.currentTarget.value
+                        })}>
                             <option value={"FW"}>공격수</option>
                             <option value={"DF"}>수비수</option>
                             <option value={"MF"}>미드필더</option>
@@ -138,7 +162,7 @@ const Styled = {
     font-weight: bold;
     }
    `,
-    joinContainer : styled.form`
+    joinContainer : styled.div`
     display: flex;
     flex-direction: column;
     
@@ -156,6 +180,15 @@ const Styled = {
     font-weight: bold;
     
     margin-top: 70px;
+    }
+    
+    & > #errorMsg {
+    position: absolute;
+    top: 360px;
+    
+    color: red;
+    font-weight: bold;
+    margin-left: 100px;
     }
     `,
     InputContainer : styled.div`
