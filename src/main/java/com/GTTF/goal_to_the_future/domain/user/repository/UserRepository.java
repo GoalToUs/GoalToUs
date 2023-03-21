@@ -16,4 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u.name from User u where u.team = :team") // jpql - jpql 문법 찾아보기
     List<String> findUserNamesByTeam(@Param("team") Team team);
+
+    boolean existsByNickname(String nickname);
+
 }

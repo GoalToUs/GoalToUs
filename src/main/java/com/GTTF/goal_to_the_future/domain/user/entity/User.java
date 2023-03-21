@@ -30,14 +30,22 @@ public class User {
     private String position;
     private String nickname;
 
-    public User(String pw, String name, String email, Integer captain, String position, String nickname) {
+    private String photo;
+    private String birth;
+
+
+    public User(String pw, String name, String email, Integer captain,
+                String position, String nickname, String photo, String birth) {
         this.pw = pw;
         this.name = name;
         this.email = email;
         this.captain = captain;
         this.position = position;
         this.nickname = nickname;
+        this.photo=photo;
+        this.birth=birth;
     }
+
 
     public void joinTeam(Team team){
         this.team = team;

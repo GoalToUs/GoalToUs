@@ -13,4 +13,6 @@ public class SignupResponseDto {
     private String email;
     private Integer isCaptain;
     private String position;
+    private String photo;
+    private String birth;
 }
