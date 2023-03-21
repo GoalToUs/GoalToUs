@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team,Long> {
     @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, u.name)" +
@@ -19,5 +20,6 @@ public interface TeamRepository extends JpaRepository<Team,Long> {
             " from User u " +
             " where u.captain=1 ")
     List<SearchTeamResponseDto> findALLTeamInfo();
+
 
 }
