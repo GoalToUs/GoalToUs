@@ -4,8 +4,36 @@ import Header from "../components/Header";
 
 import SideBar from "../components/Sidebar";
 import { TeamProfileImg, TeamProfileImg1} from "../assets";
+import {useFetchMatchAnalysis} from "../hooks/match";
 
 function MatchAnalysis() {
+    const matchId = 1;
+    // const matchData = useFetchMatchAnalysis(matchId);
+    const matchData = [{
+        "teamName": "맨시티",
+        "winnerTeamId":12,
+        "goal":3,
+        "penaltyKick":2,
+        "yellowCard":0,
+        "redCard":0,
+        "highlight":"http:/",
+        "pass":89,
+        "winner":2,
+        "effectiveShooting":67
+    },{
+        "teamName": "풀럼",
+        "matchId":13,
+        "goal":3,
+        "penaltyKick":2,
+        "yellowCard":0,
+        "redCard":0,
+        "highlight":"http:/",
+        "pass":90,
+        "winner":4,
+        "effectiveShooting":65
+    }]
+    const team1Data = matchData[0];
+    const team2Data = matchData[1];
     return(
         <Styled.Root>
             <SideBar />
@@ -13,18 +41,18 @@ function MatchAnalysis() {
             <Styled.Container>
                 <Styled.Header>
                     <Styled.TeamContainer>
-                        <Styled.TeamName>맨시티</Styled.TeamName>
+                        <Styled.TeamName>{team1Data.teamName}</Styled.TeamName>
                         <img src={TeamProfileImg} width={"50"} height={"50"}/>
                     </Styled.TeamContainer>
-                    <Styled.Score>2</Styled.Score>
+                    <Styled.Score>{team1Data.goal}</Styled.Score>
                     <Styled.InfoContainer>
                         <Styled.Info>서울 OO 축구장</Styled.Info>
                         <Styled.Info>2022.11.06 17:00</Styled.Info>
                     </Styled.InfoContainer>
-                    <Styled.Score>1</Styled.Score>
+                    <Styled.Score>{team2Data.goal}</Styled.Score>
                     <Styled.TeamContainer>
                         <img src={TeamProfileImg1} width={"50"} height={"50"} />
-                        <Styled.TeamName>풀럼</Styled.TeamName>
+                        <Styled.TeamName>{team2Data.teamName}</Styled.TeamName>
                     </Styled.TeamContainer>
                 </Styled.Header>
                 <Styled.Video/>
@@ -40,21 +68,35 @@ function MatchAnalysis() {
                     <Styled.analysisList>
                         <Styled.gaugeBar></Styled.gaugeBar>
                         <Styled.analysisNumber>72%</Styled.analysisNumber>
-                        <Styled.analysisItem>볼점유율</Styled.analysisItem>
+                        <Styled.analysisItem>슈팅</Styled.analysisItem>
                         <Styled.analysisNumber>72%</Styled.analysisNumber>
                         <Styled.gaugeBar></Styled.gaugeBar>
                     </Styled.analysisList>
                     <Styled.analysisList>
                         <Styled.gaugeBar></Styled.gaugeBar>
                         <Styled.analysisNumber>72%</Styled.analysisNumber>
-                        <Styled.analysisItem>볼점유율</Styled.analysisItem>
+                        <Styled.analysisItem>패널티킥</Styled.analysisItem>
                         <Styled.analysisNumber>72%</Styled.analysisNumber>
                         <Styled.gaugeBar></Styled.gaugeBar>
                     </Styled.analysisList>
                     <Styled.analysisList>
                         <Styled.gaugeBar></Styled.gaugeBar>
                         <Styled.analysisNumber>72%</Styled.analysisNumber>
-                        <Styled.analysisItem>볼점유율</Styled.analysisItem>
+                        <Styled.analysisItem>파울</Styled.analysisItem>
+                        <Styled.analysisNumber>72%</Styled.analysisNumber>
+                        <Styled.gaugeBar></Styled.gaugeBar>
+                    </Styled.analysisList>
+                    <Styled.analysisList>
+                        <Styled.gaugeBar></Styled.gaugeBar>
+                        <Styled.analysisNumber>72%</Styled.analysisNumber>
+                        <Styled.analysisItem>경고</Styled.analysisItem>
+                        <Styled.analysisNumber>72%</Styled.analysisNumber>
+                        <Styled.gaugeBar></Styled.gaugeBar>
+                    </Styled.analysisList>
+                    <Styled.analysisList>
+                        <Styled.gaugeBar></Styled.gaugeBar>
+                        <Styled.analysisNumber>72%</Styled.analysisNumber>
+                        <Styled.analysisItem>퇴장</Styled.analysisItem>
                         <Styled.analysisNumber>72%</Styled.analysisNumber>
                         <Styled.gaugeBar></Styled.gaugeBar>
                     </Styled.analysisList>
