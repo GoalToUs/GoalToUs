@@ -4,22 +4,46 @@ import Header from "../components/Header";
 
 import SideBar from "../components/Sidebar";
 import {OpponentTeamImg, TeamProfileImg1} from "../assets";
+import {useFetchTeamInfo} from "../hooks/team";
+import {useParams} from "react-router-dom";
+import {useState} from "react";
 
 function TeamHome() {
+    const [showAllPlayers, setShowAllPlayers] = useState(false);
+    const {teamName} = useParams();
+    //const teamData = useFetchTeamInfo(teamName);
+    const teamData = {
+        teamPhoto: null,
+        region: "서대문구",
+        teamName: "스타벅스",
+        players: [
+            "김서현",
+            "이다빈",
+            "황재민"
+        ]
+    }
+
+    const allPlayerList = teamData.players.map((player) => {
+        return `${player} `
+    })
+    const defaultPlayerList = teamData.players.slice(0,12).map((player) => {
+        return `${player} `
+    })
     return(
         <Styled.Root>
             <SideBar />
             <Header noLogo/>
+            {/*{showAllPlayers && <Styled.TeamAllPlayer className={"allPlayer"}>{allPlayerList} <button onClick={() => setShowAllPlayers(false)}>닫기</button></Styled.TeamAllPlayer>} 팝업으로*/}
             <Styled.Container>
                 <Styled.ProfileContainer>
-                    <img src={TeamProfileImg1} alt={"팀 프로필 사진"} width={"130"} height={"130"}/>
-                    <Styled.TeamName>Jenny Wilson</Styled.TeamName>
-                    <Styled.TeamRegion>지역 : 서울</Styled.TeamRegion>
+                    <img src={teamData ? teamData.teamPhoto : ""} alt={"팀 프로필 사진"} width={"130"} height={"130"}/>
+                    <Styled.TeamName>{teamData.teamName}</Styled.TeamName>
+                    <Styled.TeamRegion>지역 : {teamData.region}</Styled.TeamRegion>
                 </Styled.ProfileContainer>
                 <Styled.TeamInfoContainer>
                     <div>
                     <Styled.TeamInfoLabel className={"player"}>선수 정보</Styled.TeamInfoLabel>
-                    <Styled.TeamInfo className={"player"}>김서현 이다빈 황재민 홍길동 김서현 이다빈 황재민 홍길동 김서현 이다빈 황재민 홍길동 더보기</Styled.TeamInfo>
+                        <Styled.TeamInfo className={"player"}>{defaultPlayerList} {teamData.players.length > 12 && <Styled.moreButton onClick={() => setShowAllPlayers(true)}>더보기</Styled.moreButton>}</Styled.TeamInfo>
                     </div>
                     <div>
                     <Styled.TeamInfoLabel className={"aboutTeam"}>팀 소개글</Styled.TeamInfoLabel>
@@ -164,6 +188,7 @@ const Styled = {
     margin-top: 40px;
     `,
     TeamInfoContainer : styled.div`
+    position:relative;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -219,6 +244,22 @@ const Styled = {
     height: 100px;
     border-radius: 5px;
     margin-top: 10px;
+    }
+    `,
+    moreButton : styled.button`
+    background: none;
+    border: none;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 29px;
+    
+    cursor: pointer;
+    
+    &:hover {
+    text-decoration: underline;
     }
     `,
     MatchContainer : styled.section`
