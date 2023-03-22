@@ -1,12 +1,12 @@
 import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {fetchSearchTeam, postTeamInfo, postJoinTeam} from "../apis/team";
+import {fetchSearchTeam, postTeamInfo, postJoinTeam, fetchTeamInfo} from "../apis/team";
 
 // 팀 등록하기
 export const usePostUserInfo = () => {
     const queryClient = useQueryClient();
     return useMutation(postTeamInfo, {
         onSuccess() {
-            console.log("success");
+            console.log("create team success");
         },
     });
 }
@@ -22,7 +22,13 @@ export const usePostJoinTeam = () => {
     const queryClient = useQueryClient();
     return useMutation(postJoinTeam, {
         onSuccess() {
-            console.log("success");
+            console.log("join team success");
         },
     });
+}
+
+// 팀 정보 조회하기
+export const  useFetchTeamInfo = (teamId) => {
+    const {data} = useQuery(["teamInfo"], () => fetchTeamInfo(teamId));
+    return data;
 }
