@@ -10,10 +10,11 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 public class MypageResponseDto {
-    private String photo;
+
     private String name;
     private String birth;
-    private String teamName;
+    //private String teamName;
     private String position;
+    private String photo;
 
 }
