@@ -11,6 +11,7 @@ import TeamHome from "../pages/TeamHome";
 import MatchAnalysis from "../pages/MatchAnalysis";
 import MatchPending from "../pages/MatchPending";
 import MatchVideo from "../pages/MatchVideo";
+import SearchTeam from "../pages/SearchTeam";
 
 const Router = () => {
     return (
@@ -20,10 +21,12 @@ const Router = () => {
                 <Route path="/login" element={<Login/>}/>
                 <Route path={"/join"} element={<Join/>}/>
                 <Route path={"/team"} element={<Team/>}/>
-                <Route path={"/team/join"} element={<JoinTeam/>}/>
+                <Route path={"/team/join"} element={<JoinTeam/>}>
+                    <Route path={":searchWord"} element={<SearchTeam/>}/>
+                </Route>
                 <Route path={"/team/create"} element={<CreateTeam/>}/>
                 <Route path={"/match/create"} element={<CreateMatch/>}/>
-                <Route path={"/team/home"} element={<TeamHome/>}/>
+                <Route path={"/team/home/:teamName"} element={<TeamHome/>}/>
                 <Route path={"/team/match/analysis"} element={<MatchAnalysis/>}/>
                 <Route path={"/team/match/pending"} element={<MatchPending/>}/>
                 <Route path={"/team/match/video"} element={<MatchVideo/>}/>
