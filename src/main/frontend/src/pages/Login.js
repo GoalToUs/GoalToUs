@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 function Login() {
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
-    const {mutate: login} =usePostLogin();
+    const {mutate: login, isSuccess} =usePostLogin();
     const navigate = useNavigate();
 
     const handleOnClick = () => {
@@ -22,13 +22,9 @@ function Login() {
             "userId": userId,
             "password": password
         }
-        const {data} = login(postData);
-        console.log(data)
-        const isLoginSuccess = data.isSuccess;
+        login(postData);
 
-        if(!isLoginSuccess) {
-            alert(`존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다. 다시 입력해주세요.`);
-        } else {
+        if(isSuccess) {
             navigate(`/home`);
         }
     }

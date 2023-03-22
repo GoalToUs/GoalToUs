@@ -21,13 +21,13 @@ function Join() {
 
     const navigate = useNavigate();
     const {mutate : join} = usePostUserInfo();
-    // else if(checkDuplication) {
-    //     alert(`아이디 중복 확인을 해주세요.`);
-    // }
+
     const handleOnClick = () => {
         if(!inputs.userId) {
             alert(`아이디를 입력해주세요.`);
             return;
+        }else if(checkDuplication) {
+            alert(`아이디 중복 확인을 해주세요.`);
         }else if(!inputs.password) {
             alert(`비밀번호를 입력해주세요`);
             return;
@@ -68,11 +68,12 @@ function Join() {
     }
 
     const checkPassword = (e) => {
+        const {value} = e.currentTarget;
         setInputs({
             ...inputs,
-            passwordCheck: e.currentTarget.value
+            passwordCheck: value
         })
-        if(e.currentTarget.value !== inputs.password) {
+        if(value !== inputs.password) {
             setCheckPW(false);
         } else {
             setCheckPW(true);
