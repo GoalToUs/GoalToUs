@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import Header from "../components/Header";
 import {createMatchIcon, TeamProfileImg} from "../assets";
+import {useRecoilValue} from "recoil";
+import {teamNameState} from "../states/team";
 
 function Home() {
+    const teamName = useRecoilValue(teamNameState);
     return (
         <Styled.Root>
             <Header/>
@@ -61,7 +64,7 @@ function Home() {
                     </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
-                    <Styled.button><a href={"/team/home"}>내 팀 홈 가기</a></Styled.button>
+                    <Styled.button><a href={`/team/home/${teamName}`}>내 팀 홈 가기</a></Styled.button>
                     <Styled.button><a href={"/team"}>팀 등록 / 가입하기</a></Styled.button>
                     </Styled.buttonContainer>
             </Styled.Container>

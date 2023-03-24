@@ -9,3 +9,7 @@ export { default as arrowIcon} from './Compare arrows.svg';
 export { default as videoIcon} from './video.svg';
 export { default as TeamProfileImg1} from './Team_Profile.png';
 export { default as OpponentTeamImg} from './opponentTeam.png';
+export { default as DefaultImg} from './defaultImg.PNG';
+export { default as ClickedArrowIcon} from './Compare arrows_white.png';
+export { default as DefaultHomeIcon} from './homeIcon_black.png';
+export { default as ClickedVideoIcon} from './video_white.png';

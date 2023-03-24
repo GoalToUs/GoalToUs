@@ -1,7 +1,74 @@
 import styled from "styled-components";
 import Header from "../components/Header";
+import {usePostUserInfo} from "../hooks/team";
+import {useEffect, useRef, useState} from "react";
+import {DefaultImg} from "../assets";
 
 function CreateTeam() {
+    const [inputs, setInputs] = useState({
+        teamName: '',
+        teamRegion: '',
+        teamIntro: '',
+        teamImageFile: null,
+    });
+    const [imgSrc, setImgSrc] = useState("");
+
+    const {mutate: createTeam} = usePostUserInfo();
+
+    const handleOnChange = (e) => {
+        const {value, id}= e.currentTarget;
+        setInputs({
+            ...inputs,
+            [id]: value
+        });
+    }
+
+    const handleFileChange = (e) => {
+        const {files} = e.currentTarget;
+        setInputs({
+            ...inputs,
+            teamImageFile: files
+        });
+        const reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onloadend = () => {setImgSrc(reader.result)};
+    }
+
+    // 서버 전송용
+    // const saveImgFile = () => {
+    //     const fd = new FormData();
+    //     // 파일 데이터 저장
+    //     fd.append("file", inputs.teamImageFile);
+    //
+    //     axios.post('/test/AxiosFileTest.do', fd, {
+    //         headers: {
+    //             "Content-Type": `multipart/form-data; `,
+    //         },
+    //         baseURL: 'http://localhost:8080'
+    //     })
+    // }
+
+    const handleOnClick = () => {
+        if(!inputs.teamName) {
+            alert(`팀명을 입력해주세요.`);
+            return;
+        } else if(!inputs.teamRegion) {
+            alert(`팀 소재지를 입력해주세요.`);
+            return;
+        } else if(!inputs.teamIntro) {
+            alert(`팀 소개글을 입력해주세요.`);
+            return;
+        }
+        const teamData = {
+            "teamName": inputs.teamName,
+            "region": inputs.teamRegion,
+            "intro": inputs.teamIntro,
+            // "photo": fd,
+        }
+        console.log(teamData);
+        createTeam(teamData);
+    }
+
     return (
         <Styled.Root>
             <Header noRightSection/>
@@ -10,22 +77,22 @@ function CreateTeam() {
                 <Styled.createTeamContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>팀명</Styled.inputTitle>
-                        <Styled.createTeamInput/>
+                        <Styled.createTeamInput value={inputs.teamName} id={"teamName"} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>팀 소재지</Styled.inputTitle>
-                        <Styled.createTeamInput className={"region"}/>
+                        <Styled.createTeamInput className={"region"} id={"teamRegion"} value={inputs.teamRegion} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
-                        <img />
+                        <img src={imgSrc ? imgSrc : DefaultImg} className={"img_box"}/>
                         <label for={"file"}>사진 첨부</label>
-                        <Styled.createTeamInput type={"file"} id="file" className={"uploadImg"}/>
+                        <Styled.createTeamInput type={"file"} id="file" className={"uploadImg"} onChange={handleFileChange}/>
                     </Styled.InputContainer>
-                    <Styled.InputContainer className={"introduction"}>
+                    <Styled.InputContainer className={"introdusction"}>
                         <Styled.inputTitle className={"introduction"}>팀 소개글</Styled.inputTitle>
-                        <textarea/>
+                        <textarea id={"teamIntro"} value={inputs.teamIntro} onChange={handleOnChange}/>
                     </Styled.InputContainer>
-                    <Styled.submitButton type={"submit"} value={"등록하기"}/>
+                    <Styled.submitButton type={"button"} value={"등록하기"} onClick={handleOnClick}/>
                 </Styled.createTeamContainer>
             </Styled.createTeamSection>
         </Styled.Root>
@@ -76,7 +143,7 @@ const Styled = {
     align-items: flex-start;
     }
     
-    & > img {
+    & > .img_box {
     position: absolute;
     right: 45px;
     top: 40px;
@@ -84,7 +151,6 @@ const Styled = {
     width: 160px;
     height: 180px;
     
-    background-color: #F5F5F5;
     border: none;
     }
     

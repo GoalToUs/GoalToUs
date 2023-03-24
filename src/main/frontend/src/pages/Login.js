@@ -1,7 +1,43 @@
 import styled from "styled-components";
 import Header from "../components/Header";
+import {useState} from "react";
+import {usePostLogin} from "../hooks/user";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
+    const [userId, setUserId] = useState("");
+    const [password, setPassword] = useState("");
+    const {mutate: login, isSuccess} =usePostLogin();
+    const navigate = useNavigate();
+
+    const handleOnClick = () => {
+        if(!userId) {
+            alert(`아이디를 입력해주세요.`);
+            return;
+        }else if(!password) {
+            alert(`비밀번호를 입력해주세요.`);
+            return;
+        }
+        const postData = {
+            "userId": userId,
+            "password": password
+        }
+        login(postData);
+
+        if(isSuccess) {
+            navigate(`/home`);
+        }
+    }
+
+    const handleOnChange = (e) => {
+        const {value, id} = e.currentTarget;
+        if(id === "userId") {
+            setUserId(value);
+        } else if(id === "password") {
+            setPassword(value);
+        }
+    }
+
     return (
         <Styled.Root>
             <Header noRightSection/>
@@ -10,13 +46,13 @@ function Login() {
                 <Styled.loginContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>아이디</Styled.inputTitle>
-                        <Styled.loginInput/>
+                        <Styled.loginInput id={"userId"} value={userId} onChange={handleOnChange}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>비밀번호</Styled.inputTitle>
-                        <Styled.loginInput/>
+                        <Styled.loginInput id={"password"} type={"password"} value={password} onChange={handleOnChange}/>
                     </Styled.InputContainer>
-                    <Styled.loginButton type={"submit"} value={"로그인"}/>
+                    <Styled.loginButton type={"submit"} value={"로그인"} onClick={handleOnClick}/>
                     <span className={"forJoin"}>골투더퓨처가 처음이신가요? <Styled.joinButton href={"/join"}>회원가입</Styled.joinButton></span>
                 </Styled.loginContainer>
             </Styled.loginSection>
@@ -44,7 +80,7 @@ const Styled = {
     font-weight: bold;
     }
    `,
-    loginContainer : styled.form`
+    loginContainer : styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
