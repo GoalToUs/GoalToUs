@@ -1,11 +1,11 @@
-package com.GTTF.goal_to_the_future.domain.result.dto.request;
+package com.GTTF.goal_to_the_future.domain.result.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-public class RecordResultRequestDto {
+@AllArgsConstructor
+public class ViewAnalysisResponseDto {
     private Integer goal;
     private Integer penaltyKick;
     private Integer yellowCard;
@@ -15,3 +15,4 @@ public class RecordResultRequestDto {
     private Integer pass;
     private Integer effectiveShooting;
 }
+

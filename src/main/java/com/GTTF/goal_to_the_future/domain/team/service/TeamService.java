@@ -56,7 +56,7 @@ public class TeamService {
         List<String> playerNames = userRepository.findUserNamesByTeam(team);
 
         //3. responseDto에 담아서 보내기
-        return new InfoResponseDto(team.getPhoto(), team.getRegion(), team.getTeamName(), playerNames);
+        return new InfoResponseDto(team.getPhoto(), team.getRegion(), team.getTeamName(), playerNames, team.getIntro());
     }
     public List<SearchTeamResponseDto> searchTeamInfo(String keyword){
 

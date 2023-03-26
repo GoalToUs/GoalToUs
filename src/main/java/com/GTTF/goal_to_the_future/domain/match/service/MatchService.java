@@ -6,6 +6,8 @@ import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.JoinMatchResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.MakeMatchResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMSListResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMSListResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.entity.Match;
 import com.GTTF.goal_to_the_future.domain.match.entity.MatchState;
 import com.GTTF.goal_to_the_future.domain.match.repository.MatchRepository;
@@ -54,5 +56,19 @@ public class MatchService {
         match.joinMatch(team2);
 
         return new JoinMatchResponseDto(team2.getId(), match.getMatchId());
+    }
+    public ViewMSListResponseDto viewMSList(MatchState matchState, Long teamId){ //나의 팀 아이디값을 받아옴
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(BAD_MATCH_JOIN));
+        //받아온 id값으로 팀 객체 생성, optional로 넘어오기 때문에 오류처리
+
+        Match match = matchRepository.findByTeam1OrTeam2AnAndMatchState(team, team, matchState).orElseThrow(() -> new BusinessException(BAD_MATCH_JOIN));
+
+        String oppoteam;
+        if(match.getTeam1().getTeamName() == team.getTeamName()){//team1이 경기를 생성한 팀
+            oppoteam = match.getTeam2().getTeamName(); //받아온 팀이 team1이라면 상대팀은 team2
+        }else{
+            oppoteam = match.getTeam1().getTeamName();
+        }
+        return new ViewMSListResponseDto(oppoteam, match.getPlace(), match.getStartTime());
     }
 }

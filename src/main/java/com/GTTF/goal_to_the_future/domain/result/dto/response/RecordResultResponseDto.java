@@ -11,7 +11,7 @@ public class RecordResultResponseDto {
     private Integer yellowCard;
     private Integer redCard;
     private String highlight;
-    private Integer winnerTeamId;
+    private Long winnerTeamId;
     private Integer pass;
     private Integer effectiveShooting;
 }
