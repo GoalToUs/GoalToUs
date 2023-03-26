@@ -10,8 +10,8 @@ public class RecordResultRequestDto {
     private Integer penaltyKick;
     private Integer yellowCard;
     private Integer redCard;
-    private String highlight;
+    private String heatmap;
+    private String ballHeatmap;
     private Long winnerTeamId;
     private Integer pass;
-    private Integer effectiveShooting;
 }

@@ -15,14 +15,14 @@ public class ResultController {
 
     private final ResultService resultService;
 
-    @PostMapping("/result/match/{matchId}/{teamId}")
+    @PostMapping("/result/match/{matchId}/{teamId}") //경기 결과 기록하기
     public BaseResponseDto<RecordResultResponseDto> recordResult(@PathVariable Long matchId,
                                                                  @PathVariable Long teamId,
                                                                  @RequestBody RecordResultRequestDto recordResultRequestDto){
         return new BaseResponseDto<>(resultService.recordResult(recordResultRequestDto, matchId, teamId));
     }
 
-    @GetMapping("/result/{matchId}")
+    @GetMapping("/result/{matchId}") //경기 분석 보기
     public ViewAnalysisResponseDto viewAnalysis(@PathVariable Long matchId){
         return resultService.viewAnalysis(matchId);
     }

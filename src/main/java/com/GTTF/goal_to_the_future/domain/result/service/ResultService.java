@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.NOT_FOUND_MATCH;
-import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.NOT_FOUND_TEAM;
+import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.*;
 
 @Transactional
 @RequiredArgsConstructor
@@ -40,26 +39,31 @@ public class ResultService {
 
         Result result = new Result(recordResultRequestDto.getGoal(), recordResultRequestDto.getPenaltyKick(),
                 recordResultRequestDto.getYellowCard(), recordResultRequestDto.getRedCard(),
-                recordResultRequestDto.getHighlight(), recordResultRequestDto.getWinnerTeamId(), recordResultRequestDto.getPass(),
-                recordResultRequestDto.getEffectiveShooting());
+                recordResultRequestDto.getHeatmap(),recordResultRequestDto.getBallHeatmap(),
+                recordResultRequestDto.getWinnerTeamId(), recordResultRequestDto.getPass());
 
         // 4. resultRepository.save(Result 엔티티) - 저장
         resultRepository.save(result);
 
-        // 5. responseDto 생성 & 반환
+        // 5. 해당 결과를 연관된 경기와 연결
+        match.recordResult(result);
+
+        // 6. responseDto 생성 & 반환
         return new RecordResultResponseDto(result.getGoal(),result.getPenaltyKick(),result.getYellowCard(),
-                result.getRedCard(),result.getHighlight(),result.getWinnerTeamId() ,result.getPass(),
-                result.getEffectiveShooting());
+                result.getRedCard(),result.getHeatmap(),result.getBallHeatmap(),
+                result.getWinnerTeamId() ,result.getPass());
     }
 
     public ViewAnalysisResponseDto viewAnalysis(Long matchId){
         //1.matchId로 경기 찾기
         Match match = matchRepository.findById(matchId).get();
-        //2. 경기 결과 찾기
-        Result result=resultRepository.findById(matchId).get();
+        //2. 해당 matchId에 대한 경기 결과
+        Result result = match.getResult();
+        //3. 팀리파지토리에서 이긴 팀의 아이디로 이긴 팀명 찾기
+        Team winTeam = teamRepository.findById(result.getWinnerTeamId()).orElseThrow(()->new BusinessException(BAD_MATCH_JOIN));// 나중에 에러 변경하기
 
-        return new ViewAnalysisResponseDto(result.getGoal(),result.getPenaltyKick(),
-                result.getYellowCard(),result.getRedCard(), result.getHighlight(), result.getWinnerTeamId(),
-                result.getPass(), result.getEffectiveShooting());
+        return new ViewAnalysisResponseDto(winTeam.getTeamName(), result.getGoal(), result.getPenaltyKick(),
+                result.getYellowCard(), result.getRedCard(),result.getHeatmap(), result.getBallHeatmap(),
+                result.getPass());
     }
 }

@@ -77,7 +77,7 @@ public class MatchService {
                 oppoteam = match.getTeam1().getTeamName();
             }
 
-            result.add(new ViewMSListResponseDto(oppoteam, match.getPlace(), match.getStartTime()));
+            result.add(new ViewMSListResponseDto(match.getMatchId(), oppoteam, match.getPlace(), match.getStartTime()));
         }
 
         return result;

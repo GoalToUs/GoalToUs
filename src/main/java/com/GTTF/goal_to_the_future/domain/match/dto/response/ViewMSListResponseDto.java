@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 public class ViewMSListResponseDto {
 
+    private Long matchId;
     private String teamName;//상대팀명
     private String place;
     private LocalDateTime startTime;
