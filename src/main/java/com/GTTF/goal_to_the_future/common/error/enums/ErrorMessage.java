@@ -15,6 +15,8 @@ public enum ErrorMessage {
     NOT_FOUND_TEAM(NOT_FOUND, false, "해당 팀이 없습니다."),
     BAD_MATCH_JOIN(BAD_REQUEST, false, "본인이 속한 팀과 경기를 진행할 수 없습니다."),
 
+    NOT_FOUND_WINTEAM(NOT_FOUND,false,"이긴 팀을 찾을 수 없습니다."),
+
     NOT_FOUND_MATCH(NOT_FOUND, false,"경기가 존재하지 않습니다.");
 
 

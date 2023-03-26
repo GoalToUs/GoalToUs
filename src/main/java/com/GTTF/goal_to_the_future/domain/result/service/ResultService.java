@@ -54,13 +54,15 @@ public class ResultService {
                 result.getWinnerTeamId() ,result.getPass());
     }
 
-    public ViewAnalysisResponseDto viewAnalysis(Long matchId){
+    public ViewAnalysisResponseDto viewAnalysis(Long matchId){ //경기 분석 보기
         //1.matchId로 경기 찾기
-        Match match = matchRepository.findById(matchId).get();
+        Match match = matchRepository.findById(matchId)
+                .orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
         //2. 해당 matchId에 대한 경기 결과
         Result result = match.getResult();
         //3. 팀리파지토리에서 이긴 팀의 아이디로 이긴 팀명 찾기
-        Team winTeam = teamRepository.findById(result.getWinnerTeamId()).orElseThrow(()->new BusinessException(BAD_MATCH_JOIN));// 나중에 에러 변경하기
+        Team winTeam = teamRepository.findById(result.getWinnerTeamId())
+                .orElseThrow(()->new BusinessException(NOT_FOUND_WINTEAM));
 
         return new ViewAnalysisResponseDto(winTeam.getTeamName(), result.getGoal(), result.getPenaltyKick(),
                 result.getYellowCard(), result.getRedCard(),result.getHeatmap(), result.getBallHeatmap(),

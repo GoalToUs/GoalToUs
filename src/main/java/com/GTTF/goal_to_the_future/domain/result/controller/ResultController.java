@@ -22,7 +22,7 @@ public class ResultController {
         return new BaseResponseDto<>(resultService.recordResult(recordResultRequestDto, matchId, teamId));
     }
 
-    @GetMapping("/result/{matchId}") //경기 분석 보기
+    @GetMapping("/result/match/{matchId}") //경기 분석 보기
     public ViewAnalysisResponseDto viewAnalysis(@PathVariable Long matchId){
         return resultService.viewAnalysis(matchId);
     }
