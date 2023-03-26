@@ -15,4 +15,6 @@ public interface MatchRepository extends JpaRepository<Match,Long> {
     // @Query로 쿼리 생성
     @Query("select m from Match m where m.team1 =: team1 or m.team2 =: team2 and m.matchState =: matchState")
     Optional<Match> findMatch(Team team1, Team team2, MatchState matchState);
+
+
 }
