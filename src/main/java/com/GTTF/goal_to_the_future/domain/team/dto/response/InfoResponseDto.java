@@ -13,5 +13,6 @@ public class InfoResponseDto {
     private String region;
     private String teamName;
     private List<String> players;
+    private String teamIntro;
 
 }

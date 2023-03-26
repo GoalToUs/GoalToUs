@@ -5,13 +5,15 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RecordResultResponseDto {
+public class ViewAnalysisResponseDto {
+    private String teamName;
     private Integer goal;
     private Integer penaltyKick;
     private Integer yellowCard;
     private Integer redCard;
     private String heatmap;
     private String ballHeatmap;
-    private Long winnerTeamId;
     private Integer pass;
+
 }
+

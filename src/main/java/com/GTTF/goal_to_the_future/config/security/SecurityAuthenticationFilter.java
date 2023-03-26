@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -18,17 +19,14 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
     private CustomUserDetailsService customUserDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
-        throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String username = "test";
+        UserDetails authentication = customUserDetailsService.loadUserByUsername(username);
+        //이 부분을 수정-> authentication.getUsername() -> authentication
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(authentication, "test", authentication.getAuthorities());
 
-        //아무값 집어넣음
-        UserDetails authentication = customUserDetailsService.loadUserByUsername("test");
-        UsernamePasswordAuthenticationToken auth =
-                //여기있는 super.setAuthenticated(true); 를 타야함.
-                new UsernamePasswordAuthenticationToken(authentication.getUsername(), null, null);
         SecurityContextHolder.getContext().setAuthentication(auth);
+        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         filterChain.doFilter(request, response);
     }
 

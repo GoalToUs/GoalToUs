@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByNicknameAndEmail(String nickname, String email); // select * from User where User.username = 우리가 넘긴 username and User.email = 우리가 넘긴 이메일
 
     @Query("select u.name from User u where u.team = :team") // jpql - jpql 문법 찾아보기
+
     List<String> findUserNamesByTeam(@Param("team") Team team);
 
     boolean existsByNickname(String nickname);

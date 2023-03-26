@@ -14,6 +14,7 @@ public interface TeamRepository extends JpaRepository<Team,Long> {
             " from User u join u.team t " +
             " where u.captain=1 " +
             " and (u.name like :keyword or t.teamName like :keyword)")
+
     List<SearchTeamResponseDto> findByKeyword(@Param("keyword") String keyword);
 
     @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(u.team.teamName, u.team.photo, u.name)" +
@@ -21,5 +22,6 @@ public interface TeamRepository extends JpaRepository<Team,Long> {
             " where u.captain=1 ")
     List<SearchTeamResponseDto> findALLTeamInfo();
 
+    Optional<Team> findByTeamName(String teamName);
 
 }

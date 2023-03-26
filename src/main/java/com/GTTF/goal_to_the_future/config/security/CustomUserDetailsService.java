@@ -5,21 +5,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
-    public UserDetails loadUserByUsername(String loginId)
+    public UserDetails loadUserByUsername(String s)
             throws UsernameNotFoundException {
 
-        System.out.println("인증을 받습니다.");
+        if(!s.equals("test")) throw new UsernameNotFoundException("해당 유저가 존재하지 않습니다.");
+
 //로그인 로직 시작
 
         // loginId를 이용하여 DB에서 User 객체를 가져옴
         // User user = mapper.getUser(loginID);
         // User의 정보를 SecurityUser 에 담아준다.
 
-        return new SecurityUser();
+        return new SecurityUser(s, Arrays.asList("ROLE_AUTH"));
     }
 
 }
