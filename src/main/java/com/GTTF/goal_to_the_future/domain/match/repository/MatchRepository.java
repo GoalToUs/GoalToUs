@@ -6,15 +6,18 @@ import com.GTTF.goal_to_the_future.domain.team.entity.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MatchRepository extends JpaRepository<Match,Long> {
     // 함수명으로 쿼리 생성
-    Optional<Match> findByTeam1OrTeam2AnAndMatchState(Team team1, Team team2, MatchState matchState);
+    List<Match> findByTeam1OrTeam2AnAndMatchState(Team team1, Team team2, MatchState matchState);
 
     // @Query로 쿼리 생성
     @Query("select m from Match m where m.team1 =: team1 or m.team2 =: team2 and m.matchState =: matchState")
-    Optional<Match> findMatch(Team team1, Team team2, MatchState matchState);
+    List<Match> findMatch(Team team1, Team team2, MatchState matchState);
 
+    @Query("select m from Match m where m.team2 is null")
+    List<Match> findWaiting();
 
 }
