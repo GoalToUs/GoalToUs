@@ -4,6 +4,8 @@ import {usePostUserInfo} from "../hooks/user";
 import { useState} from "react";
 import {fetchUserDuplication} from "../apis/user";
 import {useNavigate} from "react-router-dom";
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
 
 function Join() {
     const [inputs, setInputs] = useState({
@@ -16,6 +18,7 @@ function Join() {
         position: "FW"
     });
 
+    const [isModalOpen, setIsModalOpen] = useState(true);
     const [checkPW, setCheckPW] = useState(false);
     const [checkDuplication, setCheckDuplication] = useState(true);
 
@@ -55,7 +58,8 @@ function Join() {
             "isCaptain" : inputs.isCaptain ? 1 : 0,
             "position" : inputs.position
         }
-        join(userData);
+        const {isSuccess} = join(userData);
+        if(isSuccess) setIsModalOpen(true);
     }
 
     const handleOnChange = (e) => {
@@ -139,6 +143,12 @@ function Join() {
                     <Styled.submitButton type={"button"} value={"가입하기"} onClick={handleOnClick}/>
                 </Styled.joinContainer>
             </Styled.joinSection>
+            {isModalOpen && <ModalPortal>
+                <Modal width={400} height={200}>
+                    <Styled.message>회원가입을 성공하였습니다!</Styled.message>
+                    <Styled.goLoginButton href={"/login"}>로그인으로 이동</Styled.goLoginButton>
+                </Modal>
+            </ModalPortal>}
         </Styled.Root>
     );
 }
@@ -290,5 +300,28 @@ const Styled = {
     color: white;
     font-size: 20px;
     font-weight: bold;
+    `,
+    message : styled.div`
+    font-size: 23px;
+    font-weight: bold;
+    margin-top: 50px;
+    `,
+    goLoginButton: styled.a`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-top: 40px;
+    
+    width: 130px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 2px;
+    
+    background-color: white;
+    
+    font-size: 15px;
+    
+    cursor: pointer;
     `
 }
