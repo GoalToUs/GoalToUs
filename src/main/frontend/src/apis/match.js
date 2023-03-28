@@ -13,3 +13,17 @@ export const fetchMatchAnalysis = async (matchId) => {
     } = await client.get(`/result/${matchId}`);
     return data;
 }
+
+//매칭 대기 목록 보기
+export const fetchPendingMatchList = async () => {
+    const {
+        data: { data },
+    } = await client.get(`/match/waitlist`);
+    return data;
+}
+
+//경기 참가하기
+export const postJoinMatch = async (postBody) => {
+    const { data } = await client.post(`/match/join`, postBody);
+    return data;
+}
