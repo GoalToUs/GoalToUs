@@ -35,7 +35,7 @@ public class UserService {
         //1. 유저 아이디로 사용자 조회
         User user = userRepository.findById(userId).get();
         //2. responseDto 에 담아서 보내기
-        return new MypageResponseDto(user.getName(), user.getBirth(),
+        return new MypageResponseDto(user.getName(), user.getBirth(),user.getTeam().getTeamName(),
                 user.getPosition(), user.getPhoto());
     }
 

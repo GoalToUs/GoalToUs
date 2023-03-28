@@ -35,11 +35,13 @@ public class MatchService {
         Team team = teamRepository.findByTeamName(makeMatchRequestDto.getTeamName()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
         
         // Match 엔티티 생성
-        Match newMatch = new Match(team, makeMatchRequestDto.getStartTime(), makeMatchRequestDto.getPlace(), MatchState.EXPECTED);
+        Match newMatch = new Match(team, makeMatchRequestDto.getStartTime(), makeMatchRequestDto.getPlace(),
+                makeMatchRequestDto.getRegion(),MatchState.EXPECTED);
     
         matchRepository.save(newMatch);
 
-        return new MakeMatchResponseDto(newMatch.getStartTime(), newMatch.getPlace(),newMatch.getTeam1().getTeamName());
+        return new MakeMatchResponseDto(newMatch.getStartTime(), newMatch.getPlace(),
+                newMatch.getTeam1().getTeamName(), newMatch.getRegion());
     }
 
     public JoinMatchResponseDto joinMatch(JoinMatchRequestDto joinMatchRequestDto){
