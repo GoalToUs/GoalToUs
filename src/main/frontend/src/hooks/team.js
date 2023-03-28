@@ -28,7 +28,7 @@ export const usePostJoinTeam = () => {
 }
 
 // 팀 정보 조회하기
-export const  useFetchTeamInfo = (teamId) => {
-    const {data} = useQuery(["teamInfo"], () => fetchTeamInfo(teamId));
+export const  useFetchTeamInfo = (teamName) => {
+    const {data} = useQuery(["teamInfo"], () => fetchTeamInfo(teamName));
     return data;
 }
