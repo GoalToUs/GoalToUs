@@ -87,6 +87,6 @@ public class MatchService {
     public List<ViewWaitLIstResponseDto> viewWating(){
         List<Match> WaitingMatch = matchRepository.findWaiting();
         return WaitingMatch.stream().map(m -> new ViewWaitLIstResponseDto(m.getTeam1().getTeamName(),
-                m.getPlace(),m.getStartTime())).collect(Collectors.toList());
+                m.getPlace(),m.getRegion(),m.getMatchId(),m.getStartTime())).collect(Collectors.toList());
     }
 }
