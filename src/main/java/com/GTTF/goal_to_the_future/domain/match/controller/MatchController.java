@@ -40,6 +40,12 @@ public class MatchController {
     }
     @GetMapping("/team/waitlist")
     public BaseResponseDto<ViewWaitLIstResponseDto> viewWating(){
+
         return null;
+    }
+
+    @GetMapping("match/{teamId}/mylist")
+    public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable Long teamId){
+        return new BaseResponseDto<ViewMymatchListResponseDto>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamId));
     }
 }

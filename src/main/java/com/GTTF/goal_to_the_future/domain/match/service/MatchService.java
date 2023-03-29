@@ -35,7 +35,7 @@ public class MatchService {
         Team team = teamRepository.findByTeamName(makeMatchRequestDto.getTeamName()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
         
         // Match 엔티티 생성
-        Match newMatch = new Match(team, makeMatchRequestDto.getStartTime(), makeMatchRequestDto.getPlace(),
+        Match newMatch = new Match(team , makeMatchRequestDto.getStartTime(), makeMatchRequestDto.getPlace(),
                 makeMatchRequestDto.getRegion(),MatchState.EXPECTED);
     
         matchRepository.save(newMatch);
@@ -61,12 +61,13 @@ public class MatchService {
 
         return new JoinMatchResponseDto(team2.getId(), match.getMatchId());
     }
+    //우리 팀의 예정 경기 or 지난 경기 목록 조회 matchState? expected이면 예정 finish면 지난 경기
     public List<ViewMSListResponseDto> viewMSList(MatchState matchState, Long teamId){ //나의 팀 아이디값을 받아옴
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(BAD_MATCH_JOIN));
         //받아온 id값으로 팀 객체 생성, optional로 넘어오기 때문에 오류처리
 
         List<Match> findMSList = matchRepository.findByTeam1OrTeam2AnAndMatchState(team, team, matchState);
-        //리스트 형태로 경기를 반환 받음, 각 객체는 Match엔티티 타입
+        //리스트 형태로 경기를 반환 받음, 각 객체는 Match 엔티티 타입
 
         ArrayList<ViewMSListResponseDto> result = new ArrayList<>();
         // result 배열리스트 생성, 배열의 각 객체 타입은 ViewMSListResponseDto
@@ -79,13 +80,34 @@ public class MatchService {
                 oppoteam = match.getTeam1().getTeamName();
             }
 
-            result.add(new ViewMSListResponseDto(match.getMatchId(), oppoteam, match.getPlace(), match.getStartTime()));
+            result.add(new ViewMSListResponseDto(match.getMatchId(), oppoteam,
+                    match.getRegion(), match.getPlace(), match.getStartTime()));
         }
 
         return result;
     }
-    public List<ViewWaitLIstResponseDto> viewWating(){
+    public List<ViewMymatchListResponseDto> viewMymatchList(Long teamId){
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
+
+        List<Match> findMyList=matchRepository.findByTeam1(team);
+
+        ArrayList<ViewMymatchListResponseDto> madebyme = new ArrayList<>();
+        //배열리스트 생성
+
+        for (Match match : findMyList){
+            if(match.getTeam1().getTeamName()==team.getTeamName()){
+                madebyme.add(new ViewMymatchListResponseDto(match.getTeam2().getTeamName(),
+                        match.getMatchId(), match.getRegion(), match.getPlace(),
+                        match.getStartTime(),match.getMatchState()));
+            }
+        }
+        return madebyme;
+
+    }
+    public List<ViewWaitLIstResponseDto> viewWating(){ //매칭 대기 목록 조회
         List<Match> WaitingMatch = matchRepository.findWaiting();
+
         return WaitingMatch.stream().map(m -> new ViewWaitLIstResponseDto(m.getTeam1().getTeamName(),
                 m.getPlace(),m.getRegion(),m.getMatchId(),m.getStartTime())).collect(Collectors.toList());
     }
