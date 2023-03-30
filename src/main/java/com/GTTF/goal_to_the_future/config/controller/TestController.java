@@ -1,5 +1,5 @@
 package com.GTTF.goal_to_the_future.config.controller;
-
+/*
 import com.GTTF.goal_to_the_future.config.security.SecurityUser;
 import com.GTTF.goal_to_the_future.config.service.TestService;
 import lombok.RequiredArgsConstructor;
@@ -28,4 +28,4 @@ public class TestController {
     //메소드 Parameter 영역에 @AuthenticationPrincipal 선언하고
     // SecurityUser 타입 변수 선언하면 시큐리티 내부 객체에서 Authentication에 저장된 Principal 객체 꺼내줌
 
-
+*/
