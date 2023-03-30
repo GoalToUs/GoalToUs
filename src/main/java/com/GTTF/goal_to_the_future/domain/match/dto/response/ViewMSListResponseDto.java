@@ -10,6 +10,7 @@ public class ViewMSListResponseDto {
 
     private Long matchId;
     private String teamName;//상대팀명
+    private String region;
     private String place;
     private LocalDateTime startTime;
 }
