@@ -17,9 +17,9 @@ public class ResultController {
 
     @PostMapping("/result/match/{matchId}/{teamId}") //경기 결과 기록하기
     public BaseResponseDto<RecordResultResponseDto> recordResult(@PathVariable Long matchId,
-                                                                 @PathVariable Long teamId,
+                                                                 @PathVariable String teamName,
                                                                  @RequestBody RecordResultRequestDto recordResultRequestDto){
-        return new BaseResponseDto<>(resultService.recordResult(recordResultRequestDto, matchId, teamId));
+        return new BaseResponseDto<>(resultService.recordResult(recordResultRequestDto, matchId, teamName));
     }
 
     @GetMapping("/result/match/{matchId}") //경기 분석 보기

@@ -27,11 +27,11 @@ public class ResultService {
     private final ResultRepository resultRepository;
 
     public RecordResultResponseDto recordResult(RecordResultRequestDto recordResultRequestDto,
-                                                Long matchId, Long teamId){
+                                                Long matchId, String teamName){
         // 1. matchId로 match 찾기
         Match match = matchRepository.findById(matchId).orElseThrow(() -> new BusinessException(NOT_FOUND_MATCH));
         // 2. teamId로 team 찾기 - 경기 결과의 주인
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
+        Team team=teamRepository.findByTeamName(teamName).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
         //3. 이긴팀 찾아오기
         Team winTeam = teamRepository.findById(recordResultRequestDto.getWinnerTeamId()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
         // 3. new Result로 새로운 Result 엔티티 생성 - 1, 2, requestDto 정보를 사용해서
