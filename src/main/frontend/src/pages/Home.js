@@ -3,64 +3,116 @@ import Header from "../components/Header";
 import {createMatchIcon, TeamProfileImg} from "../assets";
 import {useRecoilValue} from "recoil";
 import {teamNameState} from "../states/team";
+import {useState} from "react";
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
+import {useFetchPendingMatchList, usePostJoinMatch} from "../hooks/match";
 
 function Home() {
     const teamName = useRecoilValue(teamNameState);
+    const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+    const [joinMatchId, setJoinMatchId] = useState(0);
+
+    // const pendingMatchList = useFetchPendingMatchList();
+    const {mutate: joinMatch} = usePostJoinMatch();
+    const handleOnClick = (e) => {
+        setIsJoinModalOpen(true);
+        setJoinMatchId(e.currentTarget.id);
+    }
+
+    const handleJoinMatch = () => {
+        joinMatch({
+            "matchId" : joinMatchId
+        });
+        setIsJoinModalOpen(false);
+        alert("경기가 성사되었습니다!");
+    }
+
+    const data = [
+        {
+            "teamId": 17,
+            "teamName": "ABC",
+            "matchState": -1,
+            "region": "서울",
+            "place": "서대문구 경기장",
+            "startTime" : "2023-02-09 11:00",
+        },
+        {
+            "teamId": 15,
+            "teamName": "EFG",
+            "matchState": -1,
+            "region": "서울",
+            "startTime" : "2023-02-09 11:00",
+            "place": "강서구 경기장"
+        },
+        {
+            "teamId": 67,
+            "teamName": "OUC",
+            "matchState": -1,
+            "region": "서울",
+            "startTime" : "2023-02-09 11:00",
+            "place": "노원구 경기장"
+        },
+        {
+            "teamId": 31,
+            "teamName": "TYG",
+            "matchState": -1,
+            "region": "서울",
+            "startTime" : "2023-02-09 11:00",
+            "place": "마포구 경기장"
+        }
+    ];
+
+    const matchList = [1, 2, 3].map((item) => {return (
+        <Styled.matchListContainer>
+        <Styled.matchDay>11.02</Styled.matchDay>
+        <Styled.matchList >
+            <img src={TeamProfileImg}/>
+            <div>
+                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
+                <Styled.matchInfo>
+                    2022년 11월 12일  16:00-17:00<br/>
+                    00 대운동장
+                </Styled.matchInfo>
+            </div>
+            <Styled.matchButton id={item} onClick = {handleOnClick}>매칭 신청</Styled.matchButton>
+        </Styled.matchList>
+        <Styled.matchList><img src={TeamProfileImg}/>
+            <div>
+                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
+                <Styled.matchInfo>
+                    2022년 11월 12일  16:00-17:00<br/>
+                    00 대운동장
+                </Styled.matchInfo>
+            </div>
+            <Styled.matchButton>매칭 신청</Styled.matchButton></Styled.matchList>
+    </Styled.matchListContainer>)})
     return (
         <Styled.Root>
             <Header/>
+            {isJoinModalOpen && <ModalPortal>
+                <Modal width={600} height={360}>
+                    <Styled.matchPortalTitle>[ 경기 정보 ]</Styled.matchPortalTitle>
+                    <Styled.modalMatchInfo>
+                        <Styled.matchInfo>
+                            상대팀 : EFG <br/><br/>
+                            경기 일시 : 2022년 11월 12일  16:00-17:00 <br/><br/>
+                            경기 장소 : 지역 + 서대문구 경기장
+                        </Styled.matchInfo>
+                    </Styled.modalMatchInfo>
+                    <Styled.matchPortalMessage>매칭을 신청하시겠습니까?</Styled.matchPortalMessage>
+                    <Styled.portalButtonContainer>
+                    <Styled.matchPortalButton onClick={handleJoinMatch}>예</Styled.matchPortalButton>
+                    <Styled.matchPortalButton onClick={() => setIsJoinModalOpen(false)}>아니오</Styled.matchPortalButton>
+                    </Styled.portalButtonContainer>
+                </Modal>
+            </ModalPortal>}
             <Styled.Container>
                 <Styled.pendingMatchTitle>매칭 대기 경기</Styled.pendingMatchTitle>
                 <Styled.pendingMatchContainer>
                     <a href="/match/create" target={"_self"}><img src={createMatchIcon}  width={"120px"}/></a>
                     <Styled.scrollContainer>
-                    <Styled.matchListContainer>
-                        <Styled.matchDay>11.02</Styled.matchDay>
-                        <Styled.matchList>
-                            <img src={TeamProfileImg}/>
-                            <div>
-                                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                                <Styled.matchInfo>
-                                    2022년 11월 12일  16:00-17:00<br/>
-                                    00 대운동장
-                                </Styled.matchInfo>
-                            </div>
-                            <Styled.matchButton>매칭 신청</Styled.matchButton>
-                        </Styled.matchList>
-                        <Styled.matchList><img src={TeamProfileImg}/>
-                            <div>
-                                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                                <Styled.matchInfo>
-                                    2022년 11월 12일  16:00-17:00<br/>
-                                    00 대운동장
-                                </Styled.matchInfo>
-                            </div>
-                            <Styled.matchButton>매칭 신청</Styled.matchButton></Styled.matchList>
-                    </Styled.matchListContainer>
-                    <Styled.matchListContainer>
-                        <Styled.matchDay>11.03</Styled.matchDay>
-                        <Styled.matchList><img src={TeamProfileImg}/>
-                            <div>
-                                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                                <Styled.matchInfo>
-                                    2022년 11월 12일  16:00-17:00<br/>
-                                    00 대운동장
-                                </Styled.matchInfo>
-                            </div>
-                            <Styled.matchButton>매칭 신청</Styled.matchButton></Styled.matchList>
-                    </Styled.matchListContainer>
-                    <Styled.matchListContainer>
-                        <Styled.matchDay>11.04</Styled.matchDay>
-                        <Styled.matchList><img src={TeamProfileImg}/>
-                            <div>
-                                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                                <Styled.matchInfo>
-                                    2022년 11월 12일  16:00-17:00<br/>
-                                    00 대운동장
-                                </Styled.matchInfo>
-                            </div>
-                            <Styled.matchButton>매칭 신청</Styled.matchButton></Styled.matchList>
-                    </Styled.matchListContainer>
+                        {matchList}
                     </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
@@ -260,6 +312,51 @@ const Styled = {
     background : #274C72;
     color: white;
     }
+    `,
+
+    //팝업
+    matchPortalTitle : styled.h1`
+      margin-top: 40px;
+      margin-bottom: 20px;
+      
+      font-weight: 800;
+      font-size: 22px;
+    `,
+    modalMatchInfo : styled.div`
+        background-color: white;
+        padding: 20px;
+        
+        border-radius: 4px;
+    `,
+    matchPortalMessage :  styled.div`
+      margin-top: 17px;
+      margin-bottom: 20px;
+      
+      font-weight: 800;
+      font-size: 22px;
+    `,
+    matchPortalButton : styled.button`
+    font-weight: 800;
+    font-size: 15px;
+   
+    background-color: #E0E0E0;
+    border: none;
+    
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    
+    margin : 0 10px;
+    
+    &:hover {
+    background-color: #606060;
+    color: white;
+    cursor: pointer;
+    }
+    `,
+    portalButtonContainer : styled.div`
+    display: flex;
+    
     `
 
 }

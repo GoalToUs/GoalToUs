@@ -4,6 +4,8 @@ import {usePostUserInfo} from "../hooks/user";
 import { useState} from "react";
 import {fetchUserDuplication} from "../apis/user";
 import {useNavigate} from "react-router-dom";
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
 
 function Join() {
     const [inputs, setInputs] = useState({
@@ -16,8 +18,9 @@ function Join() {
         position: "FW"
     });
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [checkPW, setCheckPW] = useState(false);
-    const [checkDuplication, setCheckDuplication] = useState(true);
+    const [checkDuplication, setCheckDuplication] = useState(false);
 
     const navigate = useNavigate();
     const {mutate : join} = usePostUserInfo();
@@ -26,7 +29,7 @@ function Join() {
         if(!inputs.userId) {
             alert(`아이디를 입력해주세요.`);
             return;
-        }else if(checkDuplication) {
+        }else if(!checkDuplication) {
             alert(`아이디 중복 확인을 해주세요.`);
         }else if(!inputs.password) {
             alert(`비밀번호를 입력해주세요`);
@@ -48,14 +51,15 @@ function Join() {
         }
 
         const userData = {
-            "nickname" : inputs.userId,
-            "password" : inputs.password,
-            "name" : inputs.userName,
-            "email" : inputs.email,
-            "isCaptain" : inputs.isCaptain ? 1 : 0,
-            "position" : inputs.position
+            nickname : inputs.userId,
+            password : inputs.password,
+            name : inputs.userName,
+            email : inputs.email,
+            isCaptain : inputs.isCaptain ? 1 : 0,
+            position : inputs.position
         }
-        join(userData);
+        const {isSuccess} = join(userData);
+        if(isSuccess) setIsModalOpen(true);
     }
 
     const handleOnChange = (e) => {
@@ -85,7 +89,7 @@ function Join() {
         const { data : checkDuplication } = fetchUserDuplication(inputs.userId);
         console.log(checkDuplication);
         // true면 중복, false면 통과
-        setCheckDuplication(checkDuplication);
+        setCheckDuplication(!checkDuplication);
     }
 
     return (
@@ -115,7 +119,6 @@ function Join() {
                     <Styled.InputContainer>
                         <Styled.inputTitle type={"email"}>이메일</Styled.inputTitle>
                         <Styled.joinInput value={inputs.email} id={"email"} onChange={handleOnChange}/>
-                        <Styled.certificateButton>본인 확인</Styled.certificateButton>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle >주장</Styled.inputTitle>
@@ -139,6 +142,12 @@ function Join() {
                     <Styled.submitButton type={"button"} value={"가입하기"} onClick={handleOnClick}/>
                 </Styled.joinContainer>
             </Styled.joinSection>
+            {isModalOpen && <ModalPortal>
+                <Modal width={400} height={200}>
+                    <Styled.message>회원가입을 성공하였습니다!</Styled.message>
+                    <Styled.goLoginButton href={"/login"}>로그인으로 이동</Styled.goLoginButton>
+                </Modal>
+            </ModalPortal>}
         </Styled.Root>
     );
 }
@@ -247,22 +256,6 @@ const Styled = {
     outline:none;
     }
     `,
-    certificateButton : styled.button`
-    width: 90px;
-    height: 30px;
-    
-    cursor : pointer;
-    
-    background: #013C4D;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    border: none;
-    
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: -1px;
-    `,
     joinButton : styled.a`
     color: #1C66D5;
     font-size: 15px;
@@ -290,5 +283,43 @@ const Styled = {
     color: white;
     font-size: 20px;
     font-weight: bold;
+    `,
+    message : styled.div`
+    font-size: 23px;
+    font-weight: bold;
+    margin-top: 50px;
+    `,
+    goLoginButton: styled.a`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-top: 40px;
+    
+    width: 130px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 2px;
+    
+    background-color: white;
+    
+    font-size: 15px;
+    
+    cursor: pointer;
+    `,
+    certificateButton : styled.button`
+    width: 100px;
+    height: 33px;
+    
+    border-radius: 8px;
+    border: none;
+    
+    background-color: #D5441C;
+    color: white;
+    
+    font-size: 15px;
+    font-weight: bold;
+    
+    cursor: pointer;
     `
 }

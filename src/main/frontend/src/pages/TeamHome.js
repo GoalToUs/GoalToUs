@@ -8,6 +8,9 @@ import {useFetchTeamInfo} from "../hooks/team";
 import {useParams} from "react-router-dom";
 import {useState} from "react";
 
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
+
 function TeamHome() {
     const [showAllPlayers, setShowAllPlayers] = useState(false);
     const {teamName} = useParams();
@@ -19,8 +22,18 @@ function TeamHome() {
         players: [
             "김서현",
             "이다빈",
-            "황재민"
-        ]
+            "황재민",
+            "김서현",
+            "이다빈",
+            "김서현",
+            "이다빈",
+            "김서현",
+            "이다빈",
+            "김서현",
+            "이다빈","김서현",
+            "이다빈",
+        ],
+        intro: "하이 소개염",
     }
 
     const allPlayerList = teamData.players.map((player) => {
@@ -33,7 +46,7 @@ function TeamHome() {
         <Styled.Root>
             <SideBar />
             <Header noLogo/>
-            {/*{showAllPlayers && <Styled.TeamAllPlayer className={"allPlayer"}>{allPlayerList} <button onClick={() => setShowAllPlayers(false)}>닫기</button></Styled.TeamAllPlayer>} 팝업으로*/}
+            {showAllPlayers &&<ModalPortal><Modal width={400} height={200}><Styled.CloseModalButton onClick={() => setShowAllPlayers(false)}>X</Styled.CloseModalButton><Styled.AllPlayers>{allPlayerList}</Styled.AllPlayers></Modal></ModalPortal>}
             <Styled.Container>
                 <Styled.ProfileContainer>
                     <img src={teamData ? teamData.teamPhoto : ""} alt={"팀 프로필 사진"} width={"130"} height={"130"}/>
@@ -47,7 +60,7 @@ function TeamHome() {
                     </div>
                     <div>
                     <Styled.TeamInfoLabel className={"aboutTeam"}>팀 소개글</Styled.TeamInfoLabel>
-                    <Styled.TeamInfo className={"aboutTeam"}></Styled.TeamInfo>
+                    <Styled.TeamInfo className={"aboutTeam"}>{teamData.intro}</Styled.TeamInfo>
                     </div>
                 </Styled.TeamInfoContainer>
             </Styled.Container>
@@ -240,6 +253,7 @@ const Styled = {
     }
     
     &.aboutTeam {
+    padding: 10px;
     width: 100%;
     height: 100px;
     border-radius: 5px;
@@ -386,5 +400,25 @@ const Styled = {
     line-height: 0px;
     
     cursor: pointer;
+    `,
+    CloseModalButton :  styled.button`
+    background: none;
+    border: none;
+    
+    margin: 10px 13px 0px auto;
+    
+    font-size: 20px;
+    font-weight: 600;
+    
+    cursor: pointer;
+    `,
+    AllPlayers: styled.div`
+    width: 300px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
     `
 }

@@ -8,7 +8,8 @@ function CreateMatch() {
     const [inputs, setInputs] = useState({
         day: "2023-02-09 11:00",
         time: '',
-        place: ''
+        place: '',
+        region: ''
     });
 
     const handleOnChange = (e) => {
@@ -21,6 +22,7 @@ function CreateMatch() {
 
     const matchData = {
         startTime: `${inputs.day} ${inputs.time}`,
+        region: inputs.region,
         place: inputs.place,
         teamName: "", // 로컬스토리지 이용
     }
@@ -45,7 +47,7 @@ function CreateMatch() {
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>지역</Styled.inputTitle>
-                        <Styled.createMatchInput placeholder={"ex) 서울"} value={inputs.place}/>
+                        <Styled.createMatchInput placeholder={"ex) 서울"} onChange={handleOnChange} value={inputs.region}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>경기 장소</Styled.inputTitle>

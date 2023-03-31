@@ -21,9 +21,9 @@ export const postJoinTeam = async (teamId) => {
 }
 
 //팀 정보 조회
-export const fetchTeamInfo = async (teamId) => {
+export const fetchTeamInfo = async (teamName) => {
     const {
         data: { data },
-    } = await client.get(`/team/${teamId}/info`);
+    } = await client.get(`/team/info?teamName=${teamName}`);
     return data;
 }
