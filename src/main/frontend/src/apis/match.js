@@ -27,3 +27,9 @@ export const postJoinMatch = async (postBody) => {
     const { data } = await client.post(`/match/join`, postBody);
     return data;
 }
+
+//경기 기록하기
+export const postWriteMatch = async (props) => {
+    const { data } = await client.post(`/result/match/${props.matchId}?teamName=${props.teamName}`, props.postBody);
+    return data;
+}

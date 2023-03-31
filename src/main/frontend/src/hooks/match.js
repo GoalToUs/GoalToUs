@@ -1,4 +1,4 @@
-import {fetchMatchAnalysis, fetchPendingMatchList, postCreateMatch, postJoinMatch} from "../apis/match";
+import {fetchMatchAnalysis, fetchPendingMatchList, postCreateMatch, postJoinMatch, postWriteMatch} from "../apis/match";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {fetchTeamInfo} from "../apis/team";
 
@@ -30,6 +30,16 @@ export const usePostJoinMatch = () => {
         , {
             onSuccess() {
                 console.log("create join match");
+            },
+        });
+}
+
+// 경기 기록하기
+export const usePostWriteMatchAnalysis = () => {
+    return useMutation(postWriteMatch
+        , {
+            onSuccess() {
+                console.log("rewrite match analysis");
             },
         });
 }

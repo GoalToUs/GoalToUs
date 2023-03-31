@@ -10,7 +10,8 @@ export default function createAxios(endpoint, config) {
 
     const client = axios.create({
         baseURL: BASE_URL,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json', ...config?.headers },
+        ...config,
     });
 
     return {

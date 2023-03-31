@@ -33,24 +33,32 @@ function Home() {
             "teamId": 17,
             "teamName": "ABC",
             "matchState": -1,
-            "place": "서대문구 경기장"
+            "region": "서울",
+            "place": "서대문구 경기장",
+            "startTime" : "2023-02-09 11:00",
         },
         {
             "teamId": 15,
             "teamName": "EFG",
             "matchState": -1,
+            "region": "서울",
+            "startTime" : "2023-02-09 11:00",
             "place": "강서구 경기장"
         },
         {
             "teamId": 67,
             "teamName": "OUC",
             "matchState": -1,
+            "region": "서울",
+            "startTime" : "2023-02-09 11:00",
             "place": "노원구 경기장"
         },
         {
             "teamId": 31,
             "teamName": "TYG",
             "matchState": -1,
+            "region": "서울",
+            "startTime" : "2023-02-09 11:00",
             "place": "마포구 경기장"
         }
     ];

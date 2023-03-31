@@ -109,12 +109,12 @@ function MatchAnalysis() {
     const handleOnClick = () => {
         editMatchAnalysis({
             "matchId": matchId,
-            "teamId": team1Data.teamName,
+            "teamName": team1Data.teamName,
             "postBody" : team1Inputs,
         })
         editMatchAnalysis({
             "matchId": matchId,
-            "teamId": team2Data.teamName,
+            "teamName": team2Data.teamName,
             "postBody" : team2Inputs,
         })
         setIsInputActive(false);

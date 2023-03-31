@@ -32,7 +32,8 @@ function TeamHome() {
             "김서현",
             "이다빈","김서현",
             "이다빈",
-        ]
+        ],
+        intro: "하이 소개염",
     }
 
     const allPlayerList = teamData.players.map((player) => {
@@ -59,7 +60,7 @@ function TeamHome() {
                     </div>
                     <div>
                     <Styled.TeamInfoLabel className={"aboutTeam"}>팀 소개글</Styled.TeamInfoLabel>
-                    <Styled.TeamInfo className={"aboutTeam"}></Styled.TeamInfo>
+                    <Styled.TeamInfo className={"aboutTeam"}>{teamData.intro}</Styled.TeamInfo>
                     </div>
                 </Styled.TeamInfoContainer>
             </Styled.Container>
@@ -252,6 +253,7 @@ const Styled = {
     }
     
     &.aboutTeam {
+    padding: 10px;
     width: 100%;
     height: 100px;
     border-radius: 5px;
