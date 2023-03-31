@@ -3,15 +3,16 @@ package com.GTTF.goal_to_the_future.domain.match.controller;
 import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
-import com.GTTF.goal_to_the_future.domain.match.dto.response.JoinMatchResponseDto;
-import com.GTTF.goal_to_the_future.domain.match.dto.response.MakeMatchResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.response.*;
+import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMSListResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.entity.MatchState;
 import com.GTTF.goal_to_the_future.domain.match.service.MatchService;
 import com.GTTF.goal_to_the_future.domain.team.service.TeamService;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.MypageResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,5 +32,20 @@ public class MatchController {
     @PostMapping("/match/join")
     public BaseResponseDto<JoinMatchResponseDto> joinMatch(@RequestBody JoinMatchRequestDto joinMatchRequestDto){
         return new BaseResponseDto<>(matchService.joinMatch(joinMatchRequestDto));
+    }
+    @GetMapping("/team/{teamId}")//쿼리스트링으로 matchstate 넘겨줌(예정,종료 둘다 조회가능)
+    public BaseResponseDto<List<ViewMSListResponseDto>> viewWaitMatch(@RequestParam MatchState matchState,
+                                                                      @PathVariable Long teamId){
+        return new BaseResponseDto<>(matchService.viewMSList(matchState, teamId));
+    }
+    @GetMapping("/team/waitlist")
+    public BaseResponseDto<ViewWaitLIstResponseDto> viewWating(){
+
+        return null;
+    }
+
+    @GetMapping("match/{teamId}/mylist")
+    public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable Long teamId){
+        return new BaseResponseDto<ViewMymatchListResponseDto>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamId));
     }
 }

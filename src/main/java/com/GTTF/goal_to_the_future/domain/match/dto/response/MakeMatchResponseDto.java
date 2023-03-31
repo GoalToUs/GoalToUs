@@ -13,4 +13,5 @@ public class MakeMatchResponseDto {
     private LocalDateTime startTime;
     private String place;
     private String teamName;
+    private String region;
 }

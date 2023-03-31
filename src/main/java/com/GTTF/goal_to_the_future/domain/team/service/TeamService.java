@@ -48,15 +48,15 @@ public class TeamService {
         return new JoinTeamResponseDto(team.getTeamName(),user.getName());
     }
 
-    public InfoResponseDto getTeamInfo(Long teamId){
+    public InfoResponseDto getTeamInfo(String teamName){
         //1. 팀 아이디로 팀 조회하기
-        Team team=teamRepository.findById(teamId).get();
+        Team team=teamRepository.findByTeamName(teamName).get();
 
         //2. 해당 팀의 모든 유저 조회하기
         List<String> playerNames = userRepository.findUserNamesByTeam(team);
 
         //3. responseDto에 담아서 보내기
-        return new InfoResponseDto(team.getPhoto(), team.getRegion(), team.getTeamName(), playerNames);
+        return new InfoResponseDto(team.getPhoto(), team.getRegion(), team.getTeamName(), playerNames, team.getIntro());
     }
     public List<SearchTeamResponseDto> searchTeamInfo(String keyword){
 

@@ -13,7 +13,7 @@ public class MypageResponseDto {
 
     private String name;
     private String birth;
-    //private String teamName;
+    private String teamName;
     private String position;
     private String photo;
 

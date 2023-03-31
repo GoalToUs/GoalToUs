@@ -28,9 +28,9 @@ public class TeamController {
          return teamService.join(joinTeamRequestDto, teamId);
     }
 
-    @GetMapping("/team/{teamId}/info")
-    public InfoResponseDto getTeamInfo(@PathVariable Long teamId){
-        return teamService.getTeamInfo(teamId);
+    @GetMapping("/team/info")
+    public InfoResponseDto getTeamInfo(@RequestParam String teamName){
+        return teamService.getTeamInfo(teamName);
     }
     @GetMapping("/team/list")
     public List<SearchTeamResponseDto> searchTeamInfo(@RequestParam(required = false) String search){
