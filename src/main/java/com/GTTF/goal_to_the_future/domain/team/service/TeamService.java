@@ -26,12 +26,12 @@ public class TeamService {
 
     //함수 만들기 ctrl+p 로 순서
     public CreateTeamResponseDto create(CreateTeamRequestDto createTeamRequestDto){
-        Team newTeam = new Team(createTeamRequestDto.getTeamName(), createTeamRequestDto.getRegion(),
+        Team newTeam = new Team(createTeamRequestDto.getTeamName(), createTeamRequestDto.getPhoto(), createTeamRequestDto.getRegion(),
                 createTeamRequestDto.getIntro()); //ctrl+alt+v로 변수 선언
 
         teamRepository.save(newTeam); //insert 쿼리
 
-        return new CreateTeamResponseDto(newTeam.getTeamName(), newTeam.getRegion(),
+        return new CreateTeamResponseDto(newTeam.getTeamName(),newTeam.getPhoto(), newTeam.getRegion(),
                 newTeam.getIntro());
     }
 
@@ -49,7 +49,7 @@ public class TeamService {
     }
 
     public InfoResponseDto getTeamInfo(String teamName){
-        //1. 팀 아이디로 팀 조회하기
+        //1. teamName으로 팀 조회하기
         Team team=teamRepository.findByTeamName(teamName).get();
 
         //2. 해당 팀의 모든 유저 조회하기
@@ -58,6 +58,7 @@ public class TeamService {
         //3. responseDto에 담아서 보내기
         return new InfoResponseDto(team.getPhoto(), team.getRegion(), team.getTeamName(), playerNames, team.getIntro());
     }
+
     public List<SearchTeamResponseDto> searchTeamInfo(String keyword){
 
         if(keyword == null){
@@ -68,5 +69,4 @@ public class TeamService {
             return result;
         }
     }
-
 }

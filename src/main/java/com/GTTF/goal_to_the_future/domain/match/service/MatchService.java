@@ -64,8 +64,8 @@ public class MatchService {
 
 
     //우리 팀의 예정 경기 or 지난 경기 목록 조회 matchState? expected이면 예정 finish면 지난 경기
-    public List<ViewMSListResponseDto> viewMSList(MatchState matchState, Long teamId){ //나의 팀 아이디값을 받아옴
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(BAD_MATCH_JOIN));
+    public List<ViewMSListResponseDto> viewMSList(MatchState matchState, String teamName){ //나의 팀 아이디값을 받아옴
+        Team team = teamRepository.findByTeamName(teamName).orElseThrow(() -> new BusinessException(BAD_MATCH_JOIN));
         //받아온 id값으로 팀 객체 생성, optional로 넘어오기 때문에 오류처리
 
         List<Match> findMSList = matchRepository.findByTeam1OrTeam2AnAndMatchState(team, team, matchState);
@@ -88,8 +88,8 @@ public class MatchService {
 
         return result;
     }
-    public List<ViewMymatchListResponseDto> viewMymatchList(Long teamId){
-        Team team = teamRepository.findById(teamId)
+    public List<ViewMymatchListResponseDto> viewMymatchList(String teamName){//내가 생성한 경기 목록
+        Team team = teamRepository.findByTeamName(teamName)
                 .orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
 
         List<Match> findMyList=matchRepository.findByTeam1(team);

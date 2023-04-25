@@ -30,7 +30,7 @@ public class ResultService {
                                                 Long matchId, String teamName){
         // 1. matchId로 match 찾기
         Match match = matchRepository.findById(matchId).orElseThrow(() -> new BusinessException(NOT_FOUND_MATCH));
-        // 2. teamId로 team 찾기 - 경기 결과의 주인
+        // 2. teamName으로 team 찾기 - 경기 결과의 주인
         Team team=teamRepository.findByTeamName(teamName).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
         //3. 이긴팀 찾아오기
         Team winTeam = teamRepository.findById(recordResultRequestDto.getWinnerTeamId()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
