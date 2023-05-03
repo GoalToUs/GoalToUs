@@ -1,5 +1,7 @@
 package com.GTTF.goal_to_the_future.domain.team.service;
 
+import com.GTTF.goal_to_the_future.domain.result.entity.Result;
+import com.GTTF.goal_to_the_future.domain.result.repository.ResultRepository;
 import com.GTTF.goal_to_the_future.domain.team.dto.request.CreateTeamRequestDto;
 import com.GTTF.goal_to_the_future.domain.team.dto.request.JoinTeamRequestDto;
 import com.GTTF.goal_to_the_future.domain.team.dto.response.CreateTeamResponseDto;
@@ -24,8 +26,9 @@ public class TeamService {
     private final TeamRepository teamRepository; //클래스명 필드명
     private final UserRepository userRepository; //클래스명 필드명
 
+
     //함수 만들기 ctrl+p 로 순서
-    public CreateTeamResponseDto create(CreateTeamRequestDto createTeamRequestDto){
+    public CreateTeamResponseDto create(CreateTeamRequestDto createTeamRequestDto){ //팀생성하기
         Team newTeam = new Team(createTeamRequestDto.getTeamName(), createTeamRequestDto.getPhoto(), createTeamRequestDto.getRegion(),
                 createTeamRequestDto.getIntro()); //ctrl+alt+v로 변수 선언
 
@@ -59,14 +62,16 @@ public class TeamService {
         return new InfoResponseDto(team.getPhoto(), team.getRegion(), team.getTeamName(), playerNames, team.getIntro());
     }
 
-    public List<SearchTeamResponseDto> searchTeamInfo(String keyword){
+   public List<SearchTeamResponseDto> searchTeamInfo(String keyword){ //팀찾는거
 
         if(keyword == null){
-            List<SearchTeamResponseDto> result = teamRepository.findALLTeamInfo();
-            return result;
+            List<SearchTeamResponseDto> teams = teamRepository.findALLTeamInfo();
+            return teams;
+
         }else{
-            List<SearchTeamResponseDto> result = teamRepository.findByKeyword("%" + keyword + "%");
-            return result;
+            List<SearchTeamResponseDto> teams = teamRepository.findByKeyword("%" + keyword + "%");
+            return teams;
         }
-    }
+
+   }
 }

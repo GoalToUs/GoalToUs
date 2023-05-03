@@ -2,6 +2,7 @@ package com.GTTF.goal_to_the_future.domain.match.service;
 
 import com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage;
 import com.GTTF.goal_to_the_future.common.exception.custom.BusinessException;
+import com.GTTF.goal_to_the_future.domain.match.dto.request.DeleteMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.*;
@@ -68,7 +69,7 @@ public class MatchService {
         Team team = teamRepository.findByTeamName(teamName).orElseThrow(() -> new BusinessException(BAD_MATCH_JOIN));
         //받아온 id값으로 팀 객체 생성, optional로 넘어오기 때문에 오류처리
 
-        List<Match> findMSList = matchRepository.findByTeam1OrTeam2AnAndMatchState(team, team, matchState);
+        List<Match> findMSList = matchRepository.findByTeam1OrTeam2AndMatchState(team, team, matchState);
         //리스트 형태로 경기를 반환 받음, 각 객체는 Match 엔티티 타입
 
         ArrayList<ViewMSListResponseDto> result = new ArrayList<>();
@@ -112,5 +113,9 @@ public class MatchService {
 
         return WaitingMatch.stream().map(m -> new ViewWaitLIstResponseDto(m.getTeam1().getTeamName(),
                 m.getPlace(),m.getRegion(),m.getMatchId(),m.getStartTime())).collect(Collectors.toList());
+    }
+
+    public DeleteMatchResponseDto delete(DeleteMatchRequestDto deleteMatchRequestDto){//경기 삭제
+        return new DeleteMatchResponseDto(deleteMatchRequestDto.getMatchId());
     }
 }

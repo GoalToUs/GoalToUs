@@ -1,6 +1,7 @@
 package com.GTTF.goal_to_the_future.domain.match.controller;
 
 import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.request.DeleteMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.*;
@@ -47,5 +48,10 @@ public class MatchController {
     @GetMapping("match/{teamId}/mylist")
     public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable String teamName){
         return new BaseResponseDto<ViewMymatchListResponseDto>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamName));
+    }
+
+    @DeleteMapping("match/delete/{matchId}")
+    public BaseResponseDto<DeleteMatchResponseDto> deleteMatch(@RequestBody DeleteMatchRequestDto deleteMatchRequestDto){
+        return new BaseResponseDto<>(matchService.delete(deleteMatchRequestDto));
     }
 }
