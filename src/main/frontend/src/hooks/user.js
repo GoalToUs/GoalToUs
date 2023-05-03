@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { postLogin, postUserInfo} from "../apis/user";
+import {fetchUserInfo, postLogin, postUserInfo} from "../apis/user";
+import {fetchFinishedMatchList} from "../apis/match";
 
 
 export const usePostUserInfo = () => {
@@ -22,3 +23,8 @@ export const usePostLogin = () => {
     })
 }
 
+// 회원 정보 조회
+export const  useFetchUserInfo = (userId) => {
+    const {data} = useQuery(["userInfo"],() => fetchUserInfo(userId));
+    return data;
+}

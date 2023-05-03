@@ -3,20 +3,24 @@ import Header from "../components/Header";
 
 
 import SideBar from "../components/Sidebar";
-import { TeamProfileImg, TeamProfileImg1} from "../assets";
+import {HeatmapEX, TeamProfileImg, TeamProfileImg1} from "../assets";
 import {useFetchMatchAnalysis, usePostWriteMatchAnalysis} from "../hooks/match";
 import {useState} from "react";
+import {useRecoilValue} from "recoil";
+import {matchState} from "../states/match";
 
 function MatchAnalysis() {
     const matchId = 1;
     const [isAllHeatmap, setIsAllHeatmap] = useState(true);
     const [isInputActive, setIsInputActive] = useState(false);
 
+    const matchInfo = useRecoilValue(matchState);
+
     const {mutate: editMatchAnalysis} = usePostWriteMatchAnalysis();
 
     // const matchData = useFetchMatchAnalysis(matchId);
     const matchData = [{
-        "teamName": "맨시티",
+        "teamName": "니케",
         "winnerTeamId":12,
         "goal":3,
         "penaltyKick":2,
@@ -27,9 +31,9 @@ function MatchAnalysis() {
         "winner":2,
         "effectiveShooting":67
     },{
-        "teamName": "풀럼",
+        "teamName": "크랙",
         "matchId":13,
-        "goal":3,
+        "goal":1,
         "penaltyKick":15,
         "yellowCard":0,
         "redCard":0,
@@ -156,8 +160,8 @@ function MatchAnalysis() {
                     </Styled.TeamContainer>
                     <Styled.Score>{team1Data.goal}</Styled.Score>
                     <Styled.InfoContainer>
-                        <Styled.Info>서울 OO 축구장</Styled.Info>
-                        <Styled.Info>2022.11.06 17:00</Styled.Info>
+                        <Styled.Info>{matchInfo.place}</Styled.Info>
+                        <Styled.Info>{matchInfo.startTime}</Styled.Info>
                     </Styled.InfoContainer>
                     <Styled.Score>{team2Data.goal}</Styled.Score>
                     <Styled.TeamContainer>
@@ -170,20 +174,20 @@ function MatchAnalysis() {
                 <Styled.HeatmapButton className={isAllHeatmap ? "active" : "inactive"} onClick={()=>setIsAllHeatmap(true)}>전체 히트맵</Styled.HeatmapButton>
                 <Styled.HeatmapButton className={isAllHeatmap ? "inactive" : "active"} onClick={()=>setIsAllHeatmap(false)}>볼 터치 히트맵</Styled.HeatmapButton>
                 </Styled.HeatmapContainer>
-                <Styled.Heatmap src={""} className={isAllHeatmap ? "all" : "ball"}/>
+                <Styled.Heatmap src={HeatmapEX} className={isAllHeatmap ? "all" : "ball"}/>
                 <Styled.analysisContainer>
                     {isInputActive ?
                         <Styled.EditButton onClick={handleOnClick}> 수정 완료 </Styled.EditButton> :
                         <Styled.EditButton onClick={() => setIsInputActive(true)}> 경기 분석 수정하기</Styled.EditButton>
                     }
-                    <Styled.Teams><span>맨시티</span><span>VS</span><span>풀럼</span></Styled.Teams>
+                    <Styled.Teams><span>니케</span><span>VS</span><span>크랙</span></Styled.Teams>
 
                     <Styled.analysisList>
                         <Styled.gaugeContainer>
                             <Styled.gaugeBar className={"pass team1"} width={team1_BallShare}></Styled.gaugeBar>
                         </Styled.gaugeContainer>
                         <Styled.analysisNumber>{team1_BallShare}%</Styled.analysisNumber>
-                        <Styled.analysisItem>볼점유율</Styled.analysisItem>
+                        <Styled.analysisItem>볼소유율</Styled.analysisItem>
                         <Styled.analysisNumber>{team2_BallShare}%</Styled.analysisNumber>
                         <Styled.gaugeContainer>
                         <Styled.gaugeBar className={"pass team2"} width={team2_BallShare}></Styled.gaugeBar>

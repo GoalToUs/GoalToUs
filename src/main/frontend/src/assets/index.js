@@ -13,3 +13,4 @@ export { default as DefaultImg} from './defaultImg.PNG';
 export { default as ClickedArrowIcon} from './Compare arrows_white.png';
 export { default as DefaultHomeIcon} from './homeIcon_black.png';
 export { default as ClickedVideoIcon} from './video_white.png';
+export { default as HeatmapEX} from './heatmap.png';

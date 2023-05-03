@@ -5,8 +5,11 @@ import {usePostLogin} from "../hooks/user";
 import {useNavigate} from "react-router-dom";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
+import {useSetRecoilState} from "recoil";
+import {userState} from "../states/user";
 
 function Login() {
+    const setUserData = useSetRecoilState(userState);
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
     const {mutate: login, isSuccess} =usePostLogin();
@@ -24,9 +27,13 @@ function Login() {
             "userId": userId,
             "password": password
         }
-        login(postData);
+        const {successData} = login(postData);
 
         if(isSuccess) {
+            setUserData({
+                "userId": userId,
+                "userName": successData.userName,
+            })
             navigate(`/home`);
         }
     }

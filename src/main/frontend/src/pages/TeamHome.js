@@ -10,11 +10,16 @@ import {useState} from "react";
 
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
+import {useFetchPlanMatchList, useFetchFinishedMatchList} from "../hooks/match";
+import {useSetRecoilState} from "recoil";
+import {matchState} from "../states/match";
 
 function TeamHome() {
     const [showAllPlayers, setShowAllPlayers] = useState(false);
     const {teamName} = useParams();
     //const teamData = useFetchTeamInfo(teamName);
+    //const planMatchData = useFetchPlanMatchList(teamName);
+    //const finishedMatchData = useFetchFinishedMatchList(teamName);
     const teamData = {
         teamPhoto: null,
         region: "서대문구",
@@ -36,12 +41,126 @@ function TeamHome() {
         intro: "하이 소개염",
     }
 
+    const planMatchData =[
+        {
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+        },
+        {
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+        },
+        {
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+        },
+        {
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+        }
+    ];
+
+    const finishedMatchData =[
+        {
+            "matchId": 0,
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+            "result" : "2:0",
+        },
+        {
+            "matchId": 0,
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+            "result" : "2:0",
+        },
+        {
+            "matchId": 0,
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+            "result" : "2:0",
+        },
+        {
+            "matchId": 0,
+            "teamName": "ABC",
+            "oppoName": "ssssssss",
+            "place": "서울",
+            "startTime" : "2023-02-09 11:00",
+            "result" : "2:0",
+        }
+    ];
+
+
+    const planMatchList = planMatchData.map((item) => {
+    return (
+        <Styled.Match>
+            <Styled.opponentTeamContainer>
+                <Styled.opponentTeam>상대팀</Styled.opponentTeam>
+                <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
+                <Styled.opponentTeamName>{item.oppoName}</Styled.opponentTeamName>
+            </Styled.opponentTeamContainer>
+            <Styled.matchInfoContainer>
+                <Styled.info className={"scheduled"}>{item.place}</Styled.info>
+                <Styled.info className={"scheduled"}>{item.startTime}</Styled.info>
+            </Styled.matchInfoContainer>
+        </Styled.Match>
+    )
+    })
+    const setMatchData = useSetRecoilState(matchState);
+    const handleOnClick = (e) => {
+        const {id} = e.currentTarget
+        finishedMatchData.filter((item) => {
+            if(item.matchId === id) {
+                setMatchData({
+                    teamName: item.teamName,
+                    oppoName: item.oppoName,
+                    place: item.place,
+                    startTime : item.startTime,
+                    result : item.result,
+                })
+                return;
+            }
+        })
+    }
+
+    const finishedMatchList = finishedMatchData.map((item) => {
+        return (
+            <Styled.Match>
+                <Styled.opponentTeamContainer>
+                    <Styled.opponentTeam>상대팀</Styled.opponentTeam>
+                    <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
+                    <Styled.opponentTeamName>{item.oppoName}</Styled.opponentTeamName>
+                </Styled.opponentTeamContainer>
+                <Styled.matchInfoContainer>
+                    <Styled.score>2 : 0 (승)</Styled.score>
+                    <Styled.info className={"finish"}>{item.place}</Styled.info>
+                    <Styled.info className={"finish"}>{item.startTime}</Styled.info>
+                </Styled.matchInfoContainer>
+                <Styled.recordButton href={"/team/match/analysis"} id={"matchId"} onClick={handleOnClick}>기록 & 분석 보기</Styled.recordButton>
+            </Styled.Match>
+        )
+    })
+
     const allPlayerList = teamData.players.map((player) => {
         return `${player} `
     })
     const defaultPlayerList = teamData.players.slice(0,12).map((player) => {
         return `${player} `
     })
+
     return(
         <Styled.Root>
             <SideBar />
@@ -67,81 +186,11 @@ function TeamHome() {
             <Styled.Container className={"match"}>
                 <Styled.MatchContainer>
                     <Styled.MatchKind>지난 경기</Styled.MatchKind>
-                    <Styled.Match>
-                        <Styled.opponentTeamContainer>
-                            <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-                            <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
-                            <Styled.opponentTeamName>Kathryn</Styled.opponentTeamName>
-                        </Styled.opponentTeamContainer>
-                        <Styled.matchInfoContainer>
-                            <Styled.score>2 : 0 (승)</Styled.score>
-                            <Styled.info className={"finish"}>서울 OO 축구장</Styled.info>
-                            <Styled.info className={"finish"}>2022.11.06 17:00</Styled.info>
-                        </Styled.matchInfoContainer>
-                        <Styled.recordButton href={"/team/match/analysis"}>기록 & 분석 보기</Styled.recordButton>
-                    </Styled.Match>
-                    <Styled.Match>
-                        <Styled.opponentTeamContainer>
-                            <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-                            <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
-                            <Styled.opponentTeamName>Kathryn</Styled.opponentTeamName>
-                        </Styled.opponentTeamContainer>
-                        <Styled.matchInfoContainer>
-                            <Styled.score>2 : 0 (승)</Styled.score>
-                            <Styled.info className={"finish"}>서울 OO 축구장</Styled.info>
-                            <Styled.info className={"finish"}>2022.11.06 17:00</Styled.info>
-                        </Styled.matchInfoContainer>
-                        <Styled.recordButton >기록 & 분석 보기</Styled.recordButton>
-                    </Styled.Match>
-                    <Styled.Match>
-                        <Styled.opponentTeamContainer>
-                            <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-                            <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
-                            <Styled.opponentTeamName>Kathryn</Styled.opponentTeamName>
-                        </Styled.opponentTeamContainer>
-                        <Styled.matchInfoContainer>
-                            <Styled.score>2 : 0 (승)</Styled.score>
-                            <Styled.info className={"finish"}>서울 OO 축구장</Styled.info>
-                            <Styled.info className={"finish"}>2022.11.06 17:00</Styled.info>
-                        </Styled.matchInfoContainer>
-                        <Styled.recordButton>기록 & 분석 보기</Styled.recordButton>
-                    </Styled.Match>
+                    {finishedMatchList}
                 </Styled.MatchContainer>
                 <Styled.MatchContainer>
                     <Styled.MatchKind>예정 경기</Styled.MatchKind>
-                    <Styled.Match>
-                        <Styled.opponentTeamContainer>
-                            <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-                            <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
-                            <Styled.opponentTeamName>Kathryn</Styled.opponentTeamName>
-                        </Styled.opponentTeamContainer>
-                        <Styled.matchInfoContainer>
-                            <Styled.info className={"scheduled"}>서울 OO 축구장</Styled.info>
-                            <Styled.info className={"scheduled"}>2022.11.06 17:00</Styled.info>
-                        </Styled.matchInfoContainer>
-                    </Styled.Match>
-                    <Styled.Match>
-                        <Styled.opponentTeamContainer>
-                            <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-                            <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
-                            <Styled.opponentTeamName>Kathryn</Styled.opponentTeamName>
-                        </Styled.opponentTeamContainer>
-                        <Styled.matchInfoContainer>
-                            <Styled.info className={"scheduled"}>서울 OO 축구장</Styled.info>
-                            <Styled.info className={"scheduled"}>2022.11.06 17:00</Styled.info>
-                        </Styled.matchInfoContainer>
-                    </Styled.Match>
-                    <Styled.Match>
-                        <Styled.opponentTeamContainer>
-                            <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-                            <img src={OpponentTeamImg} alt={"상대팀 프로필"}/>
-                            <Styled.opponentTeamName>Kathryn</Styled.opponentTeamName>
-                        </Styled.opponentTeamContainer>
-                        <Styled.matchInfoContainer>
-                            <Styled.info className={"scheduled"}>서울 OO 축구장</Styled.info>
-                            <Styled.info className={"scheduled"}>2022.11.06 17:00</Styled.info>
-                        </Styled.matchInfoContainer>
-                    </Styled.Match>
+                    {planMatchList}
                 </Styled.MatchContainer>
             </Styled.Container>
         </Styled.Root>

@@ -7,13 +7,20 @@ import {useState} from "react";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
 import {useFetchPendingMatchList, usePostJoinMatch} from "../hooks/match";
+import {userState} from "../states/user";
 
 function Home() {
     const teamName = useRecoilValue(teamNameState);
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [joinMatchId, setJoinMatchId] = useState(0);
 
+    //const userInfo = useRecoilValue(userState);
+
     // const pendingMatchList = useFetchPendingMatchList();
+    // const userData = useFetchUserInfo(userInfo.userId);
+    const userData = {
+        "team": "ABC",
+    };
     const {mutate: joinMatch} = usePostJoinMatch();
     const handleOnClick = (e) => {
         setIsJoinModalOpen(true);
@@ -116,8 +123,8 @@ function Home() {
                     </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
-                    <Styled.button><a href={`/team/home/${teamName}`}>내 팀 홈 가기</a></Styled.button>
-                    <Styled.button><a href={"/team"}>팀 등록 / 가입하기</a></Styled.button>
+                    <a href={`/team/home/${userData.teamName}`}>내 팀 홈 가기</a>
+                    <a href={"/team"}>팀 등록 / 가입하기</a>
                     </Styled.buttonContainer>
             </Styled.Container>
         </Styled.Root>
@@ -288,29 +295,33 @@ const Styled = {
     border-radius: 15px;
     
     margin: auto 0;
-    `,
-    button: styled.button`
-    width: 200px;
-    height: 80px;
     
-    border-radius: 10px;
-    border: none;
-    
-    margin: 20px 0;
-    
-    cursor: pointer;
-    
-    font-weight: 800;
-    font-size: 22px;
-    letter-spacing : -1px;
-    
-    &:nth-child(1) {
-    background: #F9D7A4;
-    color: #494949;
-    }
-    &:nth-child(2) {
-    background : #274C72;
-    color: white;
+    & > a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        height: 80px;
+        
+        border-radius: 10px;
+        border: none;
+        
+        margin: 20px 0;
+        
+        cursor: pointer;
+        
+        font-weight: 800;
+        font-size: 22px;
+        letter-spacing : -1px;
+        
+        &:nth-child(1) {
+        background: #F9D7A4;
+        color: #494949;
+        }
+        &:nth-child(2) {
+        background : #274C72;
+        color: white;
+        }
     }
     `,
 

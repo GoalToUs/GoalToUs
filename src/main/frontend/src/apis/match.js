@@ -33,3 +33,27 @@ export const postWriteMatch = async (props) => {
     const { data } = await client.post(`/result/match/${props.matchId}?teamName=${props.teamName}`, props.postBody);
     return data;
 }
+
+// 팀 예정 경기 목록 조회
+export const fetchPlanMatchList = async (teamName) => {
+    const {
+        data: { data },
+    } = await client.get(`/team/${teamName}/match?matchState=expected`);
+    return data;
+}
+
+// 팀 지난 경기 목록 조회
+export const fetchFinishedMatchList = async (teamName) => {
+    const {
+        data: { data },
+    } = await client.get(`/team/${teamName}/match?matchState=finish`);
+    return data;
+}
+
+// 내가 생성한 경기 목록 조회
+export const fetchCreatedMatchList = async (teamName) => {
+    const {
+        data: { data },
+    } = await client.get(`/match/{teamName}/mylist`);
+    return data;
+}
