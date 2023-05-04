@@ -1,6 +1,7 @@
 package com.GTTF.goal_to_the_future.domain.match.controller;
 
 import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.request.DeleteMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.*;
@@ -35,8 +36,8 @@ public class MatchController {
     }
     @GetMapping("/team/{teamId}")//쿼리스트링으로 matchstate 넘겨줌(예정,종료 둘다 조회가능)
     public BaseResponseDto<List<ViewMSListResponseDto>> viewWaitMatch(@RequestParam MatchState matchState,
-                                                                      @PathVariable Long teamId){
-        return new BaseResponseDto<>(matchService.viewMSList(matchState, teamId));
+                                                                      @PathVariable String teamName){
+        return new BaseResponseDto<>(matchService.viewMSList(matchState, teamName));
     }
     @GetMapping("/team/waitlist")
     public BaseResponseDto<ViewWaitLIstResponseDto> viewWating(){
@@ -45,7 +46,12 @@ public class MatchController {
     }
 
     @GetMapping("match/{teamId}/mylist")
-    public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable Long teamId){
-        return new BaseResponseDto<ViewMymatchListResponseDto>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamId));
+    public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable String teamName){
+        return new BaseResponseDto<ViewMymatchListResponseDto>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamName));
+    }
+
+    @DeleteMapping("match/delete/{matchId}")
+    public BaseResponseDto<DeleteMatchResponseDto> deleteMatch(@RequestBody DeleteMatchRequestDto deleteMatchRequestDto){
+        return new BaseResponseDto<>(matchService.delete(deleteMatchRequestDto));
     }
 }

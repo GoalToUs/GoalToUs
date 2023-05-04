@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // request에는 @Getter, @NoArgsConstructor 필수
 public class CreateTeamRequestDto {
     private String teamName;
+    private String photo;
     private String region;
     private String intro;
 }
