@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateTeamResponseDto {
     private String teamName;
+
+    private String photo;
     private String region;
     private String intro;
 }

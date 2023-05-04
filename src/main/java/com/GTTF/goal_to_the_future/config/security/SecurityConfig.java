@@ -1,4 +1,4 @@
-package com.GTTF.goal_to_the_future.config.security;
+/*package com.GTTF.goal_to_the_future.config.security;
 
 import com.GTTF.goal_to_the_future.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -50,3 +50,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());//비밀번호 암호화
     }
 }
+*/

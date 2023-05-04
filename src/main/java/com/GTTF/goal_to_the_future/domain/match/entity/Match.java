@@ -35,13 +35,13 @@ public class Match {
     @Enumerated(EnumType.STRING)
     private MatchState matchState;// 경기 상태
 
-    public Match(Team team1, LocalDateTime startTime, String place, String region,MatchState matchState) {
+    public Match(Team team1,LocalDateTime startTime, String place, String region,MatchState matchState) {
         this.team1 = team1;
         this.startTime = startTime;
         this.place = place;
         this.region=region;
         this.matchState = matchState;
-    }
+    }//Match 생성자
 
     public void joinMatch(Team team2){
         this.team2 = team2;

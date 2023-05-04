@@ -15,7 +15,7 @@ public class ResultController {
 
     private final ResultService resultService;
 
-    @PostMapping("/result/match/{matchId}/{teamId}") //경기 결과 기록하기
+    @PostMapping("/result/match/{matchId}") //경기 결과 기록하기 teamName?쿼리스트링
     public BaseResponseDto<RecordResultResponseDto> recordResult(@PathVariable Long matchId,
                                                                  @PathVariable String teamName,
                                                                  @RequestBody RecordResultRequestDto recordResultRequestDto){

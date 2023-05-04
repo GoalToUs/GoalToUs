@@ -13,7 +13,6 @@ public class Team {
     @Id //기본키에 붙이는거
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String teamName;
 
     private Integer headCount;
@@ -30,8 +29,9 @@ public class Team {
     @Column(columnDefinition = "TEXT")
     private String intro;
 
-    public Team(String teamName, String region, String intro) {
+    public Team(String teamName, String photo, String region, String intro) {
         this.teamName = teamName;
+        this.photo=photo;
         this.region = region;
         this.intro = intro;
     }
