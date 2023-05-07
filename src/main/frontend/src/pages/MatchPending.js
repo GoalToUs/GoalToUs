@@ -4,37 +4,59 @@ import Header from "../components/Header";
 
 import SideBar from "../components/Sidebar";
 import {OpponentTeamImg, TeamProfileImg1} from "../assets";
+import {useFetchCreatedMatchList} from "../hooks/match";
 
 function MatchPending() {
+    const pendingMatchData = useFetchCreatedMatchList(1);
+    // const pendingMatchData =[
+    //     {
+    //         "matchId" : 1,
+    //         "place" : "하이",
+    //         "region" : "부산",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     },
+    //     {
+    //         "place" : "어쩌구 경기장",
+    //         "region" : "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     },
+    //     {
+    //         "place" : "어쩌구 경기장",
+    //         "region" : "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     },
+    //     {
+    //         "place" : "어쩌구 경기장",
+    //         "region" : "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     }
+    // ];
+    let matchList;
+    if(pendingMatchData){
+        matchList = pendingMatchData.map((item) => {
+            return (
+                <Styled.Match>
+                    <div>
+                        <Styled.Info>{item.place}</Styled.Info>
+                        <Styled.Info>{item.startTime}</Styled.Info>
+                    </div>
+                    <Styled.pending>대기중</Styled.pending>
+                    <Styled.Button>삭제</Styled.Button>
+                </Styled.Match>
+            )
+        })
+    }
+
     return(
         <Styled.Root>
             <SideBar />
             <Header noLogo/>
             <Styled.Container>
-                <Styled.Match>
-                    <div>
-                    <Styled.Info>서울 OO 축구장</Styled.Info>
-                    <Styled.Info>2022.11.06 17:00</Styled.Info>
-                    </div>
-                    <Styled.pending>대기중</Styled.pending>
-                    <Styled.Button>삭제</Styled.Button>
-                </Styled.Match>
-                <Styled.Match>
-                    <div>
-                        <Styled.Info>서울 OO 축구장</Styled.Info>
-                        <Styled.Info>2022.11.06 17:00</Styled.Info>
-                    </div>
-                    <Styled.pending>대기중</Styled.pending>
-                    <Styled.Button>삭제</Styled.Button>
-                </Styled.Match>
-                <Styled.Match>
-                    <div>
-                        <Styled.Info>서울 OO 축구장</Styled.Info>
-                        <Styled.Info>2022.11.06 17:00</Styled.Info>
-                    </div>
-                    <Styled.pending>대기중</Styled.pending>
-                    <Styled.Button>삭제</Styled.Button>
-                </Styled.Match>
+                {matchList}
             </Styled.Container>
         </Styled.Root>
     );
@@ -136,6 +158,8 @@ const Styled = {
     line-height: 0px;
     
     margin-left: 20px;
+    
+    cursor: pointer;
     `
 
 }

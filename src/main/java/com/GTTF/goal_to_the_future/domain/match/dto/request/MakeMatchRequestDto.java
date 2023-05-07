@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Getter
 public class MakeMatchRequestDto {
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
     private String place;
     private String teamName;

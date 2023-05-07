@@ -7,14 +7,26 @@ import {useState} from "react";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
 import {useFetchPendingMatchList, usePostJoinMatch} from "../hooks/match";
+import {userState} from "../states/user";
 
 function Home() {
+
     const teamName = useRecoilValue(teamNameState);
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [joinMatchId, setJoinMatchId] = useState(0);
 
-    // const pendingMatchList = useFetchPendingMatchList();
+    //const userInfo = useRecoilValue(userState);
+
+    const data = useFetchPendingMatchList();
+    // const userData = useFetchUserInfo(userInfo.userId);
+    const userData = {
+        "team": "GoalToUs",
+    };
     const {mutate: joinMatch} = usePostJoinMatch();
+    joinMatch({
+        "matchId" : 1,
+        "teamId" : 2,
+    });
     const handleOnClick = (e) => {
         setIsJoinModalOpen(true);
         setJoinMatchId(e.currentTarget.id);
@@ -22,71 +34,75 @@ function Home() {
 
     const handleJoinMatch = () => {
         joinMatch({
-            "matchId" : joinMatchId
+            "matchId" : joinMatchId,
+            "teamId" : 1,
         });
         setIsJoinModalOpen(false);
         alert("경기가 성사되었습니다!");
     }
 
-    const data = [
-        {
-            "teamId": 17,
-            "teamName": "ABC",
-            "matchState": -1,
-            "region": "서울",
-            "place": "서대문구 경기장",
-            "startTime" : "2023-02-09 11:00",
-        },
-        {
-            "teamId": 15,
-            "teamName": "EFG",
-            "matchState": -1,
-            "region": "서울",
-            "startTime" : "2023-02-09 11:00",
-            "place": "강서구 경기장"
-        },
-        {
-            "teamId": 67,
-            "teamName": "OUC",
-            "matchState": -1,
-            "region": "서울",
-            "startTime" : "2023-02-09 11:00",
-            "place": "노원구 경기장"
-        },
-        {
-            "teamId": 31,
-            "teamName": "TYG",
-            "matchState": -1,
-            "region": "서울",
-            "startTime" : "2023-02-09 11:00",
-            "place": "마포구 경기장"
-        }
-    ];
+    const orderSortByTime = (item) => {
+        return item.sort((a, b) => {
+            return Number(b.startTime) - Number(a.startTime);
+        });
+    };
 
-    const matchList = [1, 2, 3].map((item) => {return (
-        <Styled.matchListContainer>
-        <Styled.matchDay>11.02</Styled.matchDay>
-        <Styled.matchList >
-            <img src={TeamProfileImg}/>
-            <div>
-                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                <Styled.matchInfo>
-                    2022년 11월 12일  16:00-17:00<br/>
-                    00 대운동장
-                </Styled.matchInfo>
-            </div>
-            <Styled.matchButton id={item} onClick = {handleOnClick}>매칭 신청</Styled.matchButton>
-        </Styled.matchList>
-        <Styled.matchList><img src={TeamProfileImg}/>
-            <div>
-                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                <Styled.matchInfo>
-                    2022년 11월 12일  16:00-17:00<br/>
-                    00 대운동장
-                </Styled.matchInfo>
-            </div>
-            <Styled.matchButton>매칭 신청</Styled.matchButton></Styled.matchList>
-    </Styled.matchListContainer>)})
+    const pendingMatchList = orderSortByTime(data);
+
+    // const data = [
+    //     {
+    //         "teamId": 17,
+    //         "teamName": "ABC",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "place": "서대문구 경기장",
+    //         "startTime" : "2023-02-09 11:00",
+    //     },
+    //     {
+    //         "teamId": 15,
+    //         "teamName": "EFG",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "place": "강서구 경기장"
+    //     },
+    //     {
+    //         "teamId": 67,
+    //         "teamName": "OUC",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "place": "노원구 경기장"
+    //     },
+    //     {
+    //         "teamId": 31,
+    //         "teamName": "TYG",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "place": "마포구 경기장"
+    //     }
+    // ];
+
+    let matchList;
+    if(pendingMatchList){
+        matchList = pendingMatchList.map((item) => {return (
+            <Styled.matchListContainer>
+                <Styled.matchDay>{item.startTime}</Styled.matchDay>
+                <Styled.matchList>
+                    <img src={TeamProfileImg}/>
+                    <div>
+                        <Styled.teamName>{item.teamName}</Styled.teamName><br/>
+                        <Styled.matchInfo>
+                            {item.startTime}<br/>
+                            {item.place}
+                        </Styled.matchInfo>
+                    </div>
+                    <Styled.matchButton id={item} onClick = {handleOnClick}>매칭 신청</Styled.matchButton>
+                </Styled.matchList>
+            </Styled.matchListContainer>)})
+    }
+
     return (
         <Styled.Root>
             <Header/>
@@ -116,8 +132,8 @@ function Home() {
                     </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
-                    <Styled.button><a href={`/team/home/${teamName}`}>내 팀 홈 가기</a></Styled.button>
-                    <Styled.button><a href={"/team"}>팀 등록 / 가입하기</a></Styled.button>
+                    <a href={`/team/home/${userData.teamName}`}>내 팀 홈 가기</a>
+                    <a href={"/team"}>팀 등록 / 가입하기</a>
                     </Styled.buttonContainer>
             </Styled.Container>
         </Styled.Root>
@@ -288,29 +304,33 @@ const Styled = {
     border-radius: 15px;
     
     margin: auto 0;
-    `,
-    button: styled.button`
-    width: 200px;
-    height: 80px;
     
-    border-radius: 10px;
-    border: none;
-    
-    margin: 20px 0;
-    
-    cursor: pointer;
-    
-    font-weight: 800;
-    font-size: 22px;
-    letter-spacing : -1px;
-    
-    &:nth-child(1) {
-    background: #F9D7A4;
-    color: #494949;
-    }
-    &:nth-child(2) {
-    background : #274C72;
-    color: white;
+    & > a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        height: 80px;
+        
+        border-radius: 10px;
+        border: none;
+        
+        margin: 20px 0;
+        
+        cursor: pointer;
+        
+        font-weight: 800;
+        font-size: 22px;
+        letter-spacing : -1px;
+        
+        &:nth-child(1) {
+        background: #F9D7A4;
+        color: #494949;
+        }
+        &:nth-child(2) {
+        background : #274C72;
+        color: white;
+        }
     }
     `,
 

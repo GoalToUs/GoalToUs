@@ -27,7 +27,7 @@ const Router = () => {
                 <Route path={"/team/create"} element={<CreateTeam/>}/>
                 <Route path={"/match/create"} element={<CreateMatch/>}/>
                 <Route path={"/team/home/:teamName"} element={<TeamHome/>}/>
-                <Route path={"/team/match/analysis"} element={<MatchAnalysis/>}/>
+                <Route path={"/team/match/analysis/:matchId"} element={<MatchAnalysis/>}/>
                 <Route path={"/team/match/pending"} element={<MatchPending/>}/>
                 <Route path={"/team/match/video"} element={<MatchVideo/>}/>
             </Routes>

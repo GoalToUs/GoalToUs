@@ -1,4 +1,13 @@
-import {fetchMatchAnalysis, fetchPendingMatchList, postCreateMatch, postJoinMatch, postWriteMatch} from "../apis/match";
+import {
+    fetchCreatedMatchList,
+    fetchFinishedMatchList,
+    fetchMatchAnalysis,
+    fetchPendingMatchList,
+    fetchPlanMatchList,
+    postCreateMatch,
+    postJoinMatch,
+    postWriteMatch
+} from "../apis/match";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {fetchTeamInfo} from "../apis/team";
 
@@ -42,4 +51,22 @@ export const usePostWriteMatchAnalysis = () => {
                 console.log("rewrite match analysis");
             },
         });
+}
+
+//팀 예정 경기 목록 조회
+export const  useFetchPlanMatchList = (teamName) => {
+    const {data} = useQuery(["planMatchList"],()=> fetchPlanMatchList(teamName));
+    return data;
+}
+
+//팀 지난 경기 목록 조회
+export const  useFetchFinishedMatchList = (teamName) => {
+    const {data} = useQuery(["finishedMatchList"],()=> fetchFinishedMatchList(teamName));
+    return data;
+}
+
+//내가 생성한 경기 목록 조회
+export const  useFetchCreatedMatchList = (teamName) => {
+    const {data} = useQuery(["createdMatchList"],()=> fetchCreatedMatchList(teamName));
+    return data;
 }

@@ -23,14 +23,14 @@ function Join() {
     const [checkDuplication, setCheckDuplication] = useState(false);
 
     const navigate = useNavigate();
-    const {mutate : join} = usePostUserInfo();
+    const {mutate : join, isSuccess} = usePostUserInfo();
 
     const handleOnClick = () => {
         if(!inputs.userId) {
             alert(`아이디를 입력해주세요.`);
             return;
-        }else if(!checkDuplication) {
-            alert(`아이디 중복 확인을 해주세요.`);
+        // }else if(!checkDuplication) {
+        //     alert(`아이디 중복 확인을 해주세요.`);
         }else if(!inputs.password) {
             alert(`비밀번호를 입력해주세요`);
             return;
@@ -58,7 +58,7 @@ function Join() {
             isCaptain : inputs.isCaptain ? 1 : 0,
             position : inputs.position
         }
-        const {isSuccess} = join(userData);
+        join(userData)
         if(isSuccess) setIsModalOpen(true);
     }
 

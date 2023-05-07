@@ -6,10 +6,9 @@ import {usePostCreateMatch} from "../hooks/match";
 function CreateMatch() {
     const {mutate: createMatch} = usePostCreateMatch();
     const [inputs, setInputs] = useState({
-        day: "2023-02-09 11:00",
-        time: '',
+        daytime: '',
         place: '',
-        region: ''
+        region: '',
     });
 
     const handleOnChange = (e) => {
@@ -21,10 +20,10 @@ function CreateMatch() {
     }
 
     const matchData = {
-        startTime: `${inputs.day} ${inputs.time}`,
+        startTime: inputs.daytime,
         region: inputs.region,
         place: inputs.place,
-        teamName: "", // 로컬스토리지 이용
+        teamName: "GoalToUs", // 로컬스토리지 이용
     }
 
     const handleOnClick= () => {
@@ -38,20 +37,16 @@ function CreateMatch() {
                 <h1>경기 만들기</h1>
                 <Styled.createMatchContainer>
                     <Styled.InputContainer>
-                        <Styled.inputTitle>경기 날짜</Styled.inputTitle>
-                        <Styled.createMatchInput type={"date"} id={"day"} onChange={handleOnChange} value={inputs.day}/>
-                    </Styled.InputContainer>
-                    <Styled.InputContainer>
-                        <Styled.inputTitle>경기 시간</Styled.inputTitle>
-                        <Styled.createMatchInput type={"time"} id={"time"} onChange={handleOnChange} value={inputs.time}/>
+                        <Styled.inputTitle>경기 일시</Styled.inputTitle>
+                        <Styled.createMatchInput type={"datetime-local"} id={"daytime"} onChange={handleOnChange} value={inputs.daytime}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>지역</Styled.inputTitle>
-                        <Styled.createMatchInput placeholder={"ex) 서울"} onChange={handleOnChange} value={inputs.region}/>
+                        <Styled.createMatchInput placeholder={"ex) 서울"}  id={"region"} onChange={handleOnChange} value={inputs.region}/>
                     </Styled.InputContainer>
                     <Styled.InputContainer>
                         <Styled.inputTitle>경기 장소</Styled.inputTitle>
-                        <Styled.createMatchInput placeholder={"ex) ~~ 경기장"} className={"place"} id={"place"} onChange={handleOnChange} value={inputs.place} />
+                        <Styled.createMatchInput placeholder={"ex) ~~ 경기장"}  id={"place"} className={"place"} onChange={handleOnChange} value={inputs.place} />
                     </Styled.InputContainer>
                     <Styled.submitButton type={"submit"} value={"등록하기"} onClick = {handleOnClick}/>
                 </Styled.createMatchContainer>
@@ -86,9 +81,9 @@ const Styled = {
     flex-direction: column;
     
     width: 500px;
-    height: 430px;
+    height: 360px;
     
-    margin-top: 25px;
+    margin-top: 35px;
     padding: 60px 50px 0;
     
     background: rgba(122, 198, 161, 0.4);

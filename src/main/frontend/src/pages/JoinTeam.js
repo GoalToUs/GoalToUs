@@ -3,9 +3,13 @@ import Header from "../components/Header";
 import {searchIcon, TeamProfileImg} from "../assets";
 import {useState} from "react";
 import {useNavigate, Outlet} from "react-router-dom";
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
 
 function JoinTeam() {
     const [searchWord, setSearchWord] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(true);
+
     const navigate = useNavigate();
     const handleOnClick = () => {
         navigate(`/team/join/${searchWord}`);
@@ -21,7 +25,14 @@ function JoinTeam() {
                     <Styled.SearchInput value={searchWord} onChange={(e)=>setSearchWord(e.currentTarget.value)}/>
                 </Styled.SearchContainer>
             </Styled.joinTeamSection>
-            <Outlet />
+            <Outlet setIsModalOpen={setIsModalOpen}/>
+            {isModalOpen && <ModalPortal>
+                <Modal width={400} height={200}>
+                    <Styled.message>가입에 성공하였습니다!</Styled.message>
+                    <Styled.goLoginButton href={"/"}>홈으로 이동</Styled.goLoginButton>
+                    <Styled.goLoginButton href={`/team/`}>팀 홈으로 이동</Styled.goLoginButton>
+                </Modal>
+            </ModalPortal>}
         </Styled.Root>
     );
 }
@@ -92,5 +103,29 @@ const Styled = {
     &:focus {
     outline: none;
     }
+    `,
+    message : styled.div`
+    font-size: 23px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    `,
+    goLoginButton: styled.a`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-top: 15px;
+    
+    width: 130px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 2px;
+    
+    background-color: white;
+    
+    font-size: 15px;
+    
+    cursor: pointer;
     `,
 }

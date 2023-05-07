@@ -1,14 +1,17 @@
 import { client } from './index';
+import {useRecoilValue} from "recoil";
+import {userState} from "../states/user";
+import axios from "axios";
 
 // 로그인
-export const postLogin = async (postBody) => {
-    const { data } = await client.post(`/user/login`, postBody);
+export const fetchLogin = async (postBody) => {
+    const { data } = await axios.post(`login`, postBody);
     return data;
 }
 
 // 회원가입
 export const postUserInfo = async (postBody) => {
-    const { data } = await client.post(`/user/signup`, postBody);
+    const { data } = await axios.post(`/user/signup`, postBody);
     return data;
 }
 
@@ -17,6 +20,14 @@ export const postUserInfo = async (postBody) => {
 export const fetchUserDuplication = async (nickname) => {
     const {
         data: { data },
-    } = await client.get(`/user/${nickname}/exist`);
+    } = await axios.get(`/user/${nickname}/exist`);
+    return data;
+}
+
+// 회원 정보 조회
+export const fetchUserInfo = async (userId) => {
+    const {
+        data: { data },
+    } = await axios.get(`/user/info/${userId}`);
     return data;
 }

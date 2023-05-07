@@ -3,61 +3,78 @@ import Header from "../components/Header";
 
 
 import SideBar from "../components/Sidebar";
-import { TeamProfileImg, TeamProfileImg1} from "../assets";
+import {HeatmapEX, TeamProfileImg, TeamProfileImg1} from "../assets";
 import {useFetchMatchAnalysis, usePostWriteMatchAnalysis} from "../hooks/match";
 import {useState} from "react";
+import {useRecoilValue} from "recoil";
+import {matchState} from "../states/match";
+import {useParams} from "react-router-dom";
 
 function MatchAnalysis() {
-    const matchId = 1;
+    const {matchId} = useParams();
     const [isAllHeatmap, setIsAllHeatmap] = useState(true);
     const [isInputActive, setIsInputActive] = useState(false);
 
+    const matchInfo = useRecoilValue(matchState);
+
     const {mutate: editMatchAnalysis} = usePostWriteMatchAnalysis();
 
-    // const matchData = useFetchMatchAnalysis(matchId);
-    const matchData = [{
-        "teamName": "맨시티",
-        "winnerTeamId":12,
-        "goal":3,
-        "penaltyKick":2,
-        "yellowCard":0,
-        "redCard":0,
-        "highlight":"http:/",
-        "pass":89,
-        "winner":2,
-        "effectiveShooting":67
-    },{
-        "teamName": "풀럼",
-        "matchId":13,
-        "goal":3,
-        "penaltyKick":15,
-        "yellowCard":0,
-        "redCard":0,
-        "highlight":"http:/",
-        "pass":90,
-        "winner":4,
-        "effectiveShooting":65
-    }]
+    const matchData = useFetchMatchAnalysis(matchId);
+    // const matchData = [{
+    //     "teamName": "니케",
+    //     "winnerTeamId":12,
+    //     "goal":3,
+    //     "penaltyKick":2,
+    //     "yellowCard":0,
+    //     "redCard":0,
+    //     "highlight":"http:/",
+    //     "pass":89,
+    //     "winner":2,
+    //     "effectiveShooting":67
+    // },{
+    //     "teamName": "크랙",
+    //     "matchId":13,
+    //     "goal":1,
+    //     "penaltyKick":15,
+    //     "yellowCard":0,
+    //     "redCard":0,
+    //     "highlight":"http:/",
+    //     "pass":90,
+    //     "winner":4,
+    //     "effectiveShooting":65
+    // }]
 
-    const team1Data = matchData[0];
-    const team2Data = matchData[1];
+    let team1Data;
+    let team2Data;
 
-    const team1_BallShare = Math.floor(team1Data.pass / (team1Data.pass + team2Data.pass) * 100);
-    const team2_BallShare = Math.floor(team2Data.pass / (team1Data.pass + team2Data.pass) * 100)
+    let team1_BallShare;
+    let team2_BallShare;
 
-    const [team1Inputs, setTeam1Inputs] = useState({
-        goal: team1Data.goal,
-        penaltyKick: team1Data.penaltyKick,
-        yellowCard: team1Data.yellowCard,
-        redCard: team1Data.redCard,
-    });
+    let team1InitialData;
+    let team2InitialData;
 
-    const [team2Inputs, setTeam2Inputs] = useState({
-        goal: team2Data.goal,
-        penaltyKick: team2Data.penaltyKick,
-        yellowCard: team2Data.yellowCard,
-        redCard: team2Data.redCard,
-    });
+    if(matchData) {
+        team1Data = matchData[0];
+        team2Data = matchData[1];
+
+        team1_BallShare = Math.floor(team1Data.pass / (team1Data.pass + team2Data.pass) * 100);
+        team2_BallShare = Math.floor(team2Data.pass / (team1Data.pass + team2Data.pass) * 100)
+
+        team2InitialData = {
+            goal: team2Data.goal,
+            penaltyKick: team2Data.penaltyKick,
+            yellowCard: team2Data.yellowCard,
+            redCard: team2Data.redCard,
+        };
+        team1InitialData = {
+            goal: team1Data.goal,
+            penaltyKick: team1Data.penaltyKick,
+            yellowCard: team1Data.yellowCard,
+            redCard: team1Data.redCard,
+        };
+    }
+    const [team1Inputs, setTeam1Inputs] = useState(team1InitialData);
+    const [team2Inputs, setTeam2Inputs] = useState(team2InitialData);
 
     const handleTeam1OnChange = (e) => {
         const {value, id} = e.currentTarget;
@@ -110,17 +127,18 @@ function MatchAnalysis() {
         editMatchAnalysis({
             "matchId": matchId,
             "teamName": team1Data.teamName,
-            "postBody" : team1Inputs,
+            "postBody": team1Inputs,
         })
         editMatchAnalysis({
             "matchId": matchId,
             "teamName": team2Data.teamName,
-            "postBody" : team2Inputs,
+            "postBody": team2Inputs,
         })
         setIsInputActive(false);
     }
 
-    const analysisList = [ {title : "골", team1Data: team1Inputs.goal, team2Data: team2Inputs.goal},
+
+    const analysisList = team1Inputs && team2Inputs && [ {title : "골", team1Data: team1Inputs.goal, team2Data: team2Inputs.goal},
         {title : "패널티킥", team1Data: team1Inputs.penaltyKick, team2Data: team2Inputs.penaltyKick},
         {title : "경고", team1Data: team1Inputs.yellowCard, team2Data: team2Inputs.yellowCard},
         {title : "퇴장", team1Data: team1Inputs.redCard, team2Data: team2Inputs.redCard}].map((item) => {
@@ -144,6 +162,7 @@ function MatchAnalysis() {
             </Styled.gaugeContainer>
         </Styled.analysisList>)
     })
+    if(!team1Data) return;
     return(
         <Styled.Root>
             <SideBar />
@@ -156,8 +175,8 @@ function MatchAnalysis() {
                     </Styled.TeamContainer>
                     <Styled.Score>{team1Data.goal}</Styled.Score>
                     <Styled.InfoContainer>
-                        <Styled.Info>서울 OO 축구장</Styled.Info>
-                        <Styled.Info>2022.11.06 17:00</Styled.Info>
+                        <Styled.Info>{matchInfo.place}</Styled.Info>
+                        <Styled.Info>{matchInfo.startTime}</Styled.Info>
                     </Styled.InfoContainer>
                     <Styled.Score>{team2Data.goal}</Styled.Score>
                     <Styled.TeamContainer>
@@ -170,20 +189,20 @@ function MatchAnalysis() {
                 <Styled.HeatmapButton className={isAllHeatmap ? "active" : "inactive"} onClick={()=>setIsAllHeatmap(true)}>전체 히트맵</Styled.HeatmapButton>
                 <Styled.HeatmapButton className={isAllHeatmap ? "inactive" : "active"} onClick={()=>setIsAllHeatmap(false)}>볼 터치 히트맵</Styled.HeatmapButton>
                 </Styled.HeatmapContainer>
-                <Styled.Heatmap src={""} className={isAllHeatmap ? "all" : "ball"}/>
+                <Styled.Heatmap src={HeatmapEX} className={isAllHeatmap ? "all" : "ball"}/>
                 <Styled.analysisContainer>
                     {isInputActive ?
                         <Styled.EditButton onClick={handleOnClick}> 수정 완료 </Styled.EditButton> :
                         <Styled.EditButton onClick={() => setIsInputActive(true)}> 경기 분석 수정하기</Styled.EditButton>
                     }
-                    <Styled.Teams><span>맨시티</span><span>VS</span><span>풀럼</span></Styled.Teams>
+                    <Styled.Teams><span>니케</span><span>VS</span><span>크랙</span></Styled.Teams>
 
                     <Styled.analysisList>
                         <Styled.gaugeContainer>
                             <Styled.gaugeBar className={"pass team1"} width={team1_BallShare}></Styled.gaugeBar>
                         </Styled.gaugeContainer>
                         <Styled.analysisNumber>{team1_BallShare}%</Styled.analysisNumber>
-                        <Styled.analysisItem>볼점유율</Styled.analysisItem>
+                        <Styled.analysisItem>볼소유율</Styled.analysisItem>
                         <Styled.analysisNumber>{team2_BallShare}%</Styled.analysisNumber>
                         <Styled.gaugeContainer>
                         <Styled.gaugeBar className={"pass team2"} width={team2_BallShare}></Styled.gaugeBar>

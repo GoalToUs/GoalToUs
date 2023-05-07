@@ -1,16 +1,20 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import {useState} from "react";
-import {usePostLogin} from "../hooks/user";
+import {useFetchLogin, usePostLogin} from "../hooks/user";
 import {useNavigate} from "react-router-dom";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
+import {useSetRecoilState} from "recoil";
+import {userState} from "../states/user";
+import axios from "axios";
 
 function Login() {
+    const setUserData = useSetRecoilState(userState);
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
-    const {mutate: login, isSuccess} =usePostLogin();
     const navigate = useNavigate();
+
 
     const handleOnClick = () => {
         if(!userId) {
@@ -20,16 +24,21 @@ function Login() {
             alert(`비밀번호를 입력해주세요.`);
             return;
         }
-        const postData = {
-            "userId": userId,
-            "password": password
-        }
-        login(postData);
 
-        if(isSuccess) {
-            navigate(`/home`);
+        const login = async () => {
+            let {data} = await axios.get(`/login`, {"userId": userId, "password": password});
+            if(data) {
+                console.log(data);
+                // setUserData({
+                    // "userId": userId,
+                    // "userName": successData.userName,
+                // })
+                // navigate(`/`);
+            }
         }
+        login();
     }
+
 
     const handleOnChange = (e) => {
         const {value, id} = e.currentTarget;
@@ -158,5 +167,5 @@ const Styled = {
     &:hover {
     text-decoration: underline;
     }
-    `
+    `,
 }
