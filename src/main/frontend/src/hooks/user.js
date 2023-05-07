@@ -1,26 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import {fetchUserInfo, postLogin, postUserInfo} from "../apis/user";
-import {fetchFinishedMatchList} from "../apis/match";
+import {fetchLogin, fetchUserInfo,  postUserInfo} from "../apis/user";
 
 
 export const usePostUserInfo = () => {
     const queryClient = useQueryClient();
     return useMutation(postUserInfo, {
-        onSuccess() {
-            console.log("join success");
+        onSuccess(){
+            return true;
         },
     });
 }
 
-export const usePostLogin = () => {
-    return useMutation(postLogin, {
-        onSuccess() {
-            console.log("login success");
-        },
-        onError(error) {
-            alert(error.message);
-        }
-    })
+export const useFetchLogin = (loginData) => {
+    const {data} = useQuery(["login"],() => fetchLogin(loginData));
+    return data;
 }
 
 // 회원 정보 조회

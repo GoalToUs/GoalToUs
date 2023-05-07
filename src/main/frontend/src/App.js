@@ -6,19 +6,13 @@ import {
 } from 'recoil';
 
 function App() {
-  const [hello, setHello] = useState('')
+    const [hello, setHello] = useState('')
 
-  // useEffect(() => {
-  //   axios.get('/api/hello')
-  //       .then(response => setHello(response.data))
-  //       .catch(error => console.log(error))
-  // }, []);
-
-  return (
-      <RecoilRoot>
-          <Router />
-      </RecoilRoot>
-  );
+    return (
+        <RecoilRoot>
+            <Router/>
+        </RecoilRoot>
+    );
 }
 
 export default App;

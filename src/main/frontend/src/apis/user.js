@@ -4,14 +4,14 @@ import {userState} from "../states/user";
 import axios from "axios";
 
 // 로그인
-export const postLogin = async (postBody) => {
-    const { data } = await client.post(`/user/login`, postBody);
+export const fetchLogin = async (postBody) => {
+    const { data } = await axios.post(`login`, postBody);
     return data;
 }
 
 // 회원가입
 export const postUserInfo = async (postBody) => {
-    const { data } = await axios.post(`/api/user/signup`, postBody);
+    const { data } = await axios.post(`/user/signup`, postBody);
     return data;
 }
 
@@ -20,7 +20,7 @@ export const postUserInfo = async (postBody) => {
 export const fetchUserDuplication = async (nickname) => {
     const {
         data: { data },
-    } = await client.get(`/user/${nickname}/exist`);
+    } = await axios.get(`/user/${nickname}/exist`);
     return data;
 }
 
@@ -28,6 +28,6 @@ export const fetchUserDuplication = async (nickname) => {
 export const fetchUserInfo = async (userId) => {
     const {
         data: { data },
-    } = await client.get(`/user/info/${userId}`);
+    } = await axios.get(`/user/info/${userId}`);
     return data;
 }

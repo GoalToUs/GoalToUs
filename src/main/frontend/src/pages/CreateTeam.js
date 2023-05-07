@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import {usePostUserInfo} from "../hooks/team";
 import {useEffect, useRef, useState} from "react";
 import {DefaultImg} from "../assets";
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
 
 function CreateTeam() {
     const [inputs, setInputs] = useState({
@@ -12,6 +14,7 @@ function CreateTeam() {
         teamImageFile: null,
     });
     const [imgSrc, setImgSrc] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {mutate: createTeam} = usePostUserInfo();
 
@@ -65,8 +68,8 @@ function CreateTeam() {
             "intro": inputs.teamIntro,
             // "photo": fd,
         }
-        console.log(teamData);
         createTeam(teamData);
+        setIsModalOpen(true);
     }
 
     return (
@@ -95,6 +98,12 @@ function CreateTeam() {
                     <Styled.submitButton type={"button"} value={"등록하기"} onClick={handleOnClick}/>
                 </Styled.createTeamContainer>
             </Styled.createTeamSection>
+            {isModalOpen && <ModalPortal>
+                <Modal width={400} height={200}>
+                    <Styled.message>팀 등록을 성공하였습니다!</Styled.message>
+                    <Styled.goLoginButton href={"/"}>홈으로 이동</Styled.goLoginButton>
+                </Modal>
+            </ModalPortal>}
         </Styled.Root>
     );
 }
@@ -256,5 +265,28 @@ const Styled = {
     color: white;
     font-size: 20px;
     font-weight: 800;
-    `
+    `,
+    message : styled.div`
+    font-size: 23px;
+    font-weight: bold;
+    margin-top: 50px;
+    `,
+    goLoginButton: styled.a`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-top: 40px;
+    
+    width: 130px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 2px;
+    
+    background-color: white;
+    
+    font-size: 15px;
+    
+    cursor: pointer;
+    `,
 }

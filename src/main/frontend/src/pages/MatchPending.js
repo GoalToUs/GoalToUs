@@ -7,47 +7,50 @@ import {OpponentTeamImg, TeamProfileImg1} from "../assets";
 import {useFetchCreatedMatchList} from "../hooks/match";
 
 function MatchPending() {
-    //const pendingMatchData = useFetchCreatedMatchList(teamName);
-    const pendingMatchData =[
-        {
-            "matchId" : 1,
-            "place" : "하이",
-            "region" : "부산",
-            "startTime" : "2023-02-09 11:00",
-            "matchState" : "EXPECTED",
-        },
-        {
-            "place" : "어쩌구 경기장",
-            "region" : "서울",
-            "startTime" : "2023-02-09 11:00",
-            "matchState" : "EXPECTED",
-        },
-        {
-            "place" : "어쩌구 경기장",
-            "region" : "서울",
-            "startTime" : "2023-02-09 11:00",
-            "matchState" : "EXPECTED",
-        },
-        {
-            "place" : "어쩌구 경기장",
-            "region" : "서울",
-            "startTime" : "2023-02-09 11:00",
-            "matchState" : "EXPECTED",
-        }
-    ];
+    const pendingMatchData = useFetchCreatedMatchList(1);
+    // const pendingMatchData =[
+    //     {
+    //         "matchId" : 1,
+    //         "place" : "하이",
+    //         "region" : "부산",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     },
+    //     {
+    //         "place" : "어쩌구 경기장",
+    //         "region" : "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     },
+    //     {
+    //         "place" : "어쩌구 경기장",
+    //         "region" : "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     },
+    //     {
+    //         "place" : "어쩌구 경기장",
+    //         "region" : "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "matchState" : "EXPECTED",
+    //     }
+    // ];
+    let matchList;
+    if(pendingMatchData){
+        matchList = pendingMatchData.map((item) => {
+            return (
+                <Styled.Match>
+                    <div>
+                        <Styled.Info>{item.place}</Styled.Info>
+                        <Styled.Info>{item.startTime}</Styled.Info>
+                    </div>
+                    <Styled.pending>대기중</Styled.pending>
+                    <Styled.Button>삭제</Styled.Button>
+                </Styled.Match>
+            )
+        })
+    }
 
-    const matchList = pendingMatchData.map((item) => {
-        return (
-            <Styled.Match>
-                <div>
-                    <Styled.Info>{item.place}</Styled.Info>
-                    <Styled.Info>{item.startTime}</Styled.Info>
-                </div>
-                <Styled.pending>대기중</Styled.pending>
-                <Styled.Button>삭제</Styled.Button>
-            </Styled.Match>
-        )
-    })
     return(
         <Styled.Root>
             <SideBar />

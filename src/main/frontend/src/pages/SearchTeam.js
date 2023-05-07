@@ -2,54 +2,43 @@ import styled from "styled-components";
 import {TeamProfileImg} from "../assets";
 import {useFetchSearchTeam, usePostJoinTeam} from "../hooks/team";
 import {useParams} from "react-router-dom";
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
+import {useEffect, useState} from "react";
 
-function SearchTeam() {
+function SearchTeam({setIsModalOpen}) {
     const {searchWord} = useParams();
-    //const searchData = useFetchSearchTeam(searchWord); // 검색하기
-    const searchData = [
-        {
-            "teamId": 10,
-            "teamName": "ABC",
-            "captain":"ㅇㅇㅇ",
-            "image": "이미지주소"
-        },
-        {
-            "teamId": 11,
-            "teamName": "ABC",
-            "captain":"ㅇㅇㅇ",
-            "image": "이미지주소"
-        },
-        {
-            "teamId": 12,
-            "teamName": "ABC",
-            "captain":"ㅇㅇㅇ",
-            "image": "이미지주소"
-        },
-        {
-            "teamId": 13,
-            "teamName": "ABC",
-            "captain":"ㅇㅇㅇ",
-            "image": "이미지주소"
-        }
-    ]
+
+    const searchData = useFetchSearchTeam(searchWord); // 검색하기
+    if(searchData) console.log(searchData);
+    const postData = {
+        userId : 8,
+        teamId : 3,
+    }
+    const {mutate : joinTeam, isSuccess} = usePostJoinTeam(); // 팀 가입하기
     const handleOnClick = (e) => {
-        //     joinTeam(e.currentTarget.id);
+        joinTeam(postData);
+    }
+    if(isSuccess){
+        setIsModalOpen(true);
     }
 
-    const {mutate : joinTeam} = usePostJoinTeam(); // 팀 가입하기
-    const teamList = searchData.map((data) => {
-       return(
-           <Styled.teamList>
-               <img src={searchData ? TeamProfileImg : searchData.image}/> // 순서 바꿔야함
-               <Styled.teamInfoContainer>
-                   <Styled.teamInfo>팀명 : {searchData.teamName}</Styled.teamInfo>
-                   <Styled.teamInfo className={"captain"}>주장 : {searchData.captain}</Styled.teamInfo>
-               </Styled.teamInfoContainer>
-               <Styled.goTeamHome><a href={`/team/home/${searchData.teamId}`}>팀홈 보기</a></Styled.goTeamHome>
-               <Styled.joinButton id={searchData.teamId} onClick={handleOnClick}>가입 신청</Styled.joinButton>
-           </Styled.teamList>
-       ) })
 
+    let teamList;
+    if(searchData){
+        teamList = searchData.map((data) => {
+            return(
+                <Styled.teamList>
+                    <img src={searchData ? TeamProfileImg : searchData.image}/> // 순서 바꿔야함
+                    <Styled.teamInfoContainer>
+                        <Styled.teamInfo>팀명 : {searchData.teamName}</Styled.teamInfo>
+                        <Styled.teamInfo className={"captain"}>주장 : {searchData.captain}</Styled.teamInfo>
+                    </Styled.teamInfoContainer>
+                    <Styled.goTeamHome><a href={`/team/home/${searchData.teamId}`}>팀홈 보기</a></Styled.goTeamHome>
+                    <Styled.joinButton id={searchData.teamId} onClick={handleOnClick}>가입 신청</Styled.joinButton>
+                </Styled.teamList>
+            ) })
+    }
     return (
         <Styled.Root>
             <Styled.joinTeamSection>
@@ -223,5 +212,5 @@ const Styled = {
     border: none;
 
     cursor: pointer;
-    `
+    `,
 }

@@ -10,18 +10,23 @@ import {useFetchPendingMatchList, usePostJoinMatch} from "../hooks/match";
 import {userState} from "../states/user";
 
 function Home() {
+
     const teamName = useRecoilValue(teamNameState);
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [joinMatchId, setJoinMatchId] = useState(0);
 
     //const userInfo = useRecoilValue(userState);
 
-    // const pendingMatchList = useFetchPendingMatchList();
+    const data = useFetchPendingMatchList();
     // const userData = useFetchUserInfo(userInfo.userId);
     const userData = {
-        "team": "ABC",
+        "team": "GoalToUs",
     };
     const {mutate: joinMatch} = usePostJoinMatch();
+    joinMatch({
+        "matchId" : 1,
+        "teamId" : 2,
+    });
     const handleOnClick = (e) => {
         setIsJoinModalOpen(true);
         setJoinMatchId(e.currentTarget.id);
@@ -29,71 +34,75 @@ function Home() {
 
     const handleJoinMatch = () => {
         joinMatch({
-            "matchId" : joinMatchId
+            "matchId" : joinMatchId,
+            "teamId" : 1,
         });
         setIsJoinModalOpen(false);
         alert("경기가 성사되었습니다!");
     }
 
-    const data = [
-        {
-            "teamId": 17,
-            "teamName": "ABC",
-            "matchState": -1,
-            "region": "서울",
-            "place": "서대문구 경기장",
-            "startTime" : "2023-02-09 11:00",
-        },
-        {
-            "teamId": 15,
-            "teamName": "EFG",
-            "matchState": -1,
-            "region": "서울",
-            "startTime" : "2023-02-09 11:00",
-            "place": "강서구 경기장"
-        },
-        {
-            "teamId": 67,
-            "teamName": "OUC",
-            "matchState": -1,
-            "region": "서울",
-            "startTime" : "2023-02-09 11:00",
-            "place": "노원구 경기장"
-        },
-        {
-            "teamId": 31,
-            "teamName": "TYG",
-            "matchState": -1,
-            "region": "서울",
-            "startTime" : "2023-02-09 11:00",
-            "place": "마포구 경기장"
-        }
-    ];
+    const orderSortByTime = (item) => {
+        return item.sort((a, b) => {
+            return Number(b.startTime) - Number(a.startTime);
+        });
+    };
 
-    const matchList = [1, 2, 3].map((item) => {return (
-        <Styled.matchListContainer>
-        <Styled.matchDay>11.02</Styled.matchDay>
-        <Styled.matchList >
-            <img src={TeamProfileImg}/>
-            <div>
-                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                <Styled.matchInfo>
-                    2022년 11월 12일  16:00-17:00<br/>
-                    00 대운동장
-                </Styled.matchInfo>
-            </div>
-            <Styled.matchButton id={item} onClick = {handleOnClick}>매칭 신청</Styled.matchButton>
-        </Styled.matchList>
-        <Styled.matchList><img src={TeamProfileImg}/>
-            <div>
-                <Styled.teamName>MANCHESTER CITY FC</Styled.teamName><br/>
-                <Styled.matchInfo>
-                    2022년 11월 12일  16:00-17:00<br/>
-                    00 대운동장
-                </Styled.matchInfo>
-            </div>
-            <Styled.matchButton>매칭 신청</Styled.matchButton></Styled.matchList>
-    </Styled.matchListContainer>)})
+    const pendingMatchList = orderSortByTime(data);
+
+    // const data = [
+    //     {
+    //         "teamId": 17,
+    //         "teamName": "ABC",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "place": "서대문구 경기장",
+    //         "startTime" : "2023-02-09 11:00",
+    //     },
+    //     {
+    //         "teamId": 15,
+    //         "teamName": "EFG",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "place": "강서구 경기장"
+    //     },
+    //     {
+    //         "teamId": 67,
+    //         "teamName": "OUC",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "place": "노원구 경기장"
+    //     },
+    //     {
+    //         "teamId": 31,
+    //         "teamName": "TYG",
+    //         "matchState": -1,
+    //         "region": "서울",
+    //         "startTime" : "2023-02-09 11:00",
+    //         "place": "마포구 경기장"
+    //     }
+    // ];
+
+    let matchList;
+    if(pendingMatchList){
+        matchList = pendingMatchList.map((item) => {return (
+            <Styled.matchListContainer>
+                <Styled.matchDay>{item.startTime}</Styled.matchDay>
+                <Styled.matchList>
+                    <img src={TeamProfileImg}/>
+                    <div>
+                        <Styled.teamName>{item.teamName}</Styled.teamName><br/>
+                        <Styled.matchInfo>
+                            {item.startTime}<br/>
+                            {item.place}
+                        </Styled.matchInfo>
+                    </div>
+                    <Styled.matchButton id={item} onClick = {handleOnClick}>매칭 신청</Styled.matchButton>
+                </Styled.matchList>
+            </Styled.matchListContainer>)})
+    }
+
     return (
         <Styled.Root>
             <Header/>

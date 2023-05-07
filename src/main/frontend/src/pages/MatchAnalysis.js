@@ -8,9 +8,10 @@ import {useFetchMatchAnalysis, usePostWriteMatchAnalysis} from "../hooks/match";
 import {useState} from "react";
 import {useRecoilValue} from "recoil";
 import {matchState} from "../states/match";
+import {useParams} from "react-router-dom";
 
 function MatchAnalysis() {
-    const matchId = 1;
+    const {matchId} = useParams();
     const [isAllHeatmap, setIsAllHeatmap] = useState(true);
     const [isInputActive, setIsInputActive] = useState(false);
 
@@ -18,50 +19,62 @@ function MatchAnalysis() {
 
     const {mutate: editMatchAnalysis} = usePostWriteMatchAnalysis();
 
-    // const matchData = useFetchMatchAnalysis(matchId);
-    const matchData = [{
-        "teamName": "니케",
-        "winnerTeamId":12,
-        "goal":3,
-        "penaltyKick":2,
-        "yellowCard":0,
-        "redCard":0,
-        "highlight":"http:/",
-        "pass":89,
-        "winner":2,
-        "effectiveShooting":67
-    },{
-        "teamName": "크랙",
-        "matchId":13,
-        "goal":1,
-        "penaltyKick":15,
-        "yellowCard":0,
-        "redCard":0,
-        "highlight":"http:/",
-        "pass":90,
-        "winner":4,
-        "effectiveShooting":65
-    }]
+    const matchData = useFetchMatchAnalysis(matchId);
+    // const matchData = [{
+    //     "teamName": "니케",
+    //     "winnerTeamId":12,
+    //     "goal":3,
+    //     "penaltyKick":2,
+    //     "yellowCard":0,
+    //     "redCard":0,
+    //     "highlight":"http:/",
+    //     "pass":89,
+    //     "winner":2,
+    //     "effectiveShooting":67
+    // },{
+    //     "teamName": "크랙",
+    //     "matchId":13,
+    //     "goal":1,
+    //     "penaltyKick":15,
+    //     "yellowCard":0,
+    //     "redCard":0,
+    //     "highlight":"http:/",
+    //     "pass":90,
+    //     "winner":4,
+    //     "effectiveShooting":65
+    // }]
 
-    const team1Data = matchData[0];
-    const team2Data = matchData[1];
+    let team1Data;
+    let team2Data;
 
-    const team1_BallShare = Math.floor(team1Data.pass / (team1Data.pass + team2Data.pass) * 100);
-    const team2_BallShare = Math.floor(team2Data.pass / (team1Data.pass + team2Data.pass) * 100)
+    let team1_BallShare;
+    let team2_BallShare;
 
-    const [team1Inputs, setTeam1Inputs] = useState({
-        goal: team1Data.goal,
-        penaltyKick: team1Data.penaltyKick,
-        yellowCard: team1Data.yellowCard,
-        redCard: team1Data.redCard,
-    });
+    let team1InitialData;
+    let team2InitialData;
 
-    const [team2Inputs, setTeam2Inputs] = useState({
-        goal: team2Data.goal,
-        penaltyKick: team2Data.penaltyKick,
-        yellowCard: team2Data.yellowCard,
-        redCard: team2Data.redCard,
-    });
+    if(matchData) {
+        team1Data = matchData[0];
+        team2Data = matchData[1];
+
+        team1_BallShare = Math.floor(team1Data.pass / (team1Data.pass + team2Data.pass) * 100);
+        team2_BallShare = Math.floor(team2Data.pass / (team1Data.pass + team2Data.pass) * 100)
+
+        team2InitialData = {
+            goal: team2Data.goal,
+            penaltyKick: team2Data.penaltyKick,
+            yellowCard: team2Data.yellowCard,
+            redCard: team2Data.redCard,
+        };
+        team1InitialData = {
+            goal: team1Data.goal,
+            penaltyKick: team1Data.penaltyKick,
+            yellowCard: team1Data.yellowCard,
+            redCard: team1Data.redCard,
+        };
+    }
+    const [team1Inputs, setTeam1Inputs] = useState(team1InitialData);
+    const [team2Inputs, setTeam2Inputs] = useState(team2InitialData);
 
     const handleTeam1OnChange = (e) => {
         const {value, id} = e.currentTarget;
@@ -114,17 +127,18 @@ function MatchAnalysis() {
         editMatchAnalysis({
             "matchId": matchId,
             "teamName": team1Data.teamName,
-            "postBody" : team1Inputs,
+            "postBody": team1Inputs,
         })
         editMatchAnalysis({
             "matchId": matchId,
             "teamName": team2Data.teamName,
-            "postBody" : team2Inputs,
+            "postBody": team2Inputs,
         })
         setIsInputActive(false);
     }
 
-    const analysisList = [ {title : "골", team1Data: team1Inputs.goal, team2Data: team2Inputs.goal},
+
+    const analysisList = team1Inputs && team2Inputs && [ {title : "골", team1Data: team1Inputs.goal, team2Data: team2Inputs.goal},
         {title : "패널티킥", team1Data: team1Inputs.penaltyKick, team2Data: team2Inputs.penaltyKick},
         {title : "경고", team1Data: team1Inputs.yellowCard, team2Data: team2Inputs.yellowCard},
         {title : "퇴장", team1Data: team1Inputs.redCard, team2Data: team2Inputs.redCard}].map((item) => {
@@ -148,6 +162,7 @@ function MatchAnalysis() {
             </Styled.gaugeContainer>
         </Styled.analysisList>)
     })
+    if(!team1Data) return;
     return(
         <Styled.Root>
             <SideBar />
