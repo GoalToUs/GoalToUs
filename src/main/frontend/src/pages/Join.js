@@ -29,8 +29,8 @@ function Join() {
         if(!inputs.userId) {
             alert(`아이디를 입력해주세요.`);
             return;
-        }else if(!checkDuplication) {
-            alert(`아이디 중복 확인을 해주세요.`);
+        // }else if(!checkDuplication) {
+        //     alert(`아이디 중복 확인을 해주세요.`);
         }else if(!inputs.password) {
             alert(`비밀번호를 입력해주세요`);
             return;

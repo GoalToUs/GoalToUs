@@ -1,6 +1,7 @@
 import { client } from './index';
 import {useRecoilValue} from "recoil";
 import {userState} from "../states/user";
+import axios from "axios";
 
 // 로그인
 export const postLogin = async (postBody) => {
@@ -10,7 +11,7 @@ export const postLogin = async (postBody) => {
 
 // 회원가입
 export const postUserInfo = async (postBody) => {
-    const { data } = await client.post(`/user/signup`, postBody);
+    const { data } = await axios.post(`/api/user/signup`, postBody);
     return data;
 }
 
