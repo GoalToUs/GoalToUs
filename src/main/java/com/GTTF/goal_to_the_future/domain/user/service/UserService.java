@@ -66,9 +66,9 @@ public class UserService implements UserDetailsService { //userService가 UserDe
         }
     }
 
-
-    //public boolean checkNicknameDuplicate(String nickname){
-        //return userRepository.existsByNickname(nickname);}
+    public boolean checkNicknameDuplicate(String nickname){
+        return userRepository.existsByNickname(nickname);
+    }
 
 
 }
