@@ -1,5 +1,7 @@
 package com.GTTF.goal_to_the_future.domain.team.controller;
 
+import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMymatchListResponseDto;
 import com.GTTF.goal_to_the_future.domain.team.dto.request.CreateTeamRequestDto;
 import com.GTTF.goal_to_the_future.domain.team.dto.request.JoinTeamRequestDto;
 import com.GTTF.goal_to_the_future.domain.team.dto.response.CreateTeamResponseDto;
@@ -37,5 +39,7 @@ public class TeamController {
             ,@RequestParam String teamName){
         return teamService.searchTeamInfo(search);
     }
+
+
 
 }

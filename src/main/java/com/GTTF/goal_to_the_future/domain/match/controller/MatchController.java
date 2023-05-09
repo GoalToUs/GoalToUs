@@ -34,18 +34,20 @@ public class MatchController {
     public BaseResponseDto<JoinMatchResponseDto> joinMatch(@RequestBody JoinMatchRequestDto joinMatchRequestDto){
         return new BaseResponseDto<>(matchService.joinMatch(joinMatchRequestDto));
     }
-    @GetMapping("/team/{teamId}")//쿼리스트링으로 matchstate 넘겨줌(예정,종료 둘다 조회가능)
+
+    @GetMapping("/team/{teamName}")//쿼리스트링으로 matchstate 넘겨줌(예정,종료 둘다 조회가능)
     public BaseResponseDto<List<ViewMSListResponseDto>> viewWaitMatch(@RequestParam MatchState matchState,
                                                                       @PathVariable String teamName){
         return new BaseResponseDto<>(matchService.viewMSList(matchState, teamName));
     }
+
     @GetMapping("/team/waitlist")
     public BaseResponseDto<ViewWaitLIstResponseDto> viewWating(){
 
-        return null;
+        return new BaseResponseDto<ViewWaitLIstResponseDto>((ViewWaitLIstResponseDto) matchService.viewWating());
     }
 
-    @GetMapping("match/{teamId}/mylist")
+    @GetMapping("match/{teamName}/mylist")
     public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable String teamName){
         return new BaseResponseDto<ViewMymatchListResponseDto>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamName));
     }
