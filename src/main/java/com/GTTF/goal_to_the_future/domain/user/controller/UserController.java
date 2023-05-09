@@ -29,10 +29,8 @@ public class UserController {
         return "/member/memberLoginform";
     }
 
-
-
-  /*  @GetMapping("/user/{nickname}/exist")
+    @GetMapping("/user/{nickname}/exist")
     public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String nickname)
     { return ResponseEntity.ok(userService.checkNicknameDuplicate(nickname));}
-*/
+
 }
