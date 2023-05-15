@@ -24,4 +24,6 @@ public interface TeamRepository extends JpaRepository<Team,Long> {
 
     Optional<Team> findByTeamName(String teamName);
 
+    @Override
+    Optional<Team> findById(Long teamId);
 }

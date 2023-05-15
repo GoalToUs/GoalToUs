@@ -13,6 +13,7 @@ import com.GTTF.goal_to_the_future.domain.team.repository.TeamRepository;
 import com.GTTF.goal_to_the_future.domain.user.entity.User;
 import com.GTTF.goal_to_the_future.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,7 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class TeamService {
+    @Autowired
     private final TeamRepository teamRepository; //클래스명 필드명
+    @Autowired
     private final UserRepository userRepository; //클래스명 필드명
 
 

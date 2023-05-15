@@ -58,8 +58,10 @@ public class ResultService {
         //1.matchId로 경기 찾기
         Match match = matchRepository.findById(matchId)
                 .orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
-        //2. 해당 matchId에 대한 경기 결과
+
+        //2. 해당 matchId에 대한 경기 결과 match엔티티의 getter에서 이긴팀 아이디도 받아옴
         Result result = match.getResult();
+
         //3. 팀리파지토리에서 이긴 팀의 아이디로 이긴 팀명 찾기
         Team winTeam = teamRepository.findById(result.getWinnerTeamId())
                 .orElseThrow(()->new BusinessException(NOT_FOUND_WINTEAM));
