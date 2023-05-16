@@ -58,7 +58,7 @@ function Join() {
             isCaptain : inputs.isCaptain ? 1 : 0,
             position : inputs.position
         }
-        join(userData)
+        join(userData);
         if(isSuccess) setIsModalOpen(true);
     }
 
