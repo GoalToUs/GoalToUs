@@ -26,6 +26,7 @@ public class ResultService {
     private final MatchRepository matchRepository;
     private final ResultRepository resultRepository;
 
+    //경기 결과 기록하기
     public RecordResultResponseDto recordResult(RecordResultRequestDto recordResultRequestDto,
                                                 Long matchId, String teamName){
         // 1. matchId로 match 찾기
