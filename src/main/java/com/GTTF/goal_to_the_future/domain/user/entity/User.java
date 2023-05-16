@@ -22,7 +22,7 @@ public class User {
     private String name;
     private String email;
 
-    @ManyToOne(fetch=FetchType.LAZY)//좀 복잡함
+    @ManyToOne(fetch=FetchType.LAZY) //팀 하나에 선수 여러명, 단방향
     @JoinColumn(name="team_id")
     private Team team;
 

@@ -1,14 +1,13 @@
 package com.GTTF.goal_to_the_future.domain.result.entity;
 
 import com.GTTF.goal_to_the_future.domain.match.entity.Match;
+import com.GTTF.goal_to_the_future.domain.team.entity.Team;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
@@ -24,6 +23,15 @@ public class Result {
     private String ballHeatmap;
     private Long winnerTeamId;
     private Integer pass;
+
+    @ManyToOne(fetch= FetchType.LAZY) //팀 하나에 결과 여러개
+    @JoinColumn(name="team_id")
+    private Team team;
+
+    //매치 하나에 결과 2개
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="match_id")
+    private Match match;
 
 
     public Result(Integer goal, Integer penaltyKick, Integer yellowCard,

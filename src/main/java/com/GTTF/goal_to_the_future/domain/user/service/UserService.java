@@ -7,6 +7,7 @@ import com.GTTF.goal_to_the_future.domain.user.entity.User;
 import com.GTTF.goal_to_the_future.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +18,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class UserService implements UserDetailsService { //userService가 UserDetailsService 구현
+    @Autowired
     private final UserRepository userRepository;
 
     @Override

@@ -13,6 +13,7 @@ import com.GTTF.goal_to_the_future.domain.team.repository.TeamRepository;
 import com.GTTF.goal_to_the_future.domain.user.entity.User;
 import com.GTTF.goal_to_the_future.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,7 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class TeamService {
+    @Autowired
     private final TeamRepository teamRepository; //클래스명 필드명
+    @Autowired
     private final UserRepository userRepository; //클래스명 필드명
 
 
@@ -64,7 +67,7 @@ public class TeamService {
 
    public List<SearchTeamResponseDto> searchTeamInfo(String keyword){ //팀찾는거
 
-        if(keyword == null){
+        if(keyword == null){ //키워드 없으면 모든 팀 보여주기
             List<SearchTeamResponseDto> teams = teamRepository.findALLTeamInfo();
             return teams;
 

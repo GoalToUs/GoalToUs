@@ -22,6 +22,7 @@ public class TeamController {
     @PostMapping("/team")
     public CreateTeamResponseDto create(@RequestBody CreateTeamRequestDto createTeamRequestDto){
         return teamService.create(createTeamRequestDto);
+
     }
 
     @PostMapping("/team/join/{teamId}")

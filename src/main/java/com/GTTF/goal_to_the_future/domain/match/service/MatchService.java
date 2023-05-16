@@ -31,13 +31,14 @@ public class MatchService {
     private final TeamRepository teamRepository; //클래스명 필드명
     private final MatchRepository matchRepository;
 
-    public MakeMatchResponseDto createMatch(MakeMatchRequestDto makeMatchRequestDto){
+    public MakeMatchResponseDto createMatch(MakeMatchRequestDto makeMatchRequestDto){ //경기 생성
         // request - teamName으로 teamRepository에서 Team 객체를 찾아와야함
         Team team = teamRepository.findByTeamName(makeMatchRequestDto.getTeamName()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
         
         // Match 엔티티 생성
         Match newMatch = new Match(team , makeMatchRequestDto.getStartTime(), makeMatchRequestDto.getPlace(),
-                makeMatchRequestDto.getRegion(),MatchState.EXPECTED);
+                makeMatchRequestDto.getRegion(),MatchState.WAITING);
+        //경기 새로 생성하고 매칭이 성사되지 않은 상태 WAITING
     
         matchRepository.save(newMatch);
 
@@ -45,7 +46,7 @@ public class MatchService {
                 newMatch.getTeam1().getTeamName(), newMatch.getRegion());
     }
 
-    public JoinMatchResponseDto joinMatch(JoinMatchRequestDto joinMatchRequestDto){
+    public JoinMatchResponseDto joinMatch(JoinMatchRequestDto joinMatchRequestDto){ //경기 참여하기
         //1.matchId로 경기 찾기
         Match match = matchRepository.findById(joinMatchRequestDto.getMatchId()).get();
 

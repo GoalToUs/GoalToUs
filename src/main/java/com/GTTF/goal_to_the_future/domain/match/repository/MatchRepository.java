@@ -18,11 +18,13 @@ public interface MatchRepository extends JpaRepository<Match,Long> {
 
     List<Match> findByTeam1(Team team1);
 
+
+
     // @Query로 쿼리 생성
     @Query("select m from Match m where m.team1 =: team1 or m.team2 =: team2 and m.matchState =: matchState")
     List<Match> findMatch(Team team1, Team team2, MatchState matchState);
 
-    @Query("select m from Match m where m.team2 is null")
+    @Query("select m from Match m where m.team2 is null") //참가하는 팀 team2가 없는 경기
     List<Match> findWaiting();
 
 }

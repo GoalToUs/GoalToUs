@@ -11,4 +11,5 @@ public class CreateTeamRequestDto {
     private String photo;
     private String region;
     private String intro;
+
 }
