@@ -10,10 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team,Long> {
+
+//    @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, u.name)" +
+//            " from User u join u.team t " +
+//            " where u.captain=1 " +
+//            " and (u.name like :keyword or t.teamName like :keyword)")
     @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, u.name)" +
             " from User u join u.team t " +
-            " where u.captain=1 " +
-            " and (u.name like :keyword or t.teamName like :keyword)")
+            " where t.teamName like :keyword")
 
     List<SearchTeamResponseDto> findByKeyword(@Param("keyword") String keyword);
 

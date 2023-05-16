@@ -67,7 +67,7 @@ public class TeamService {
 
    public List<SearchTeamResponseDto> searchTeamInfo(String keyword){ //팀찾는거
 
-        if(keyword == null){
+        if(keyword == null){ //키워드 없으면 모든 팀 보여주기
             List<SearchTeamResponseDto> teams = teamRepository.findALLTeamInfo();
             return teams;
 
