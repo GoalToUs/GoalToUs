@@ -1,7 +1,9 @@
 package com.GTTF.goal_to_the_future.domain.user.controller;
 
 import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
+import com.GTTF.goal_to_the_future.domain.user.dto.request.LoginRequestDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.request.SignupRequestDto;
+import com.GTTF.goal_to_the_future.domain.user.dto.response.LoginResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.SignupResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +22,16 @@ public class UserController {
         return new BaseResponseDto<>(signupResponseDto);
     }
     @GetMapping("/login")
-    public String loginMember(){
-        return "/member/memberLoginForm"; //로그인폼 html 경로 수정하기
+    public BaseResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
+        LoginResponseDto loginResponseDto=userService.login(loginRequestDto);
+        return new BaseResponseDto<>(loginResponseDto);
     }
-    @GetMapping("/login/error") //로그인 에러 출력 ->api에 추가할까 말까
-    public String loginError(Model model){
-        model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요");
-        return "/member/memberLoginform";
-    }
+
+//    @GetMapping("/login/error") //로그인 에러 출력 ->api에 추가할까 말까
+//    public String loginError(Model model){
+//        model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요");
+//        return "/member/memberLoginform";
+//    }
 
     @GetMapping("/user/{nickname}/exist")
     public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String nickname)

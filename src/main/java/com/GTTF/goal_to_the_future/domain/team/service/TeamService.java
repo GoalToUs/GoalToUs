@@ -38,7 +38,7 @@ public class TeamService {
         teamRepository.save(newTeam); //insert 쿼리
 
         return new CreateTeamResponseDto(newTeam.getTeamName(),newTeam.getPhoto(), newTeam.getRegion(),
-                newTeam.getIntro());
+                newTeam.getIntro(), newTeam.getId());
     }
 
     public JoinTeamResponseDto join(JoinTeamRequestDto joinTeamRequestDto, Long teamId){// teamId = pk
