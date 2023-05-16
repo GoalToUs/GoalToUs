@@ -1,6 +1,8 @@
 package com.GTTF.goal_to_the_future.domain.user.service;
 
+import com.GTTF.goal_to_the_future.domain.user.dto.request.LoginRequestDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.request.SignupRequestDto;
+import com.GTTF.goal_to_the_future.domain.user.dto.response.LoginResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.MypageResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.SignupResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.entity.User;
@@ -8,34 +10,30 @@ import com.GTTF.goal_to_the_future.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class UserService implements UserDetailsService { //userService가 UserDetailsService 구현
+public class UserService  { //userService가 UserDetailsService 구현
     @Autowired
     private final UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
-        User user=userRepository.findByEmail(email); //로그인 할 유저의 email을 파라미터로 전달받음
-
-        if(user==null){
-            throw new UsernameNotFoundException(email);
-        }
-
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
-                .password(user.getPw())
-                //.roles(user.getRole().toString())
-                .build();
-    }
-    public SignupResponseDto signup(SignupRequestDto requestDto) {
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
+//        User user=userRepository.findByEmail(email); //로그인 할 유저의 email을 파라미터로 전달받음
+//
+//        if(user==null){
+//            throw new UsernameNotFoundException(email);
+//        }
+//
+//        return org.springframework.security.core.userdetails.User.builder()
+//                .username(user.getEmail())
+//                .password(user.getPw())
+//                //.roles(user.getRole().toString())
+//                .build();
+//    }
+    public SignupResponseDto signup(SignupRequestDto requestDto) {//회원가입
         //1. 유저 객체 생성
         User newUser = new User(requestDto.getPassword(), requestDto.getName(),
                 requestDto.getEmail(), requestDto.getIsCaptain(),
@@ -54,6 +52,14 @@ public class UserService implements UserDetailsService { //userService가 UserDe
         return signupResponseDto;
 
     }
+    public LoginResponseDto login(LoginRequestDto loginRequestDto){
+        //유저 닉네임으로 사용자 조회
+        User user=userRepository.findByNickname(loginRequestDto.getUserId());
+        //회원 정보 dto에 담아서 보내주기
+        return new LoginResponseDto(user.getId(), user.getNickname(),user.getPw(), user.getEmail(),
+                user.getCaptain(),user.getPosition(),user.getPhoto(),user.getBirth());
+    }
+
     public MypageResponseDto getInfo(Long userId){ //회원 정보 조회
         //1. 유저 아이디로 사용자 조회
         User user = userRepository.findById(userId).get();
