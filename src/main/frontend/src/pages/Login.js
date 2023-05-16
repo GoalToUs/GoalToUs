@@ -24,9 +24,11 @@ function Login() {
             alert(`비밀번호를 입력해주세요.`);
             return;
         }
+        console.log(userId);
+        console.log(password);
 
         const login = async () => {
-            let {data} = await axios.get(`/login`, {"userId": userId, "password": password});
+            let {data} = await axios.get(`/login`, {userId, password});
             if(data) {
                 console.log(data);
                 // setUserData({

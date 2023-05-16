@@ -8,7 +8,7 @@ import Modal from "../components/modal/Modal";
 
 function JoinTeam() {
     const [searchWord, setSearchWord] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const handleOnClick = () => {
