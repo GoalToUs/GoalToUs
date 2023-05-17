@@ -36,8 +36,7 @@ public class TeamController {
         return teamService.getTeamInfo(teamName);
     }
     @GetMapping("/team/list")
-    public List<SearchTeamResponseDto> searchTeamInfo(@RequestParam(required = false) String search
-            ,@RequestParam String teamName){
+    public List<SearchTeamResponseDto> searchTeamInfo(@RequestParam(required = false) String search ,@RequestParam String teamName){
         return teamService.searchTeamInfo(search);
     }
 

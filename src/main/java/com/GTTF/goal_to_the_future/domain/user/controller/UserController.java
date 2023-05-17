@@ -21,9 +21,11 @@ public class UserController {
         SignupResponseDto signupResponseDto = userService.signup(requestDto);
         return new BaseResponseDto<>(signupResponseDto);
     }
-    @GetMapping("/login")
-    public BaseResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
-        LoginResponseDto loginResponseDto=userService.login(loginRequestDto);
+    @GetMapping("/login/{userId}/{password}")
+    public BaseResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto,
+                                                   @PathVariable String userId,
+                                                   @PathVariable String password){
+        LoginResponseDto loginResponseDto=userService.login(loginRequestDto,userId,password);
         return new BaseResponseDto<>(loginResponseDto);
     }
 
