@@ -52,9 +52,12 @@ public class UserService  { //userService가 UserDetailsService 구현
         return signupResponseDto;
 
     }
-    public LoginResponseDto login(LoginRequestDto loginRequestDto){
+    public LoginResponseDto login(LoginRequestDto loginRequestDto, String userId, String password){
         //유저 닉네임으로 사용자 조회
         User user=userRepository.findByNickname(loginRequestDto.getUserId());
+        if(user !=null){
+            throw new IllegalStateException("일치하는 회원이 존재하지 않습니다.");
+        }
         //회원 정보 dto에 담아서 보내주기
         return new LoginResponseDto(user.getId(), user.getNickname(),user.getPw(), user.getEmail(),
                 user.getCaptain(),user.getPosition(),user.getPhoto(),user.getBirth());
