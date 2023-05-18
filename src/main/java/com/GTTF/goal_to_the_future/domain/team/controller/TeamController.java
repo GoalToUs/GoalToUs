@@ -37,15 +37,20 @@ public class TeamController {
         return teamService.getTeamInfo(teamName);
     }
 
-//    @GetMapping("/team/list")//팀 검색하기
+    @GetMapping("/team/list")//팀 검색하기
+    public List<SearchTeamResponseDto> searchTeamInfo(@RequestParam(required = false) String search){
+        return teamService.searchTeamInfo(search);
+    }
+
+    //    @GetMapping("/team/list")//팀 검색하기
 //    public List<SearchTeamResponseDto> searchTeamInfo(@RequestParam(required = false) String search ,@RequestParam String teamName){
 //        return teamService.searchTeamInfo(search);
 //    }
 
-    @GetMapping("/team/list/{keyword}")
-    public List<SearchTeamResponseDto> searchTeam(@PathVariable String keyword){
-        return teamService.search(keyword);
-    }
+//    @GetMapping("/team/list/{keyword}")
+//    public List<SearchTeamResponseDto> searchTeam(@PathVariable String keyword){
+//        return teamService.search(keyword);
+//    }
 
 
 
