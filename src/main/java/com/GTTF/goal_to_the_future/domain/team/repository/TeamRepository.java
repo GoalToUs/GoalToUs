@@ -31,5 +31,5 @@ public interface TeamRepository extends JpaRepository<Team,Long> {
     @Override
     Optional<Team> findById(Long teamId);
 
-    List<SearchTeamResponseDto> findByTeamNameContaining(String keyword);
+//    List<SearchTeamResponseDto> findByTeamNameContaining(String keyword);
 }
