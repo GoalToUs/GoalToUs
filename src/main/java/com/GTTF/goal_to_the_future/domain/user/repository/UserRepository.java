@@ -11,8 +11,8 @@ import java.util.List;
 //메인 엔티티와 pk타입
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findByTeam(Team team); // select * from User where User.team_id = 우리가 넘긴 Team 객체의 id''
-    User findByNicknameAndEmail(String nickname, String email); // select * from User where User.username = 우리가 넘긴 username and User.email = 우리가 넘긴 이메일
+    List<User> findByTeam(Team team); // select * from User where User.team_id
+    User findByNicknameAndEmail(String nickname, String email); // select * from User where User.username and User.email
 
     User findByNickname(String nickname);
     User findByEmail(String email);

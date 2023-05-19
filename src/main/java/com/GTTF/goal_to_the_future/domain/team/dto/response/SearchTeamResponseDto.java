@@ -8,6 +8,5 @@ import lombok.Getter;
 public class SearchTeamResponseDto { //팀 검색 결과로 보내주는 거
     private String teamName;
     private String teamPhoto;
-    //private String captainName;
     private String teamIntro;
 }
