@@ -11,13 +11,15 @@ import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team,Long> {
 
-//    @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, u.name)" +
-//            " from User u join u.team t " +
-//            " where u.captain=1 " +
-//            " and (u.name like :keyword or t.teamName like :keyword)")
     @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, u.name)" +
             " from User u join u.team t " +
-            " where t.teamName like :keyword")
+            " where u.captain=1 " +
+            " and (u.name like :keyword or t.teamName like :keyword)")
+
+
+//    @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, u.name)" +
+//            " from User u join u.team t " +
+//            " where t.teamName like :keyword") 오류는 안나는데 dto에 빈배열 오는 레포코드
 
     List<SearchTeamResponseDto> findByKeyword(@Param("keyword") String keyword);
 
