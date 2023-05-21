@@ -48,10 +48,10 @@ public class MatchService {
 
     public JoinMatchResponseDto joinMatch(JoinMatchRequestDto joinMatchRequestDto){ //경기 참여하기
         //1.matchId로 경기 찾기
-        Match match = matchRepository.findById(joinMatchRequestDto.getMatchId()).get();
+        Match match = matchRepository.findById(joinMatchRequestDto.getMatchId()).orElseThrow(() -> new BusinessException(NOT_FOUND_MATCH));
 
         //2. 팀 아이디로 팀 찾기
-        Team team2 = teamRepository.findById(joinMatchRequestDto.getTeamId()).get();
+        Team team2 = teamRepository.findById(joinMatchRequestDto.getTeamId()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
 
         // 추가) 경기의 팀 2개가 같으면 에러 처리
         if(match.getTeam1().getId() == team2.getId()){
