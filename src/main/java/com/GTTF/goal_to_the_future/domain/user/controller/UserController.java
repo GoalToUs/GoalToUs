@@ -23,9 +23,10 @@ public class UserController {
         SignupResponseDto signupResponseDto = userService.signup(requestDto);
         return new BaseResponseDto<>(signupResponseDto);
     }
-    @GetMapping("/login")
-    public BaseResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
-        LoginResponseDto loginResponseDto=userService.login(loginRequestDto);
+    @GetMapping("/login/{userId}")
+    public BaseResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto,
+                                                   @PathVariable Long userId){
+        LoginResponseDto loginResponseDto=userService.login(loginRequestDto,userId);
         return new BaseResponseDto<>(loginResponseDto);
     }
 
@@ -35,10 +36,11 @@ public class UserController {
 //        return "/member/memberLoginform";
 //    }
 
-//    @GetMapping("user/info/{userId}")
-//    public BaseResponseDto<MypageResponseDto> getInfo(@PathVariable Long userId){
-//        return new BaseResponseDto<>(MypageResponseDto);
-//    }
+    @GetMapping("user/info/{userId}")
+    public BaseResponseDto<MypageResponseDto> getInfo(@PathVariable Long userId){
+        MypageResponseDto mypageResponseDto=userService.getInfo(userId);
+        return new BaseResponseDto<>(mypageResponseDto);
+    }
 
     @GetMapping("/user/{nickname}/exist")
     public ResponseEntity<Boolean> checkNicknameDuplicate(@PathVariable String nickname)
