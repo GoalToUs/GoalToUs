@@ -52,7 +52,7 @@ public class UserService  { //userService가 UserDetailsService 구현
         return signupResponseDto;
 
     }
-    public LoginResponseDto login(LoginRequestDto loginRequestDto, String userId, String password){
+    public LoginResponseDto login(LoginRequestDto loginRequestDto){
         //유저 닉네임으로 사용자 조회
         User user=userRepository.findByNickname(loginRequestDto.getUserId());
         if(user !=null){

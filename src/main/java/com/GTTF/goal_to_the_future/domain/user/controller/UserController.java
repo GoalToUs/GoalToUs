@@ -4,8 +4,10 @@ import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.request.LoginRequestDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.request.SignupRequestDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.LoginResponseDto;
+import com.GTTF.goal_to_the_future.domain.user.dto.response.MypageResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.SignupResponseDto;
 import com.GTTF.goal_to_the_future.domain.user.service.UserService;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -21,11 +23,9 @@ public class UserController {
         SignupResponseDto signupResponseDto = userService.signup(requestDto);
         return new BaseResponseDto<>(signupResponseDto);
     }
-    @GetMapping("/login/{userId}/{password}")
-    public BaseResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto,
-                                                   @PathVariable String userId,
-                                                   @PathVariable String password){
-        LoginResponseDto loginResponseDto=userService.login(loginRequestDto,userId,password);
+    @GetMapping("/login")
+    public BaseResponseDto<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
+        LoginResponseDto loginResponseDto=userService.login(loginRequestDto);
         return new BaseResponseDto<>(loginResponseDto);
     }
 
@@ -33,6 +33,11 @@ public class UserController {
 //    public String loginError(Model model){
 //        model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요");
 //        return "/member/memberLoginform";
+//    }
+
+//    @GetMapping("user/info/{userId}")
+//    public BaseResponseDto<MypageResponseDto> getInfo(@PathVariable Long userId){
+//        return new BaseResponseDto<>(MypageResponseDto);
 //    }
 
     @GetMapping("/user/{nickname}/exist")
