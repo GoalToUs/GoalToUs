@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 
 import SideBar from "../components/Sidebar";
-import {HeatmapEX, TeamProfileImg, TeamProfileImg1} from "../assets";
+import {HeatmapEX, TeamProfileImg, TeamProfileImg1,TeamLogo5,TeamLogo4} from "../assets";
 import {useFetchMatchAnalysis, usePostWriteMatchAnalysis} from "../hooks/match";
 import {useState} from "react";
 import {useRecoilValue} from "recoil";
@@ -19,30 +19,30 @@ function MatchAnalysis() {
 
     const {mutate: editMatchAnalysis} = usePostWriteMatchAnalysis();
 
-    const matchData = useFetchMatchAnalysis(matchId);
-    // const matchData = [{
-    //     "teamName": "니케",
-    //     "winnerTeamId":12,
-    //     "goal":3,
-    //     "penaltyKick":2,
-    //     "yellowCard":0,
-    //     "redCard":0,
-    //     "highlight":"http:/",
-    //     "pass":89,
-    //     "winner":2,
-    //     "effectiveShooting":67
-    // },{
-    //     "teamName": "크랙",
-    //     "matchId":13,
-    //     "goal":1,
-    //     "penaltyKick":15,
-    //     "yellowCard":0,
-    //     "redCard":0,
-    //     "highlight":"http:/",
-    //     "pass":90,
-    //     "winner":4,
-    //     "effectiveShooting":65
-    // }]
+    // const matchData = useFetchMatchAnalysis(matchId);
+    const matchData = [{
+        "teamName": "PENTA",
+        "winnerTeamId":12,
+        "goal":2,
+        "penaltyKick":1,
+        "yellowCard":1,
+        "redCard":0,
+        "highlight":"http:/",
+        "pass":39,
+        "winner":2,
+        "effectiveShooting":67
+    },{
+        "teamName": "LEO",
+        "matchId":13,
+        "goal":1,
+        "penaltyKick":0,
+        "yellowCard":0,
+        "redCard":0,
+        "highlight":"http:/",
+        "pass":61,
+        "winner":4,
+        "effectiveShooting":65
+    }]
 
     let team1Data;
     let team2Data;
@@ -171,7 +171,7 @@ function MatchAnalysis() {
                 <Styled.Header>
                     <Styled.TeamContainer>
                         <Styled.TeamName>{team1Data.teamName}</Styled.TeamName>
-                        <img src={TeamProfileImg} width={"50"} height={"50"}/>
+                        <img src={TeamLogo5} width={"55"} height={"50"}/>
                     </Styled.TeamContainer>
                     <Styled.Score>{team1Data.goal}</Styled.Score>
                     <Styled.InfoContainer>
@@ -180,14 +180,14 @@ function MatchAnalysis() {
                     </Styled.InfoContainer>
                     <Styled.Score>{team2Data.goal}</Styled.Score>
                     <Styled.TeamContainer>
-                        <img src={TeamProfileImg1} width={"50"} height={"50"} />
+                        <img src={TeamLogo4} width={"55"} height={"50"} />
                         <Styled.TeamName>{team2Data.teamName}</Styled.TeamName>
                     </Styled.TeamContainer>
                 </Styled.Header>
 
                 <Styled.HeatmapContainer>
-                <Styled.HeatmapButton className={isAllHeatmap ? "active" : "inactive"} onClick={()=>setIsAllHeatmap(true)}>전체 히트맵</Styled.HeatmapButton>
-                <Styled.HeatmapButton className={isAllHeatmap ? "inactive" : "active"} onClick={()=>setIsAllHeatmap(false)}>볼 터치 히트맵</Styled.HeatmapButton>
+                {/*<Styled.HeatmapButton className={isAllHeatmap ? "active" : "inactive"} onClick={()=>setIsAllHeatmap(true)}>전체 히트맵</Styled.HeatmapButton>*/}
+                <Styled.HeatmapButton className={isAllHeatmap ? "active" : "inactive"} onClick={()=>setIsAllHeatmap(false)}>히트맵</Styled.HeatmapButton>
                 </Styled.HeatmapContainer>
                 <Styled.Heatmap src={HeatmapEX} className={isAllHeatmap ? "all" : "ball"}/>
                 <Styled.analysisContainer>
@@ -195,7 +195,7 @@ function MatchAnalysis() {
                         <Styled.EditButton onClick={handleOnClick}> 수정 완료 </Styled.EditButton> :
                         <Styled.EditButton onClick={() => setIsInputActive(true)}> 경기 분석 수정하기</Styled.EditButton>
                     }
-                    <Styled.Teams><span>니케</span><span>VS</span><span>크랙</span></Styled.Teams>
+                    <Styled.Teams><span>PENTA</span><span>VS</span><span>LEO</span></Styled.Teams>
 
                     <Styled.analysisList>
                         <Styled.gaugeContainer>
@@ -261,6 +261,10 @@ const Styled = {
     align-items: center;
     
     margin: 0 60px;
+    
+    & > img {
+    border-radius: 50%;
+    }
     `,
     TeamName : styled.h1`
     font-family: 'Inter';
@@ -402,7 +406,7 @@ const Styled = {
     font-size: 16px;
     font-weight: bold;
     
-    width: 150px;
+    width: 100px;
     height: 40px;
     
     cursor: pointer;

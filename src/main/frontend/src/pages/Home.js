@@ -1,44 +1,48 @@
 import styled from 'styled-components';
 import Header from "../components/Header";
-import {createMatchIcon, TeamProfileImg} from "../assets";
-import {useRecoilValue} from "recoil";
+import {createMatchIcon, TeamLogo1, TeamLogo2, TeamLogo3, TeamLogo4} from "../assets";
+import {useRecoilValue, useSetRecoilState} from "recoil";
 import {teamNameState} from "../states/team";
 import {useState} from "react";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
 import {useFetchPendingMatchList, usePostJoinMatch} from "../hooks/match";
-import {userState} from "../states/user";
+import {loginState, userState} from "../states/user";
+import {Link} from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Home() {
 
     const teamName = useRecoilValue(teamNameState);
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [joinMatchId, setJoinMatchId] = useState(0);
+    const [color, setColor] = useState("");
 
     //const userInfo = useRecoilValue(userState);
 
-    const data = useFetchPendingMatchList();
+    // const data = useFetchPendingMatchList();
     // const userData = useFetchUserInfo(userInfo.userId);
     const userData = {
         "team": "GoalToUs",
     };
-    const {mutate: joinMatch} = usePostJoinMatch();
-    joinMatch({
-        "matchId" : 1,
-        "teamId" : 2,
-    });
+    // const {mutate: joinMatch} = usePostJoinMatch();
+    // joinMatch({
+    //     "matchId" : 1,
+    //     "teamId" : 2,
+    // });
     const handleOnClick = (e) => {
         setIsJoinModalOpen(true);
         setJoinMatchId(e.currentTarget.id);
     }
 
     const handleJoinMatch = () => {
-        joinMatch({
-            "matchId" : joinMatchId,
-            "teamId" : 1,
-        });
+        // joinMatch({
+        //     "matchId" : joinMatchId,
+        //     "teamId" : 1,
+        // });
         setIsJoinModalOpen(false);
-        alert("경기가 성사되었습니다!");
+        setColor("gray");
+        Swal.fire('경기가 성사되었습니다!');
     }
 
     const orderSortByTime = (item) => {
@@ -47,50 +51,58 @@ function Home() {
         });
     };
 
-    const pendingMatchList = orderSortByTime(data);
+    // const pendingMatchList = orderSortByTime(data);
 
-    // const data = [
-    //     {
-    //         "teamId": 17,
-    //         "teamName": "ABC",
-    //         "matchState": -1,
-    //         "region": "서울",
-    //         "place": "서대문구 경기장",
-    //         "startTime" : "2023-02-09 11:00",
-    //     },
-    //     {
-    //         "teamId": 15,
-    //         "teamName": "EFG",
-    //         "matchState": -1,
-    //         "region": "서울",
-    //         "startTime" : "2023-02-09 11:00",
-    //         "place": "강서구 경기장"
-    //     },
-    //     {
-    //         "teamId": 67,
-    //         "teamName": "OUC",
-    //         "matchState": -1,
-    //         "region": "서울",
-    //         "startTime" : "2023-02-09 11:00",
-    //         "place": "노원구 경기장"
-    //     },
-    //     {
-    //         "teamId": 31,
-    //         "teamName": "TYG",
-    //         "matchState": -1,
-    //         "region": "서울",
-    //         "startTime" : "2023-02-09 11:00",
-    //         "place": "마포구 경기장"
-    //     }
-    // ];
+    const data = [
+        {
+            "teamId": 17,
+            "teamName": "Throwin",
+            "matchState": -1,
+            "region": "충청북도 세종시",
+            "place": "금강 스포츠공원 풋살장",
+            "startTime" : "2023.06.07 11:00",
+            "date" : "2023.06.07",
+            "img" : TeamLogo1
+        },
+        {
+            "teamId": 15,
+            "teamName": "Jupiter",
+            "matchState": -1,
+            "region": "충청북도 세종시",
+            "startTime" : "2023.06.08 13:00",
+            "place": "솔뜰근린공원 풋살장",
+            "date" : "2023.06.08",
+            "img" : TeamLogo2
+        },
+        {
+            "teamId": 67,
+            "teamName": "쎄비지",
+            "matchState": -1,
+            "region": "서울시",
+            "startTime" : "2023.06.09 18:00",
+            "place": "월드컵난지천공원 풋살장",
+            "date" : "2023.06.09",
+            "img" : TeamLogo3
+        },
+        {
+            "teamId": 31,
+            "teamName": "LEO",
+            "matchState": -1,
+            "region": "서울시",
+            "startTime" : "2023.06.10 19:00",
+            "place": "방배배수지체육공원",
+            "date" : "2023.06.10",
+            "img" : TeamLogo4
+        }
+    ];
 
     let matchList;
-    if(pendingMatchList){
-        matchList = pendingMatchList.map((item) => {return (
+    // if(pendingMatchList){
+        matchList = data.map((item) => {return (
             <Styled.matchListContainer>
-                <Styled.matchDay>{item.startTime}</Styled.matchDay>
+                <Styled.matchDay>{item.date}</Styled.matchDay>
                 <Styled.matchList>
-                    <img src={TeamProfileImg}/>
+                    <img src={item.img}  width={"56px"} height={56}/>
                     <div>
                         <Styled.teamName>{item.teamName}</Styled.teamName><br/>
                         <Styled.matchInfo>
@@ -98,28 +110,28 @@ function Home() {
                             {item.place}
                         </Styled.matchInfo>
                     </div>
-                    <Styled.matchButton id={item} onClick = {handleOnClick}>매칭 신청</Styled.matchButton>
+                    <Styled.matchButton id={item.teamName} onClick = {handleOnClick} className={color}>{color === "gray" ? "매칭 완료" : "매칭 신청"}</Styled.matchButton>
                 </Styled.matchList>
             </Styled.matchListContainer>)})
-    }
+    // }
 
     return (
         <Styled.Root>
             <Header/>
             {isJoinModalOpen && <ModalPortal>
-                <Modal width={600} height={360}>
+                <Modal width={600} height={360} >
                     <Styled.matchPortalTitle>[ 경기 정보 ]</Styled.matchPortalTitle>
                     <Styled.modalMatchInfo>
                         <Styled.matchInfo>
-                            상대팀 : EFG <br/><br/>
-                            경기 일시 : 2022년 11월 12일  16:00-17:00 <br/><br/>
-                            경기 장소 : 지역 + 서대문구 경기장
+                            상대팀 : Throwin <br/><br/>
+                            경기 일시 : 2022년 6월 7일  11:00-12:00 <br/><br/>
+                            경기 장소 : 서울시 금강 스포츠공원 풋살장
                         </Styled.matchInfo>
                     </Styled.modalMatchInfo>
                     <Styled.matchPortalMessage>매칭을 신청하시겠습니까?</Styled.matchPortalMessage>
                     <Styled.portalButtonContainer>
                     <Styled.matchPortalButton onClick={handleJoinMatch}>예</Styled.matchPortalButton>
-                    <Styled.matchPortalButton onClick={() => setIsJoinModalOpen(false)}>아니오</Styled.matchPortalButton>
+                    <Styled.matchPortalButton  onClick={() => setIsJoinModalOpen(false)}>아니오</Styled.matchPortalButton>
                     </Styled.portalButtonContainer>
                 </Modal>
             </ModalPortal>}
@@ -132,8 +144,8 @@ function Home() {
                     </Styled.scrollContainer>
                 </Styled.pendingMatchContainer>
                 <Styled.buttonContainer>
-                    <a href={`/team/home/${userData.teamName}`}>내 팀 홈 가기</a>
-                    <a href={"/team"}>팀 등록 / 가입하기</a>
+                    <Link to={`/team/home/Penta`}>내 팀 홈 가기</Link>
+                    <Link to={"/team"}>팀 등록 / 가입하기</Link>
                     </Styled.buttonContainer>
             </Styled.Container>
         </Styled.Root>
@@ -280,6 +292,9 @@ const Styled = {
     height: 40px;
     
     background: #D5441C;
+    #Throwin&.gray {
+    background: gray;
+    }
     border-radius: 10px;
     border: none;
 

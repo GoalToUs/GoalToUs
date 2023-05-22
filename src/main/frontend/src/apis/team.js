@@ -14,7 +14,7 @@ export const fetchSearchTeam = async (searchWord) => {
         searchWord = encodeURI(searchWord); // 한글 인코딩
     }
     const {
-        data: { data },
+        data
     } = await axios.get(`/team/list?search=${searchWord}`);
     return data;
 }

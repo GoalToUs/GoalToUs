@@ -3,6 +3,7 @@ import Header from "../components/Header";
 
 import {teamJoinIcon} from "../assets";
 import {createTeamIcon} from "../assets";
+import {Link} from "react-router-dom";
 
 function Team() {
     return(
@@ -13,10 +14,14 @@ function Team() {
                 팀 등록하기<hr/>
                 <img src={createTeamIcon} alt={"팀 등록하기 아이콘"}/>
             </Styled.button>
+
+            <Link to={"/team/join"}>
             <Styled.button href={"/team/join"}>
                 팀 가입하기<hr/>
                 <img src={teamJoinIcon} alt={"팀 가입하기 아이콘"}/>
             </Styled.button>
+
+            </Link>
         </Styled.buttonContainer>
     </Styled.Root>
     );
@@ -39,7 +44,7 @@ const Styled = {
     
     width: 800px;
     `,
-    button : styled.a`
+    button : styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;

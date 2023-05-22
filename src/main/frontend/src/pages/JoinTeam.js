@@ -8,11 +8,10 @@ import Modal from "../components/modal/Modal";
 
 function JoinTeam() {
     const [searchWord, setSearchWord] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const handleOnClick = () => {
-        navigate(`/team/join/${searchWord}`);
+        setTimeout(()=>{navigate(`/team/join/${searchWord}`)}, 400);
     }
 
     return (
@@ -25,14 +24,8 @@ function JoinTeam() {
                     <Styled.SearchInput value={searchWord} onChange={(e)=>setSearchWord(e.currentTarget.value)}/>
                 </Styled.SearchContainer>
             </Styled.joinTeamSection>
-            <Outlet setIsModalOpen={setIsModalOpen}/>
-            {isModalOpen && <ModalPortal>
-                <Modal width={400} height={200}>
-                    <Styled.message>가입에 성공하였습니다!</Styled.message>
-                    <Styled.goLoginButton href={"/"}>홈으로 이동</Styled.goLoginButton>
-                    <Styled.goLoginButton href={`/team/`}>팀 홈으로 이동</Styled.goLoginButton>
-                </Modal>
-            </ModalPortal>}
+            <Outlet/>
+
         </Styled.Root>
     );
 }

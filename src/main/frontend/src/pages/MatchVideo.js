@@ -3,7 +3,7 @@ import Header from "../components/Header";
 
 
 import SideBar from "../components/Sidebar";
-import {OpponentTeamImg, TeamProfileImg1} from "../assets";
+import {OpponentTeamImg, TeamProfileImg1, ThumbNail1, ThumbNail2, ThumbNail3} from "../assets";
 
 function MatchVideo() {
     return(
@@ -13,24 +13,20 @@ function MatchVideo() {
             <Styled.Container>
                 <Styled.CenterContainer>
                     <Styled.VideoContainer>
-                        <Styled.Video></Styled.Video>
-                        <Styled.Info>22.04.21 장소</Styled.Info>
-                        <Styled.Info className={"opponentTeam"}>상대팀</Styled.Info>
+                        <Styled.Video target="_blank" href={"https://goaltous-bucket.s3.us-west-1.amazonaws.com/match-video/match_video.mp4"}><img src={ThumbNail1} width={300} height={200}/></Styled.Video>
+                        <Styled.Info>23.02.09</Styled.Info>
+                        <Styled.Info className={"opponentTeam"}>LEO</Styled.Info>
                     </Styled.VideoContainer>
                     <Styled.VideoContainer>
-                        <Styled.Video></Styled.Video>
-                        <Styled.Info>22.04.21 장소</Styled.Info>
-                        <Styled.Info className={"opponentTeam"}>상대팀</Styled.Info>
+                        <Styled.Video><img src={ThumbNail2} width={300} height={200}/></Styled.Video>
+                        <Styled.Info>23.04.05</Styled.Info>
+                        <Styled.Info className={"opponentTeam"}>Throwin</Styled.Info>
                     </Styled.VideoContainer>
                     <Styled.VideoContainer>
-                        <Styled.Video></Styled.Video>
-                        <Styled.Info>22.04.21 장소</Styled.Info>
-                        <Styled.Info className={"opponentTeam"}>상대팀</Styled.Info>
-                    </Styled.VideoContainer><Styled.VideoContainer>
-                    <Styled.Video></Styled.Video>
-                    <Styled.Info>22.04.21 장소</Styled.Info>
-                    <Styled.Info className={"opponentTeam"}>상대팀</Styled.Info>
-                </Styled.VideoContainer>
+                        <Styled.Video><img src={ThumbNail3} width={300} height={200}/></Styled.Video>
+                        <Styled.Info>23.04.21</Styled.Info>
+                        <Styled.Info className={"opponentTeam"}>Jupiter</Styled.Info>
+                    </Styled.VideoContainer>
 
                 </Styled.CenterContainer>
             </Styled.Container>
@@ -74,8 +70,7 @@ const Styled = {
     
     margin: 20px 30px;
     `,
-    Video: styled.div`
-    border: 1px solid black;
+    Video: styled.a`
     width: 300px;
     height: 200px;
     `,

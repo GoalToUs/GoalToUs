@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import {ProfileIcon} from "../assets";
+import {useRecoilValue} from "recoil";
+import {loginState} from "../states/user";
+import {Link} from "react-router-dom";
 
 function Header({noRightSection, noLogo}) {
-    const isLogined = true;
+    const isLogined = useRecoilValue(loginState);
     return (
         <Styled.Container>
-             <Styled.Logo href={"/"}>{!noLogo && "GoalToUs"}</Styled.Logo>
+             <Styled.Logo href={"/"}><Link to={"/"}>{!noLogo && "GoalToUs"}</Link></Styled.Logo>
             {!noRightSection && (isLogined ? <img src={ProfileIcon}/> : <Styled.loginJoinButton href={"/login"}>로그인/회원가입</Styled.loginJoinButton>)}
         </Styled.Container>
     );
@@ -28,7 +31,7 @@ const Styled = {
     cursor : pointer;
     }
     `,
-    Logo : styled.a`
+    Logo : styled.div`
     font-size: 30px;
     font-weight: bold;
     

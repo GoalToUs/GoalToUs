@@ -7,3 +7,8 @@ export const userState = atom({
         userName: "",
     },
 });
+
+export const loginState = atom({
+    key: 'loginState',
+    default: false,
+});

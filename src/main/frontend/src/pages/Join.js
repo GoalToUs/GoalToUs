@@ -23,7 +23,7 @@ function Join() {
     const [checkDuplication, setCheckDuplication] = useState(false);
 
     const navigate = useNavigate();
-    const {mutate : join, isSuccess} = usePostUserInfo();
+    // const {mutate : join, isSuccess} = usePostUserInfo();
 
     const handleOnClick = () => {
         if(!inputs.userId) {
@@ -58,8 +58,8 @@ function Join() {
             isCaptain : inputs.isCaptain ? 1 : 0,
             position : inputs.position
         }
-        join(userData);
-        if(isSuccess) setIsModalOpen(true);
+        // join(userData);
+        setIsModalOpen(true);
     }
 
     const handleOnChange = (e) => {

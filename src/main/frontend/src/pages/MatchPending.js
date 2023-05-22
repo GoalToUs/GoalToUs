@@ -4,37 +4,36 @@ import Header from "../components/Header";
 
 import SideBar from "../components/Sidebar";
 import {OpponentTeamImg, TeamProfileImg1} from "../assets";
-import {useFetchCreatedMatchList} from "../hooks/match";
 
 function MatchPending() {
-    const pendingMatchData = useFetchCreatedMatchList(1);
-    // const pendingMatchData =[
-    //     {
-    //         "matchId" : 1,
-    //         "place" : "하이",
-    //         "region" : "부산",
-    //         "startTime" : "2023-02-09 11:00",
-    //         "matchState" : "EXPECTED",
-    //     },
-    //     {
-    //         "place" : "어쩌구 경기장",
-    //         "region" : "서울",
-    //         "startTime" : "2023-02-09 11:00",
-    //         "matchState" : "EXPECTED",
-    //     },
-    //     {
-    //         "place" : "어쩌구 경기장",
-    //         "region" : "서울",
-    //         "startTime" : "2023-02-09 11:00",
-    //         "matchState" : "EXPECTED",
-    //     },
-    //     {
-    //         "place" : "어쩌구 경기장",
-    //         "region" : "서울",
-    //         "startTime" : "2023-02-09 11:00",
-    //         "matchState" : "EXPECTED",
-    //     }
-    // ];
+    // const pendingMatchData = useFetchCreatedMatchList(1);
+    const pendingMatchData =[
+        {
+            "matchId" : 1,
+            "place" : "고척스카이돔 풋살장",
+            "region" : "서울",
+            "startTime" : "2023.06.03 11:00",
+            "matchState" : "EXPECTED",
+        },
+        {
+            "place" : "에코파크 풋살장",
+            "region" : "서울",
+            "startTime" : "2023.06.12 18:00",
+            "matchState" : "EXPECTED",
+        },
+        {
+            "place" : "마루공원 풋살장",
+            "region" : "서울",
+            "startTime" : "2023.07.12 13:00",
+            "matchState" : "EXPECTED",
+        },
+        {
+            "place" : "망원유수지 풋살구장",
+            "region" : "서울",
+            "startTime" : "2023.06.21 15:00",
+            "matchState" : "EXPECTED",
+        }
+    ];
     let matchList;
     if(pendingMatchData){
         matchList = pendingMatchData.map((item) => {
