@@ -65,7 +65,7 @@ public class ResultService {
 
         //3. 팀리파지토리에서 이긴 팀의 아이디로 이긴 팀명 찾기
         Team winTeam = teamRepository.findById(result.getWinnerTeamId())
-                .orElseThrow(()->new BusinessException(NOT_FOUND_WINTEAM));
+                 .orElseThrow(()->new BusinessException(NOT_FOUND_WINTEAM));
 
         return new ViewAnalysisResponseDto(winTeam.getTeamName(), result.getGoal(), result.getPenaltyKick(),
                 result.getYellowCard(), result.getRedCard(),result.getHeatmap(), result.getBallHeatmap(),

@@ -20,6 +20,9 @@ public interface MatchRepository extends JpaRepository<Match,Long> {
 
     List<Match> findByTeam1OrTeam2(Team team1,Team team2);
 
+    @Override
+    Optional<Match> findById(Long matchId);
+
 
 
     // @Query로 쿼리 생성

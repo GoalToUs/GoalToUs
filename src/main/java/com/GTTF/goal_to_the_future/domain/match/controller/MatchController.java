@@ -41,25 +41,28 @@ public class MatchController {
 //        return new BaseResponseDto<>(matchService.viewMSList(matchState, teamName));
 //    }
 
-    @GetMapping("team/{teamName}")//쿼리스트링으로 matchstate 넘겨줌(예정,종료 둘다 조회가능)
+//    @GetMapping("match/list")
+//    public
+
+    @GetMapping("team/{teamName}")//팀명으로 경기 결과 넘겨주기
     public BaseResponseDto<List<ViewMSListResponseDto>> viewWaitMatch(@PathVariable String teamName){
         return new BaseResponseDto<>(matchService.viewMSList(teamName));
     }
 
-    @GetMapping("team/{teamId}")
+    @GetMapping("team/{teamId}") //팀 아이디로 경기 결과 넘겨주기
     public BaseResponseDto<List<ViewAllResponseDto>> viewAll(@PathVariable Long teamId){
         return new BaseResponseDto<>(matchService.viewAll(teamId));
     }
 
-    @GetMapping("/team/waitlist")
+    @GetMapping("/team/waitlist") //매칭 대기 목록 조회
     public BaseResponseDto<ViewWaitLIstResponseDto> viewWating(){
 
-        return new BaseResponseDto<ViewWaitLIstResponseDto>((ViewWaitLIstResponseDto) matchService.viewWating());
+        return new BaseResponseDto<>((ViewWaitLIstResponseDto) matchService.viewWating());
     }
 
-    @GetMapping("match/{teamName}/mylist")
-    public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable String teamName){
-        return new BaseResponseDto<ViewMymatchListResponseDto>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamName));
+    @GetMapping("match/{teamId}/mylist") //내가 생성한 경기 목록 조회
+    public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable Long teamId){
+        return new BaseResponseDto<>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamId));
     }
 
     @DeleteMapping("match/delete/{matchId}")
