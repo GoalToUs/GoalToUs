@@ -76,12 +76,12 @@ public class ResultService {
     }
 
     public ViewRecordResponseDto viewRecord(Long matchId){
-//        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
         //해당 아이디의 경기를 찾음
         Optional<Result> result=resultRepository.findById(matchId);
 
         return new ViewRecordResponseDto(result.get().getGoal(),result.get().getPenaltyKick(),
                 result.get().getYellowCard(),result.get().getRedCard(), result.get().getHeatmap(),
-                result.get().getBallHeatmap(),result.get().getPass());
+                result.get().getBallHeatmap(),result.get().getPass(),match.getTeam1().getId());
     }
 }
