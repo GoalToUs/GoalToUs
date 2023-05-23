@@ -4,6 +4,7 @@ import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.dto.request.RecordResultRequestDto;
 import com.GTTF.goal_to_the_future.domain.result.dto.response.RecordResultResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.dto.response.ViewAnalysisResponseDto;
+import com.GTTF.goal_to_the_future.domain.result.dto.response.ViewRecordResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.service.ResultService;
 import com.GTTF.goal_to_the_future.domain.team.dto.response.InfoResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,11 @@ public class ResultController {
     @GetMapping("/result/match/{matchId}") //경기 분석 보기
     public ViewAnalysisResponseDto viewAnalysis(@PathVariable Long matchId){
         return resultService.viewAnalysis(matchId);
+    }
+
+    @GetMapping("result/{matchId}") //matchId로 경기 결과 보기
+    public BaseResponseDto<ViewRecordResponseDto> viewRecord(@PathVariable Long matchId){
+        return new BaseResponseDto<>(resultService.viewRecord(matchId));
     }
 
 
