@@ -29,7 +29,7 @@ public class Result {
     private Team team;
 
     //매치 하나에 결과 2개
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="match_id")
     private Match match;
 
