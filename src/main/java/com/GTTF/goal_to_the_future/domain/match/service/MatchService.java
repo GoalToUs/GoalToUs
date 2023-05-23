@@ -93,8 +93,8 @@ public class MatchService {
 //
 //    }
     public List<MatchListResponseDto> viewMatch(){ //리파지토리의 모든 경기 목록 조회
-        List<Match> matchList=matchRepository.findAll();
-        ArrayList<MatchListResponseDto> mlist=new ArrayList<>();
+        List<Match> matchList=matchRepository.findAll();//리스트 형태로 경기 반환
+        ArrayList<MatchListResponseDto> mlist=new ArrayList<>(); //dto배열 리스트 생성
         return mlist;
     }
 

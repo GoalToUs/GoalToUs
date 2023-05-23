@@ -66,6 +66,7 @@ public class MatchController {
     }
 
 
+
     @GetMapping("match/{teamId}/mylist") //내가 생성한 경기 목록 조회
     public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable Long teamId){
         return new BaseResponseDto<>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamId));
