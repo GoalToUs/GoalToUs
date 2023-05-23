@@ -7,6 +7,14 @@ export const postCreateMatch = async (postBody) => {
   return data;
 };
 
+// 경기 삭제하기
+export const deleteMatch = async (matchId) => {
+  const { data } = await axios.delete(`/match/delete/${matchId}`, {
+    matchId: matchId,
+  });
+  return data;
+};
+
 //경기 분석 보기
 export const fetchMatchAnalysis = async (matchId) => {
   const { data } = await axios.get(`/result/match/${matchId}`);
