@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.Optional;
+
 import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.*;
 
 @Transactional
@@ -74,12 +76,12 @@ public class ResultService {
     }
 
     public ViewRecordResponseDto viewRecord(Long matchId){
-        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+//        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+        //해당 아이디의 경기를 찾음
+        Optional<Result> result=resultRepository.findById(matchId);
 
-        Result result=match.getResult();
-
-
-        return new ViewRecordResponseDto(result.getGoal(), result.getPenaltyKick(), result.getYellowCard(),
-                result.getRedCard(), result.getHeatmap(), result.getBallHeatmap(), result.getPass());
+        return new ViewRecordResponseDto(result.get().getGoal(),result.get().getPenaltyKick(),
+                result.get().getYellowCard(),result.get().getRedCard(), result.get().getHeatmap(),
+                result.get().getBallHeatmap(),result.get().getPass());
     }
 }
