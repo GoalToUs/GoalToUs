@@ -6,6 +6,7 @@ import com.GTTF.goal_to_the_future.domain.match.repository.MatchRepository;
 import com.GTTF.goal_to_the_future.domain.result.dto.request.RecordResultRequestDto;
 import com.GTTF.goal_to_the_future.domain.result.dto.response.RecordResultResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.dto.response.ViewAnalysisResponseDto;
+import com.GTTF.goal_to_the_future.domain.result.dto.response.ViewRecordResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.entity.Result;
 import com.GTTF.goal_to_the_future.domain.result.repository.ResultRepository;
 import com.GTTF.goal_to_the_future.domain.team.entity.Team;
@@ -70,5 +71,15 @@ public class ResultService {
         return new ViewAnalysisResponseDto(winTeam.getTeamName(), result.getGoal(), result.getPenaltyKick(),
                 result.getYellowCard(), result.getRedCard(),result.getHeatmap(), result.getBallHeatmap(),
                 result.getPass());
+    }
+
+    public ViewRecordResponseDto viewRecord(Long matchId){
+        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+
+        Result result=match.getResult();
+
+
+        return new ViewRecordResponseDto(result.getGoal(), result.getPenaltyKick(), result.getYellowCard(),
+                result.getRedCard(), result.getHeatmap(), result.getBallHeatmap(), result.getPass());
     }
 }

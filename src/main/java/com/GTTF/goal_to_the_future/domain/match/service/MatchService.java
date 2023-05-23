@@ -92,6 +92,11 @@ public class MatchService {
 //
 //
 //    }
+    public List<MatchListResponseDto> viewMatch(){ //리파지토리의 모든 경기 목록 조회
+        List<Match> matchList=matchRepository.findAll();
+        ArrayList<MatchListResponseDto> mlist=new ArrayList<>();
+        return mlist;
+    }
 
     //우리 팀의 예정 경기 or 지난 경기 목록 조회 matchState? expected이면 예정 finish면 지난 경기
     public List<ViewMSListResponseDto> viewMSList(String teamName){ //나의 팀 아이디값을 받아옴

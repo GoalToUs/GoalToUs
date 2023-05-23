@@ -54,18 +54,24 @@ public class MatchController {
         return new BaseResponseDto<>(matchService.viewAll(teamId));
     }
 
-    @GetMapping("/team/waitlist") //매칭 대기 목록 조회
+    @GetMapping("team/waitlist") //매칭 대기 목록 조회
     public BaseResponseDto<ViewWaitLIstResponseDto> viewWating(){
 
         return new BaseResponseDto<>((ViewWaitLIstResponseDto) matchService.viewWating());
     }
+
+    @GetMapping("match/list") //모든 경기 목록 get
+    public BaseResponseDto<MatchListResponseDto> viewMatchList(){
+        return new BaseResponseDto<>((MatchListResponseDto) matchService.viewMatch());
+    }
+
 
     @GetMapping("match/{teamId}/mylist") //내가 생성한 경기 목록 조회
     public BaseResponseDto<ViewMymatchListResponseDto> viewMymatch(@PathVariable Long teamId){
         return new BaseResponseDto<>((ViewMymatchListResponseDto) matchService.viewMymatchList(teamId));
     }
 
-    @DeleteMapping("match/delete/{matchId}")
+    @DeleteMapping("match/delete/{matchId}") //경기 삭제
     public BaseResponseDto<DeleteMatchResponseDto> deleteMatch(@RequestBody DeleteMatchRequestDto deleteMatchRequestDto){
         return new BaseResponseDto<>(matchService.delete(deleteMatchRequestDto));
     }
