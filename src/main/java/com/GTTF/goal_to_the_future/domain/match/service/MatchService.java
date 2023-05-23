@@ -48,10 +48,10 @@ public class MatchService {
 
     public JoinMatchResponseDto joinMatch(JoinMatchRequestDto joinMatchRequestDto){ //경기 참여하기
         //1.matchId로 경기 찾기
-        Match match = matchRepository.findById(joinMatchRequestDto.getMatchId()).get();
+        Match match = matchRepository.findById(joinMatchRequestDto.getMatchId()).orElseThrow(() -> new BusinessException(NOT_FOUND_MATCH));
 
         //2. 팀 아이디로 팀 찾기
-        Team team2 = teamRepository.findById(joinMatchRequestDto.getTeamId()).get();
+        Team team2 = teamRepository.findById(joinMatchRequestDto.getTeamId()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
 
         // 추가) 경기의 팀 2개가 같으면 에러 처리
         if(match.getTeam1().getId() == team2.getId()){
@@ -64,13 +64,41 @@ public class MatchService {
         return new JoinMatchResponseDto(team2.getId(), match.getMatchId());
     }
 
+    public List<ViewAllResponseDto> viewAll(Long teamId){
+        Team team=teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
+
+        List<Match> allList=matchRepository.findByTeam1OrTeam2(team,team);
+
+        ArrayList<ViewAllResponseDto> result=new ArrayList<>();
+
+        for (Match match : allList) { //리스트를 돌면서 반복
+            String oppoteam; //경기 마다 상대팀 찾기
+            if(match.getTeam1().getTeamName() == team.getTeamName()){//team1이 경기를 생성한 팀
+                oppoteam = match.getTeam2().getTeamName(); //받아온 팀이 team1이라면 상대팀은 team2
+            }else{
+                oppoteam = match.getTeam1().getTeamName();
+            }
+
+            result.add(new ViewAllResponseDto(match.getMatchId(), match.getRegion(), match.getPlace(),
+                    match.getStartTime(),match.getMatchState()));
+        }
+
+        return result;
+
+    }
+
+//    public List<MatchListResponseDto> viewMatch(Long teamId){
+//        Team team=teamRepository.findById(teamId).orElseThrow(()->new BusinessException(NOT_FOUND_TEAM));
+//
+//
+//    }
 
     //우리 팀의 예정 경기 or 지난 경기 목록 조회 matchState? expected이면 예정 finish면 지난 경기
-    public List<ViewMSListResponseDto> viewMSList(MatchState matchState, String teamName){ //나의 팀 아이디값을 받아옴
-        Team team = teamRepository.findByTeamName(teamName).orElseThrow(() -> new BusinessException(BAD_MATCH_JOIN));
+    public List<ViewMSListResponseDto> viewMSList(String teamName){ //나의 팀 아이디값을 받아옴
+        Team team = teamRepository.findByTeamName(teamName).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
         //받아온 id값으로 팀 객체 생성, optional로 넘어오기 때문에 오류처리
 
-        List<Match> findMSList = matchRepository.findByTeam1OrTeam2AndMatchState(team, team, matchState);
+        List<Match> findMSList=matchRepository.findByTeam1OrTeam2(team,team); //matchState 안보내는 걸로 했더니 오류
         //리스트 형태로 경기를 반환 받음, 각 객체는 Match 엔티티 타입
 
         ArrayList<ViewMSListResponseDto> result = new ArrayList<>();
@@ -90,8 +118,8 @@ public class MatchService {
 
         return result;
     }
-    public List<ViewMymatchListResponseDto> viewMymatchList(String teamName){//내가 생성한 경기 목록
-        Team team = teamRepository.findByTeamName(teamName)
+    public List<ViewMymatchListResponseDto> viewMymatchList(Long teamId){//내가 생성한 경기 목록
+        Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
 
         List<Match> findMyList=matchRepository.findByTeam1(team);
@@ -117,6 +145,7 @@ public class MatchService {
     }
 
     public DeleteMatchResponseDto delete(DeleteMatchRequestDto deleteMatchRequestDto){//경기 삭제
+        matchRepository.deleteById(deleteMatchRequestDto.getMatchId());
         return new DeleteMatchResponseDto(deleteMatchRequestDto.getMatchId());
     }
 }

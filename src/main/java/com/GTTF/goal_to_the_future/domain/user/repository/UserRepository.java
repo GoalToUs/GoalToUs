@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 //메인 엔티티와 pk타입
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -16,6 +17,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByNickname(String nickname);
     User findByEmail(String email);
+
+    @Override
+    Optional<User> findById(Long userId);
 
     @Query("select u.name from User u where u.team = :team")
 

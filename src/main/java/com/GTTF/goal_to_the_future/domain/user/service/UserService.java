@@ -1,5 +1,6 @@
 package com.GTTF.goal_to_the_future.domain.user.service;
 
+import com.GTTF.goal_to_the_future.common.exception.custom.BusinessException;
 import com.GTTF.goal_to_the_future.domain.user.dto.request.LoginRequestDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.request.SignupRequestDto;
 import com.GTTF.goal_to_the_future.domain.user.dto.response.LoginResponseDto;
@@ -13,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.NOT_FOUND_TEAM;
+import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.NOT_FOUND_USER;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -52,9 +57,10 @@ public class UserService  { //userService가 UserDetailsService 구현
         return signupResponseDto;
 
     }
-    public LoginResponseDto login(LoginRequestDto loginRequestDto, String userId, String password){
+    public LoginResponseDto login(LoginRequestDto loginRequestDto,Long userId){
         //유저 닉네임으로 사용자 조회
-        User user=userRepository.findByNickname(loginRequestDto.getUserId());
+        User user=userRepository.findById(userId).orElseThrow(() -> new BusinessException(NOT_FOUND_USER));
+
         if(user !=null){
             throw new IllegalStateException("일치하는 회원이 존재하지 않습니다.");
         }
