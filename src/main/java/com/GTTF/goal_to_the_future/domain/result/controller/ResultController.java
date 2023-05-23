@@ -5,6 +5,7 @@ import com.GTTF.goal_to_the_future.domain.result.dto.request.RecordResultRequest
 import com.GTTF.goal_to_the_future.domain.result.dto.response.RecordResultResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.dto.response.ViewAnalysisResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.dto.response.ViewRecordResponseDto;
+import com.GTTF.goal_to_the_future.domain.result.dto.response.ViewjointeamResponseDto;
 import com.GTTF.goal_to_the_future.domain.result.service.ResultService;
 import com.GTTF.goal_to_the_future.domain.team.dto.response.InfoResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,14 @@ public class ResultController {
         return resultService.viewAnalysis(matchId);
     }
 
-    @GetMapping("result/{matchId}") //matchId로 경기 결과 보기
+    @GetMapping("result/{matchId}") //matchId로 경기 결과 보기 (경기 생성한 팀의 결과 )
     public BaseResponseDto<ViewRecordResponseDto> viewRecord(@PathVariable Long matchId){
         return new BaseResponseDto<>(resultService.viewRecord(matchId));
+    }
+
+    @GetMapping("result/jointeam/{matchId}")//경기에 참여한 팀의 결과 보기
+    public BaseResponseDto<ViewjointeamResponseDto> viewJoinResult(@PathVariable Long matchId){
+        return new BaseResponseDto<>(resultService.viewJoinResult(matchId));
     }
 
 
