@@ -13,6 +13,5 @@ public class MatchListResponseDto {
     private String place; //경기장
     private String region;//경기 지역
     private MatchState matchState;// 경기 상태
-
     private Long teamId; //경기에 참여한 팀 아이디
 }
