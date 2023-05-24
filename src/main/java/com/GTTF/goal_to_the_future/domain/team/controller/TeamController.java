@@ -4,10 +4,7 @@ import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMymatchListResponseDto;
 import com.GTTF.goal_to_the_future.domain.team.dto.request.CreateTeamRequestDto;
 import com.GTTF.goal_to_the_future.domain.team.dto.request.JoinTeamRequestDto;
-import com.GTTF.goal_to_the_future.domain.team.dto.response.CreateTeamResponseDto;
-import com.GTTF.goal_to_the_future.domain.team.dto.response.InfoResponseDto;
-import com.GTTF.goal_to_the_future.domain.team.dto.response.JoinTeamResponseDto;
-import com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto;
+import com.GTTF.goal_to_the_future.domain.team.dto.response.*;
 import com.GTTF.goal_to_the_future.domain.team.entity.Team;
 import com.GTTF.goal_to_the_future.domain.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -34,13 +31,20 @@ public class TeamController {
 
     @GetMapping("/team/info") //팀 정보 조회
     public InfoResponseDto getTeamInfo(@RequestParam String teamName){
+
         return teamService.getTeamInfo(teamName);
+    }
+
+    @GetMapping("/team/veiwteam/{teamId}")
+    public ViewTeamResponseDto viewTeam(@PathVariable Long teamId){
+        return teamService.viewTeam(teamId);
     }
 
     @GetMapping("/team/list")//팀 검색하기
     public List<SearchTeamResponseDto> searchTeamInfo(@RequestParam(required = false) String search){
         return teamService.searchTeamInfo(search);
     }
+
 
     //    @GetMapping("/team/list")//팀 검색하기
 //    public List<SearchTeamResponseDto> searchTeamInfo(@RequestParam(required = false) String search ,@RequestParam String teamName){
