@@ -15,8 +15,7 @@ public interface ResultRepository extends JpaRepository<Result,Long> {
     @Override
     Optional<Result> findById(Long matchId);
 
-    @Query("select new com.GTTF.goal_to_the_future.domain.result.dto.response.ViewRecordResponseDto(r.goal,r.penaltyKick,r.yellowCard,r.redCard,r.heatmap,r.ballHeatmap,r.pass,r.team.id)"
-            +"from Result r join r.match m " +
-            " where m.matchId =: matchId ")
+    @Query("select new com.GTTF.goal_to_the_future.domain.result.dto.response.ViewRecordResponseDto(r.goal,r.penaltyKick,r.yellowCard,r.redCard,r.heatmap,r.ballHeatmap,r.pass,r.team.id,r.match.matchId)"
+            +"from Result r")
     List<ViewRecordResponseDto> findALLRecord();
 }
