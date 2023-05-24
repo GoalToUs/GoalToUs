@@ -1,5 +1,6 @@
 package com.GTTF.goal_to_the_future.domain.match.repository;
 
+import com.GTTF.goal_to_the_future.domain.match.dto.response.MatchListResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.entity.Match;
 import com.GTTF.goal_to_the_future.domain.match.entity.MatchState;
 import com.GTTF.goal_to_the_future.domain.team.entity.Team;
@@ -18,14 +19,17 @@ public interface MatchRepository extends JpaRepository<Match,Long> {
 
     List<Match> findByTeam1(Team team1);
 
-    List<Match> findAll();
+//    List<Match> findAll();
 
     List<Match> findByTeam1OrTeam2(Team team1,Team team2);
 
     @Override
     Optional<Match> findById(Long matchId);
 
-
+    @Query("select new com.GTTF.goal_to_the_future.domain.match.dto.response.MatchListResponseDto(m.matchId," +
+            "m.startTime,m.place,m.region,m.matchState,m.team1.id)"
+    +"from Match m")
+    List<MatchListResponseDto>findAllMatch();
 
     // @Query로 쿼리 생성
     @Query("select m from Match m where m.team1 =: team1 or m.team2 =: team2 and m.matchState =: matchState")

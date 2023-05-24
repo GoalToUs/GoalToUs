@@ -89,24 +89,25 @@ public class ResultService {
                 result.get().getBallHeatmap(),result.get().getPass(),match.getTeam1().getId());
     }
 
-    public ViewjointeamResponseDto viewJoinResult(Long matchId,Long teamId){ //team2의 아이디를 보내줌
-        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
-        //해당 아이디의 경기를 찾음->matchId와 teamId 둘다 일치하는 결과를 가져옴 같은 매치 아이디를 갖는데 팀 두개
-        Optional<Result> result=resultRepository.findById(matchId);//일단 매치 아이디로 경기 객체 가져옴
-        List<Result> results=resultRepository.findAll();//리스트 형태로 경기 반환
-        ArrayList<ViewjointeamResponseDto> Rlist=new ArrayList<>(); //dto배열 리스트 생성
-
-        if(teamId==result.get().getTeam().getId()){
-            //받아온 teamId와 matchId로 찾는 경기의 팀 아이디가 같다면
-            Rlist.add(new ViewjointeamResponseDto(result.get().getGoal(), result.get().getPenaltyKick(),
-                    result.get().getYellowCard(),result.get().getRedCard(),result.get().getHeatmap(),
-                    result.get().getBallHeatmap(),result.get().getPass(),result.get().getWinnerTeamId()));
-        }else{
-
-        }
-        return new ViewjointeamResponseDto(result.get().getGoal(),result.get().getPenaltyKick(),
-                result.get().getYellowCard(),result.get().getRedCard(), result.get().getHeatmap(),
-                result.get().getBallHeatmap(),result.get().getPass(),match.getTeam1().getId());
-
-    }
+//    public List<ViewjointeamResponseDto> viewJoinResult(Long matchId,Long teamId){ //team2의 아이디를 보내줌
+//        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+//        //해당 아이디의 경기를 찾음->matchId와 teamId 둘다 일치하는 결과를 가져옴 같은 매치 아이디를 갖는데 팀 두개
+//        Result result=resultRepository.findById(matchId);
+//        //일단 매치 아이디로 경기 객체 가져옴
+//        List<Result> results=resultRepository.findAll();//리스트 형태로 경기 반환
+//        ArrayList<ViewjointeamResponseDto> Rlist=new ArrayList<>(); //dto배열 리스트 생성
+//
+//        if(teamId==result.get().getTeam().getId()){
+//            //받아온 teamId와 matchId로 찾는 경기의 팀 아이디가 같다면
+//            Rlist.add(new ViewjointeamResponseDto(result.get().getGoal(), result.get().getPenaltyKick(),
+//                    result.get().getYellowCard(),result.get().getRedCard(),result.get().getHeatmap(),
+//                    result.get().getBallHeatmap(),result.get().getPass(),result.get().getWinnerTeamId()));
+//        }else{
+//
+//        }
+//        return new ViewjointeamResponseDto(result.get().getGoal(),result.get().getPenaltyKick(),
+//                result.get().getYellowCard(),result.get().getRedCard(), result.get().getHeatmap(),
+//                result.get().getBallHeatmap(),result.get().getPass(),match.getTeam1().getId());
+//
+//    }
 }
