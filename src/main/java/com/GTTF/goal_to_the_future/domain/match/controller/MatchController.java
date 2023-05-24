@@ -6,6 +6,7 @@ import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.*;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMSListResponseDto;
+import com.GTTF.goal_to_the_future.domain.match.entity.Match;
 import com.GTTF.goal_to_the_future.domain.match.entity.MatchState;
 import com.GTTF.goal_to_the_future.domain.match.service.MatchService;
 import com.GTTF.goal_to_the_future.domain.team.service.TeamService;
@@ -13,6 +14,7 @@ import com.GTTF.goal_to_the_future.domain.user.dto.response.MypageResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Negative;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -65,6 +67,7 @@ public class MatchController {
     public BaseResponseDto<MatchListResponseDto> viewMatchList(){
         return new BaseResponseDto<>((MatchListResponseDto) matchService.viewMatch());
     }
+
 
 
 
