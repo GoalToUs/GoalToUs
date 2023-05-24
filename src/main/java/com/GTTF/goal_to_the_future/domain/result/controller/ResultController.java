@@ -11,6 +11,8 @@ import com.GTTF.goal_to_the_future.domain.team.dto.response.InfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class ResultController {
@@ -30,8 +32,8 @@ public class ResultController {
     }
 
     @GetMapping("result/{matchId}") //matchId로 경기 결과 보기 (경기 생성한 팀의 결과 )
-    public BaseResponseDto<ViewRecordResponseDto> viewRecord(@PathVariable Long matchId){
-        return new BaseResponseDto<>(resultService.viewRecord(matchId));
+    public List<ViewRecordResponseDto> viewRecord(@PathVariable Long matchId){
+        return resultService.viewRecord(matchId);
     }
 
 //    @GetMapping("result/jointeam/{matchId}")//경기에 참여한 팀의 결과 보기
