@@ -45,8 +45,9 @@ public class MatchController {
 //    public
 
     @GetMapping("team/{teamName}")//팀명으로 경기 결과 넘겨주기
-    public BaseResponseDto<List<ViewMSListResponseDto>> viewWaitMatch(@PathVariable String teamName){
-        return new BaseResponseDto<>(matchService.viewMSList(teamName));
+    public BaseResponseDto<List<ViewMSListResponseDto>> viewWaitMatch(@RequestParam MatchState matchState,
+                                                                      @PathVariable String teamName){
+        return new BaseResponseDto<>(matchService.viewMSList(matchState,teamName));
     }
 
     @GetMapping("team/{teamId}") //팀 아이디로 경기 결과 넘겨주기
