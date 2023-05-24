@@ -34,11 +34,11 @@ public class ResultController {
         return new BaseResponseDto<>(resultService.viewRecord(matchId));
     }
 
-    @GetMapping("result/jointeam/{matchId}")//경기에 참여한 팀의 결과 보기
-    public BaseResponseDto<ViewjointeamResponseDto> viewJoinResult(@PathVariable Long matchId,
-                                                                   @PathVariable Long teamId){
-        return new BaseResponseDto<>(resultService.viewJoinResult(matchId,teamId));
-    }
+//    @GetMapping("result/jointeam/{matchId}")//경기에 참여한 팀의 결과 보기
+//    public BaseResponseDto<ViewjointeamResponseDto> viewJoinResult(@PathVariable Long matchId,
+//                                                                   @PathVariable Long teamId){
+//        return new BaseResponseDto<>(resultService.viewJoinResult(matchId,teamId));
+//    }
 
 
 
