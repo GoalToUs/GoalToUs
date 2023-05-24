@@ -29,10 +29,10 @@ public class TeamController {
          return teamService.join(joinTeamRequestDto, teamId);
     }
 
-    @GetMapping("/team/info") //팀 정보 조회
-    public InfoResponseDto getTeamInfo(@RequestParam String teamName){
+    @GetMapping("/team/info/{teamId}") //팀 정보 조회
+    public InfoResponseDto getTeamInfo(@PathVariable Long teamId){
 
-        return teamService.getTeamInfo(teamName);
+        return teamService.getTeamInfo(teamId);
     }
 
     @GetMapping("/team/veiwteam/{teamId}")
