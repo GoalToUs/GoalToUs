@@ -35,8 +35,9 @@ public class ResultController {
     }
 
     @GetMapping("result/jointeam/{matchId}")//경기에 참여한 팀의 결과 보기
-    public BaseResponseDto<ViewjointeamResponseDto> viewJoinResult(@PathVariable Long matchId){
-        return new BaseResponseDto<>(resultService.viewJoinResult(matchId));
+    public BaseResponseDto<ViewjointeamResponseDto> viewJoinResult(@PathVariable Long matchId,
+                                                                   @PathVariable Long teamId){
+        return new BaseResponseDto<>(resultService.viewJoinResult(matchId,teamId));
     }
 
 
