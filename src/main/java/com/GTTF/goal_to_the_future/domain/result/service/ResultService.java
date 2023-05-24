@@ -87,6 +87,7 @@ public class ResultService {
         return records;
     }
 
+
 //    public List<ViewjointeamResponseDto> viewJoinResult(Long matchId,Long teamId){ //team2의 아이디를 보내줌
 //        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
 //        //해당 아이디의 경기를 찾음->matchId와 teamId 둘다 일치하는 결과를 가져옴 같은 매치 아이디를 갖는데 팀 두개

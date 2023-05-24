@@ -14,5 +14,6 @@ public class ViewRecordResponseDto {
     private String ballHeatmap;
     private Integer pass;
     private Long teamId;
+    private Long matchId;
 
 }
