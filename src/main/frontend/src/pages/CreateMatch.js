@@ -3,16 +3,17 @@ import Header from "../components/Header";
 import { useState } from "react";
 import { usePostCreateMatch } from "../hooks/match";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function CreateMatch() {
+function CreateMatch({ history }) {
   const navigate = useNavigate;
   const { mutate: createMatch } = usePostCreateMatch();
-  const [inputs, setInputs] = useState({
+  const initState = {
     daytime: "",
     place: "",
     region: "",
-  });
+  };
+  const [inputs, setInputs] = useState(initState);
 
   const handleOnChange = (e) => {
     const { value, id } = e.currentTarget;
@@ -29,9 +30,25 @@ function CreateMatch() {
     teamId: localStorage.getItem("userTeam"), // 로컬스토리지 이용
   };
 
+  const goToHome = () => {
+    navigate("/");
+  };
+
   const handleOnClick = () => {
+    if (!inputs.daytime) {
+      alert(`경기 일시를 입력해주세요.`);
+      return;
+    } else if (!inputs.place) {
+      alert(`지역을 입력해주세요`);
+      return;
+    } else if (!inputs.region) {
+      alert(`경기 장소를 입력해주세요.`);
+      return;
+    }
+
     createMatch(matchData);
-    Swal.fire("경기가 성사되었습니다!").then(() => navigate("/"));
+    Swal.fire("경기가 성사되었습니다!");
+    setInputs(initState);
   };
 
   return (
