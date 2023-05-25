@@ -26,17 +26,30 @@ import { matchState } from "../states/match";
 
 function TeamHome() {
   const [showAllPlayers, setShowAllPlayers] = useState(false);
-  const { teamName } = useParams();
-  // const teamData = useFetchTeamInfo(teamName);
+  const { teamId } = useParams();
+
+  const teamData = useFetchTeamInfo(teamId);
+  let teamImg = "";
+  switch (teamId) {
+    case "1":
+      teamImg = TeamLogo1;
+      break;
+    case "2":
+      teamImg = TeamLogo2;
+      break;
+    case "3":
+      teamImg = TeamLogo3;
+      break;
+    case "4":
+      teamImg = TeamLogo4;
+      break;
+    case "5":
+      teamImg = TeamLogo5;
+      break;
+  }
+  console.log(teamImg);
   // const planMatchData  = useFetchPlanMatchList(teamName);
 
-  const matchData1 = useFetchPlanMatchList("GoalToUs");
-  const matchData2 = useFetchFinishedMatchList("GoalToUs");
-  console.log(matchData1);
-  console.log(matchData2);
-  // const teamData = {
-  //
-  // }
   const planMatchData = [
     {
       teamName: "Throwin",
@@ -113,7 +126,7 @@ function TeamHome() {
   if (planMatchData) {
     planMatchList = planMatchData.map((item) => {
       return (
-        <Styled.Match>
+        <Styled.Match key={item.matchId}>
           <Styled.opponentTeamContainer>
             <Styled.opponentTeam>상대팀</Styled.opponentTeam>
             <img
@@ -182,37 +195,6 @@ function TeamHome() {
     });
   }
 
-  const teamData = {
-    teamPhoto: TeamLogo5,
-    teamName: "PENTA (펜타)",
-    region: "서울",
-    players: [
-      "정민준",
-      "김서준",
-      "황도윤",
-      "조예준",
-      "박시우",
-      "김하준",
-      "최주원",
-      "오지호",
-      "윤지후",
-      "김준서",
-      "박건우",
-      "이도현",
-      "성현우",
-      "최우진",
-      "곽현준",
-      "정은우",
-      "김민재",
-      "오정우",
-    ],
-    teamIntro:
-      "안녕하세요. 남자 풋살팀 펜타입니다." +
-      "영등포구청장배풋살 2위" +
-      "2021 은평구풋살연맹 회장배 우승" +
-      "성동구 풋살대회 출전",
-  };
-
   let allPlayerList, defaultPlayerList;
   if (teamData) {
     allPlayerList = teamData.players.map((player) => {
@@ -241,7 +223,7 @@ function TeamHome() {
         <Styled.Container>
           <Styled.ProfileContainer>
             <img
-              src={teamData ? teamData.teamPhoto : ""}
+              src={teamImg}
               alt={"팀 프로필 사진"}
               width={"130"}
               height={"130"}
@@ -268,12 +250,7 @@ function TeamHome() {
                 팀 소개글
               </Styled.TeamInfoLabel>
               <Styled.TeamInfo className={"aboutTeam"}>
-                안녕하세요. 서울시 남자 풋살팀 펜타입니다. 📧 CONTACT :
-                rjfoslrifu@naver.com <br />
-                🥈 영등포구청장배풋살 2위
-                <br />
-                🏅 2021 은평구풋살연맹 회장배 우승
-                <br />
+                {teamData.teamIntro}
               </Styled.TeamInfo>
             </div>
           </Styled.TeamInfoContainer>
@@ -302,21 +279,21 @@ const Styled = {
     margin: 0 auto;
   `,
   Container: styled.div`
-    display:flex;
-    
+    display: flex;
+
     @media (max-width: 1279px) {
-    width: 1280px;
+      width: 1280px;
     }
     @media (min-width: 1280px) {
-    width: 100vw-226px;
+      width: 100vw-226px;
     }
     margin-left: 226px;
     padding: 0 40px;
-    
+    /*     
     &.match {
-    justify-content
-    }
-    `,
+    justify-content : 
+    } */
+  `,
   ProfileContainer: styled.div`
     display: flex;
     flex-direction: column;
