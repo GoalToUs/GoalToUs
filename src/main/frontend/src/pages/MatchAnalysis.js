@@ -282,9 +282,9 @@ function MatchAnalysis() {
             </Styled.EditButton>
           )}
           <Styled.Teams>
-            <span>PENTA</span>
+            <span>{matchInfo.thisTeamName}</span>
             <span>VS</span>
-            <span>LEO</span>
+            <span>{matchInfo.oppoName}</span>
           </Styled.Teams>
 
           <Styled.analysisList>
@@ -443,7 +443,7 @@ const Styled = {
     font-family: "Inter";
     font-style: normal;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 17px;
     line-height: 0px;
 
     color: #8e8e8e;
@@ -458,6 +458,9 @@ const Styled = {
     line-height: 0px;
   `,
   gaugeContainer: styled.div`
+    display: flex;
+    align-items: center;
+
     position: relative;
 
     width: 230px;
@@ -468,11 +471,11 @@ const Styled = {
   gaugeBar: styled.span`
     position: absolute;
     z-index: 2;
-    width: ${(props) => `${props.width * 10}px`};
-    height: 14px;
+    width: ${(props) => `${props.width * 15}px`};
+    height: 21px;
 
     &.pass {
-      width: ${(props) => `${props.width * 2}px`};
+      width: ${(props) => `${props.width * 3.5}px`};
     }
     &.team1 {
       right: 0;
