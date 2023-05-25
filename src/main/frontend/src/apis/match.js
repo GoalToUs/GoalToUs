@@ -67,3 +67,9 @@ export const fetchAllMatchList = async () => {
   const { data } = await axios.get(`/match/list`);
   return data;
 };
+
+//전체 결과 조회
+export const fetchAllResultList = async () => {
+  const { data } = await axios.get(`/result/`);
+  return data;
+};

@@ -1,6 +1,7 @@
 import {
   deleteMatch,
   fetchAllMatchList,
+  fetchAllResultList,
   fetchCreatedMatchList,
   fetchFinishedMatchList,
   fetchMatchAnalysis,
@@ -90,5 +91,11 @@ export const useDeleteMatch = () => {
 //경기 목록 전체 조회
 export const useFetchAllMatchList = () => {
   const { data } = useQuery(["matchAllList"], fetchAllMatchList);
+  return data;
+};
+
+//결과 목록 전체 조회
+export const useFetchAllResultList = () => {
+  const { data } = useQuery(["resultAllList"], fetchAllResultList);
   return data;
 };

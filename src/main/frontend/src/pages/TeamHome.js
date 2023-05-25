@@ -21,6 +21,7 @@ import {
   useFetchPlanMatchList,
   useFetchFinishedMatchList,
   useFetchAllMatchList,
+  useFetchAllResultList,
 } from "../hooks/match";
 import { useSetRecoilState } from "recoil";
 import { matchState } from "../states/match";
@@ -30,6 +31,8 @@ function TeamHome() {
   const { teamId } = useParams();
 
   const teamData = useFetchTeamInfo(teamId);
+  const resultData = useFetchAllResultList();
+  console.log(resultData);
 
   const returnImg = (teamId) => {
     let teamImg;
@@ -127,9 +130,25 @@ function TeamHome() {
     });
   };
 
+  const findResult = (matchId) => {
+    const result = resultData.filter((item) => {
+      return item.matchId === matchId;
+    });
+    return result;
+  };
+
   let finishedMatchList;
   if (finishedMatchData) {
     finishedMatchList = finishedMatchData.map((item) => {
+      const result = findResult(item.matchId);
+      let thisTimeGoal, oppoTeamGoal;
+      if (result[0].teamId === teamId) {
+        thisTimeGoal = result[0].goal;
+        oppoTeamGoal = result[1].goal;
+      } else {
+        thisTimeGoal = result[1].goal;
+        oppoTeamGoal = result[0].goal;
+      }
       const imgUrl = returnImg(String(item.matchId));
       const oppoName = item.teamId === teamId ? item.team2Id : item.teamId;
       return (
@@ -140,7 +159,16 @@ function TeamHome() {
             <Styled.opponentTeamName>{oppoName}</Styled.opponentTeamName>
           </Styled.opponentTeamContainer>
           <Styled.matchInfoContainer>
-            <Styled.score>{item.result}</Styled.score>
+            <Styled.score>
+              {thisTimeGoal} : {oppoTeamGoal}
+              {" ("}
+              {thisTimeGoal > oppoTeamGoal
+                ? "승"
+                : thisTimeGoal === oppoTeamGoal
+                ? "무"
+                : "패"}
+              {")"}
+            </Styled.score>
             <Styled.info className={"finish"}>{item.place}</Styled.info>
             <Styled.info className={"finish"}>
               {returnDate(new Date(item.startTime))}{" "}
