@@ -1,5 +1,12 @@
 import styled from "styled-components";
-import { TeamLogo5, TeamProfileImg } from "../assets";
+import {
+  TeamLogo1,
+  TeamLogo2,
+  TeamLogo3,
+  TeamLogo4,
+  TeamLogo5,
+  TeamProfileImg,
+} from "../assets";
 import { useFetchSearchTeam, usePostJoinTeam } from "../hooks/team";
 import { useParams } from "react-router-dom";
 import ModalPortal from "../components/modal/ModalPortal";
@@ -23,15 +30,37 @@ function SearchTeam() {
     Swal.fire("이미 가입된 팀이 있어요!");
   };
 
+  const returnImg = (teamId) => {
+    let teamImg;
+    switch (String(teamId)) {
+      case "1":
+        teamImg = TeamLogo1;
+        break;
+      case "2":
+        teamImg = TeamLogo2;
+        break;
+      case "3":
+        teamImg = TeamLogo3;
+        break;
+      case "4":
+        teamImg = TeamLogo4;
+        break;
+      case "5":
+        teamImg = TeamLogo5;
+        break;
+      default:
+        break;
+    }
+    return teamImg;
+  };
+
   let teamList;
   if (searchData) {
     teamList = searchData.map((searchData) => {
+      const imgUrl = returnImg(searchData.teamId);
       return (
         <Styled.teamList>
-          <img
-            src={searchData ? searchData.image : TeamProfileImg}
-            width={55}
-          />
+          <img src={imgUrl} width={55} />
           <Styled.teamInfoContainer>
             <Styled.teamInfo>팀명 : {searchData.teamName}</Styled.teamInfo>
             <Styled.teamInfo className={"captain"}>
@@ -168,6 +197,10 @@ const Styled = {
     border-radius: 20px;
 
     padding: 0 10px;
+
+    & > img {
+      border-radius: 20%;
+    }
   `,
   teamInfoContainer: styled.div`
     display: flex;
