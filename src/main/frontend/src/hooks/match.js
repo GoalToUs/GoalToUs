@@ -81,9 +81,10 @@ export const useFetchCreatedMatchList = (teamName) => {
 };
 
 export const useDeleteMatch = () => {
+  const queryClient = useQueryClient();
   return useMutation(deleteMatch, {
     onSuccess() {
-      console.log("delete match");
+      queryClient.invalidateQueries(["matchAllList"]);
     },
   });
 };

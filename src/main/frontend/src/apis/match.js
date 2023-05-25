@@ -8,10 +8,8 @@ export const postCreateMatch = async (postBody) => {
 };
 
 // 경기 삭제하기
-export const deleteMatch = async (matchId) => {
-  const { data } = await axios.delete(`/match/delete/${matchId}`, {
-    matchId: matchId,
-  });
+export const deleteMatch = async (deleteBody) => {
+  const { data } = await axios.delete(`/match/delete/1`, { data: deleteBody });
   return data;
 };
 

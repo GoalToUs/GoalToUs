@@ -28,6 +28,10 @@ function MatchPending() {
     return dateString;
   };
 
+  const handleOnClick = (matchId) => {
+    deleteMatch({ matchId: matchId });
+  };
+
   let matchList;
   if (pendingMatchList) {
     matchList = pendingMatchList.map((item) => {
@@ -43,7 +47,9 @@ function MatchPending() {
             </Styled.Info>
           </div>
           <Styled.pending>대기중</Styled.pending>
-          <Styled.Button onClick={() => deleteMatch(1)}>삭제</Styled.Button>
+          <Styled.Button onClick={() => handleOnClick(item.matchId)}>
+            삭제
+          </Styled.Button>
         </Styled.Match>
       );
     });
