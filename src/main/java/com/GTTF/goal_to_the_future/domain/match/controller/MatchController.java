@@ -58,9 +58,9 @@ public class MatchController {
         return new BaseResponseDto<>(matchService.viewAll(teamId));
     }
 
-    @PutMapping("match/update")
-    public BaseResponseDto<UpdateMatchResponseDto> updateMatch(@RequestBody UpdateMatchRequestDto updateMatchRequestDto){
-        return new BaseResponseDto<>(matchService.update(updateMatchRequestDto));
+    @PutMapping("match/update/{teamId}")
+    public BaseResponseDto<UpdateMatchResponseDto> updateMatch(@PathVariable Long matchId,@RequestBody UpdateMatchRequestDto updateMatchRequestDto){
+        return new BaseResponseDto<>(matchService.update(matchId,updateMatchRequestDto));
     }
 
     @GetMapping("team/waitlist") //매칭 대기 목록 조회

@@ -49,8 +49,8 @@ public class MatchService {
                 newMatch.getTeam1().getTeamName(), newMatch.getRegion());
     }
 
-    public UpdateMatchResponseDto update(UpdateMatchRequestDto updateMatchRequestDto){
-        Match match=matchRepository.findById(updateMatchRequestDto.getMatchId()).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+    public UpdateMatchResponseDto update(Long matchId,UpdateMatchRequestDto updateMatchRequestDto){
+        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
 
         match.update(updateMatchRequestDto.getMatchState());
 
