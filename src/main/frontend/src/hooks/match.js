@@ -38,9 +38,10 @@ export const useFetchPendingMatchList = () => {
 
 //경기 참가하기
 export const usePostJoinMatch = () => {
+  const queryClient = useQueryClient();
   return useMutation(postJoinMatch, {
     onSuccess() {
-      console.log("create join match");
+      queryClient.invalidateQueries(["matchAllList"]);
     },
   });
 };

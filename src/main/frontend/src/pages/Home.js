@@ -96,9 +96,13 @@ function Home() {
     setJoinMatchId(e.currentTarget.id);
   };
 
-  const handleJoinMatch = () => {
+  const handleJoinMatch = (matchId) => {
     setIsJoinModalOpen(false);
+    {
+      joinMatch({ teamId: teamId, matchId: matchId });
+    }
     setColor("gray");
+
     Swal.fire("경기가 성사되었습니다!");
   };
 
@@ -129,7 +133,7 @@ function Home() {
             break;
         }
         return (
-          <Styled.matchList>
+          <Styled.matchList key={item.matchId}>
             <img src={img} width={"56px"} height={56} />
             <div>
               <Styled.teamName>{teamName}</Styled.teamName>
@@ -183,7 +187,9 @@ function Home() {
               매칭을 신청하시겠습니까?
             </Styled.matchPortalMessage>
             <Styled.portalButtonContainer>
-              <Styled.matchPortalButton onClick={handleJoinMatch}>
+              <Styled.matchPortalButton
+                onClick={handleJoinMatch(modalData.matchId)}
+              >
                 예
               </Styled.matchPortalButton>
               <Styled.matchPortalButton
