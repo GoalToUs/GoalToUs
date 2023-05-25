@@ -61,3 +61,9 @@ export const fetchCreatedMatchList = async (teamName) => {
   const { data } = await axios.get(`/match/${teamName}/mylist`);
   return data;
 };
+
+// 전체 경기 목록 조회
+export const fetchAllMatchList = async () => {
+  const { data } = await axios.get(`/match/list`);
+  return data;
+};

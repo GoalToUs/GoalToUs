@@ -6,130 +6,154 @@ import {
   TeamLogo2,
   TeamLogo3,
   TeamLogo4,
+  TeamLogo5,
 } from "../assets";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { teamNameState } from "../states/team";
 import { useState } from "react";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
-import { useFetchPendingMatchList, usePostJoinMatch } from "../hooks/match";
+import {
+  useFetchAllMatchList,
+  useFetchPendingMatchList,
+  usePostJoinMatch,
+} from "../hooks/match";
 import { loginState, userState } from "../states/user";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useFetchTeamInfo } from "../hooks/team";
+import axios from "axios";
 
 function Home() {
-  const teamName = useRecoilValue(teamNameState);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const [joinMatchId, setJoinMatchId] = useState(0);
   const [color, setColor] = useState("");
+  const teamId = localStorage.getItem("userTeam");
 
-  //const userInfo = useRecoilValue(userState);
-
-  // const data = useFetchPendingMatchList();
-  // const userData = useFetchUserInfo(userInfo.userId);
-  const userData = {
-    team: "GoalToUs",
-  };
+  const matchData = useFetchAllMatchList();
   const { mutate: joinMatch } = usePostJoinMatch();
-  joinMatch({
-    matchId: 4,
-    teamId: 1,
+
+  const orderSortByTime = (item) => {
+    return item.sort((a, b) => {
+      return new Date(a.startTime) - new Date(b.startTime);
+    });
+  };
+
+  const orderSort = (item) => {
+    return item.sort((a, b) => {
+      return new Date(a) - new Date(b);
+    });
+  };
+
+  const returnDate = (item) => {
+    const dateString = `${item.getFullYear()}.${item.getMonth()}.${item.getDate()}`;
+    return dateString;
+  };
+
+  const returnTime = (item) => {
+    const dateString = `${item.getHours()}:${String(item.getMinutes()).padStart(
+      2,
+      "0"
+    )}`;
+    return dateString;
+  };
+
+  if (!matchData) return;
+  // waiting만 거르기
+  const pendingMatchList = matchData?.filter(({ matchState }) => {
+    return matchState === "WAITING";
   });
+
+  // 중복 제외 유닉 날짜만 받기
+  let uniqueArr = [];
+  pendingMatchList.forEach((element) => {
+    const date = new Date(element.startTime);
+    const dateString = returnDate(date);
+    if (!uniqueArr.includes(dateString)) {
+      uniqueArr.push(dateString);
+    }
+  });
+  const sortedDateList = orderSort(uniqueArr);
+
+  // 날짜 그룹과 대조하여 한번 더 날짜끼리 묶기
+  let sortedPendingMatchList = [];
+  sortedDateList.forEach((date, idx) => {
+    const sameDateList = pendingMatchList.filter((item) => {
+      return date === returnDate(new Date(item.startTime));
+    });
+    const sortedSameDateList = orderSortByTime(sameDateList);
+    sortedPendingMatchList.push({ date: uniqueArr[idx], sortedSameDateList });
+  });
+  console.log(sortedPendingMatchList);
+
   const handleOnClick = (e) => {
     setIsJoinModalOpen(true);
     setJoinMatchId(e.currentTarget.id);
   };
 
   const handleJoinMatch = () => {
-    // joinMatch({
-    //     "matchId" : joinMatchId,
-    //     "teamId" : 1,
-    // });
     setIsJoinModalOpen(false);
     setColor("gray");
     Swal.fire("경기가 성사되었습니다!");
   };
 
-  const orderSortByTime = (item) => {
-    return item.sort((a, b) => {
-      return Number(b.startTime) - Number(a.startTime);
-    });
-  };
-
-  // const pendingMatchList = orderSortByTime(data);
-
-  const data = [
-    {
-      teamId: 17,
-      teamName: "Throwin",
-      matchState: -1,
-      region: "충청북도 세종시",
-      place: "금강 스포츠공원 풋살장",
-      startTime: "2023.06.07 11:00",
-      date: "2023.06.07",
-      img: TeamLogo1,
-    },
-    {
-      teamId: 15,
-      teamName: "Jupiter",
-      matchState: -1,
-      region: "충청북도 세종시",
-      startTime: "2023.06.08 13:00",
-      place: "솔뜰근린공원 풋살장",
-      date: "2023.06.08",
-      img: TeamLogo2,
-    },
-    {
-      teamId: 67,
-      teamName: "쎄비지",
-      matchState: -1,
-      region: "서울시",
-      startTime: "2023.06.09 18:00",
-      place: "월드컵난지천공원 풋살장",
-      date: "2023.06.09",
-      img: TeamLogo3,
-    },
-    {
-      teamId: 31,
-      teamName: "LEO",
-      matchState: -1,
-      region: "서울시",
-      startTime: "2023.06.10 19:00",
-      place: "방배배수지체육공원",
-      date: "2023.06.10",
-      img: TeamLogo4,
-    },
-  ];
-
-  let matchList;
-  // if(pendingMatchList){
-  matchList = data.map((item) => {
-    return (
-      <Styled.matchListContainer>
-        <Styled.matchDay>{item.date}</Styled.matchDay>
-        <Styled.matchList>
-          <img src={item.img} width={"56px"} height={56} />
-          <div>
-            <Styled.teamName>{item.teamName}</Styled.teamName>
-            <br />
-            <Styled.matchInfo>
-              {item.startTime}
+  const matchContainerList = sortedPendingMatchList.map(
+    ({ date, sortedSameDateList }) => {
+      const matchList = sortedSameDateList.map((item) => {
+        let img, teamName;
+        switch (item.teamId) {
+          case 1:
+            img = TeamLogo1;
+            teamName = "Throwin";
+            break;
+          case 2:
+            img = TeamLogo2;
+            teamName = "Jupiter";
+            break;
+          case 3:
+            img = TeamLogo3;
+            teamName = "쎄비지";
+            break;
+          case 4:
+            img = TeamLogo4;
+            teamName = "LEO";
+            break;
+          case 5:
+            img = TeamLogo5;
+            teamName = "PENTA";
+            break;
+        }
+        return (
+          <Styled.matchList>
+            <img src={img} width={"56px"} height={56} />
+            <div>
+              <Styled.teamName>{teamName}</Styled.teamName>
               <br />
-              {item.place}
-            </Styled.matchInfo>
-          </div>
-          <Styled.matchButton
-            id={item.teamName}
-            onClick={handleOnClick}
-            className={color}
-          >
-            {color === "gray" ? "매칭 완료" : "매칭 신청"}
-          </Styled.matchButton>
-        </Styled.matchList>
-      </Styled.matchListContainer>
-    );
-  });
-  // }
+              <Styled.matchInfo>
+                {returnDate(new Date(item.startTime))}{" "}
+                {returnTime(new Date(item.startTime))}
+                <br />
+                {item.place}
+              </Styled.matchInfo>
+            </div>
+            <Styled.matchButton
+              id={item.teamName}
+              onClick={handleOnClick}
+              className={color}
+            >
+              {color === "gray" ? "매칭 완료" : "매칭 신청"}
+            </Styled.matchButton>
+          </Styled.matchList>
+        );
+      });
+      return (
+        <Styled.matchListContainer key={date}>
+          <Styled.matchDay>{date}</Styled.matchDay>
+          {matchList}
+        </Styled.matchListContainer>
+      );
+    }
+  );
 
   return (
     <Styled.Root>
@@ -169,10 +193,11 @@ function Home() {
           <a href="/match/create" target={"_self"}>
             <img src={createMatchIcon} width={"120px"} />
           </a>
-          <Styled.scrollContainer>{matchList}</Styled.scrollContainer>
+          <Styled.scrollContainer>{matchContainerList}</Styled.scrollContainer>
         </Styled.pendingMatchContainer>
+
         <Styled.buttonContainer>
-          <Link to={`/team/home/Penta`}>내 팀 홈 가기</Link>
+          <Link to={`/team/home/${teamId}`}>내 팀 홈 가기</Link>
           <Link to={"/team"}>팀 등록 / 가입하기</Link>
         </Styled.buttonContainer>
       </Styled.Container>
@@ -213,25 +238,23 @@ const Styled = {
     flex-direction: column;
     align-items: center;
     position: relative;
-    
+
     width: 800px;
     height: 550px;
-    
-    
+
     background-color: rgba(122, 198, 161, 0.4);
     border-radius: 15px;
-    
+
     padding-top: 20px;
-    
-    & > a{
-    position: absolute;
-    z-index:2;
-    
-    right: 45px;
-    top: -22px;
+
+    & > a {
+      position: absolute;
+      z-index: 2;
+
+      right: 45px;
+      top: -22px;
     }
-  }
-    `,
+  `,
   scrollContainer: styled.div`
     display: flex;
     flex-direction: column;

@@ -1,18 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import Router from './components/Router'
-import {
-    RecoilRoot,
-} from 'recoil';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Router from "./components/Router";
+import { RecoilRoot } from "recoil";
 
 function App() {
-    const [hello, setHello] = useState('')
+  localStorage.setItem("userTeam", 1);
 
-    return (
-        <RecoilRoot>
-            <Router/>
-        </RecoilRoot>
-    );
+  return (
+    <RecoilRoot>
+      <Router />
+    </RecoilRoot>
+  );
 }
 
 export default App;

@@ -1,5 +1,6 @@
 import {
   deleteMatch,
+  fetchAllMatchList,
   fetchCreatedMatchList,
   fetchFinishedMatchList,
   fetchMatchAnalysis,
@@ -83,4 +84,10 @@ export const useDeleteMatch = () => {
       console.log("delete match");
     },
   });
+};
+
+//경기 목록 전체 조회
+export const useFetchAllMatchList = () => {
+  const { data } = useQuery(["matchAllList"], fetchAllMatchList);
+  return data;
 };
