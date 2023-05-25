@@ -3,46 +3,44 @@ import Header from "../components/Header";
 
 import SideBar from "../components/Sidebar";
 import { OpponentTeamImg, TeamProfileImg1 } from "../assets";
-import { useDeleteMatch } from "../hooks/match";
+import { useDeleteMatch, useFetchAllMatchList } from "../hooks/match";
 
 function MatchPending() {
-  // const pendingMatchData = useFetchCreatedMatchList(1);
   const { mutate: deleteMatch } = useDeleteMatch();
-  const pendingMatchData = [
-    {
-      matchId: 1,
-      place: "고척스카이돔 풋살장",
-      region: "서울",
-      startTime: "2023.06.03 11:00",
-      matchState: "EXPECTED",
-    },
-    {
-      place: "에코파크 풋살장",
-      region: "서울",
-      startTime: "2023.06.12 18:00",
-      matchState: "EXPECTED",
-    },
-    {
-      place: "마루공원 풋살장",
-      region: "서울",
-      startTime: "2023.07.12 13:00",
-      matchState: "EXPECTED",
-    },
-    {
-      place: "망원유수지 풋살구장",
-      region: "서울",
-      startTime: "2023.06.21 15:00",
-      matchState: "EXPECTED",
-    },
-  ];
+  const userTeamId = localStorage.getItem("userTeam");
+  const matchData = useFetchAllMatchList();
+
+  // waiting만 거르기
+  const pendingMatchList = matchData?.filter(({ matchState, teamId }) => {
+    return matchState === "WAITING" && teamId === Number(userTeamId);
+  });
+
+  const returnDate = (item) => {
+    const dateString = `${item.getFullYear()}/${item.getMonth()}/${item.getDate()}`;
+    return dateString;
+  };
+
+  const returnTime = (item) => {
+    const dateString = `${item.getHours()}:${String(item.getMinutes()).padStart(
+      2,
+      "0"
+    )}`;
+    return dateString;
+  };
+
   let matchList;
-  if (pendingMatchData) {
-    matchList = pendingMatchData.map((item) => {
+  if (pendingMatchList) {
+    matchList = pendingMatchList.map((item) => {
       return (
         <Styled.Match>
           <div>
-            <Styled.Info>{item.place}</Styled.Info>
-            <Styled.Info>{item.startTime}</Styled.Info>
+            <Styled.Info>
+              {item.region} {item.place}
+            </Styled.Info>
+            <Styled.Info>
+              {returnDate(new Date(item.startTime))}{" "}
+              {returnTime(new Date(item.startTime))}
+            </Styled.Info>
           </div>
           <Styled.pending>대기중</Styled.pending>
           <Styled.Button onClick={() => deleteMatch(1)}>삭제</Styled.Button>
@@ -69,23 +67,19 @@ const Styled = {
     margin: 0 auto;
   `,
   Container: styled.div`
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     @media (max-width: 1279px) {
-    width: 1280px;
+      width: 1280px;
     }
     @media (min-width: 1280px) {
-    width: 100vw-226px;
+      width: 100vw-226px;
     }
     margin-left: 226px;
     padding: 0 40px;
-    
-    &.match {
-    justify-content
-    }
-    `,
+  `,
   Match: styled.div`
     display: flex;
     align-items: center;
