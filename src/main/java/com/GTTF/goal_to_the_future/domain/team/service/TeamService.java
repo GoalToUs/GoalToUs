@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.NOT_FOUND_TEAM;
+import static com.GTTF.goal_to_the_future.common.error.enums.ErrorMessage.NOT_FOUND_USER;
 
 @Transactional
 @RequiredArgsConstructor
@@ -43,10 +44,10 @@ public class TeamService {
 
     public JoinTeamResponseDto join(JoinTeamRequestDto joinTeamRequestDto, Long teamId){// teamId = pk
         // teamId로 team을 조회
-        Team team = teamRepository.findById(teamId).get();
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
 
         // userId로 user를 조회
-        User user = userRepository.findById(joinTeamRequestDto.getUserId()).get();
+        User user = userRepository.findById(joinTeamRequestDto.getUserId()).orElseThrow(() -> new BusinessException(NOT_FOUND_USER));
 
         // user의 team필드에 team을 값을 넣어줌
         user.joinTeam(team);// JPA update - 요약: 필드 값만 바꿔도 알아서 update 쿼리 날라감
@@ -54,9 +55,9 @@ public class TeamService {
         return new JoinTeamResponseDto(team.getTeamName(),user.getName());
     }
 
-    public InfoResponseDto getTeamInfo(String teamName){
+    public InfoResponseDto getTeamInfo(Long teamId){
         //1. teamName으로 팀 조회하기
-        Team team=teamRepository.findByTeamName(teamName).get();
+        Team team=teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
 
         //2. 해당 팀의 모든 유저 조회하기
         List<String> playerNames = userRepository.findUserNamesByTeam(team);
