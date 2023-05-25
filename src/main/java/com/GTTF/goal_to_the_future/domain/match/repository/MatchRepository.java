@@ -27,7 +27,7 @@ public interface MatchRepository extends JpaRepository<Match,Long> {
     Optional<Match> findById(Long matchId);
 
     @Query("select new com.GTTF.goal_to_the_future.domain.match.dto.response.MatchListResponseDto(m.matchId,m.startTime,m.place,m.region," +
-            "m.matchState,m.team1.id,m.team1.teamName,m.team2.id,m.team2.teamName)"
+            "m.matchState,m.team1.id,m.team2.id)"
     +"from Match m")
     List<MatchListResponseDto>findAllMatch();
 

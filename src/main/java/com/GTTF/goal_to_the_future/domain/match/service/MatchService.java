@@ -32,9 +32,8 @@ public class MatchService {
     private final MatchRepository matchRepository;
 
     public MakeMatchResponseDto createMatch(MakeMatchRequestDto makeMatchRequestDto){ //경기 생성
-        // request - teamName으로 teamRepository에서 Team 객체를 찾아와야함
-        Team team = teamRepository.findByTeamName(makeMatchRequestDto.getTeamName()).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
-        
+        // request - teamId로 teamRepository에서 Team 객체를 찾아와야함
+        Team team=teamRepository.findById(makeMatchRequestDto.getTeamId()).orElseThrow(()->new BusinessException(NOT_FOUND_TEAM));
         // Match 엔티티 생성
         Match newMatch = new Match(team , makeMatchRequestDto.getStartTime(), makeMatchRequestDto.getPlace(),
                 makeMatchRequestDto.getRegion(),MatchState.WAITING);
@@ -61,8 +60,15 @@ public class MatchService {
         //3. 받아온 match의 team2자리에 팀을 넣어줌
         match.joinMatch(team2);
 
+        //4.해당 match의 matchState를 expected로 변경
+
+
+
         return new JoinMatchResponseDto(team2.getId(), match.getMatchId());
     }
+
+//    public void update(){
+//    }
 
     public List<ViewAllResponseDto> viewAll(Long teamId){
         Team team=teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));

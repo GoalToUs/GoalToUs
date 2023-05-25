@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface TeamRepository extends JpaRepository<Team,Long> {
 
-    @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, t.intro)" +
+    @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(t.teamName, t.photo, t.intro,t.id)" +
             " from User u join u.team t " +
             " where u.captain=1 " +
             " and (u.name like :keyword or t.teamName like :keyword)")
@@ -22,7 +22,7 @@ public interface TeamRepository extends JpaRepository<Team,Long> {
 
     List<SearchTeamResponseDto> findByKeyword(@Param("keyword") String keyword);
 
-    @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(u.team.teamName, u.team.photo, u.name)" +
+    @Query("select new com.GTTF.goal_to_the_future.domain.team.dto.response.SearchTeamResponseDto(u.team.teamName, u.team.photo, u.name,u.team.id)" +
             " from User u " +
             " where u.captain=1 ")
     List<SearchTeamResponseDto> findALLTeamInfo();

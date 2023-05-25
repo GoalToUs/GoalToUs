@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class MakeMatchRequestDto {
     private LocalDateTime startTime;
     private String place;
-    private String teamName;
+    private Long teamId;
     private String region;
 
 }
