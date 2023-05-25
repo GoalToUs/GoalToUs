@@ -52,7 +52,9 @@ function TeamHome() {
   };
 
   const returnDate = (item) => {
-    const dateString = `${item.getFullYear()}/${item.getMonth()}/${item.getDate()}`;
+    const dateString = `${item.getFullYear()}/${
+      item.getMonth() + 1
+    }/${item.getDate()}`;
     return dateString;
   };
 

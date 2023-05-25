@@ -38,7 +38,9 @@ function Home() {
   };
 
   const returnDate = (item) => {
-    const dateString = `${item.getFullYear()}/${item.getMonth()}/${item.getDate()}`;
+    const dateString = `${item.getFullYear()}/${
+      item.getMonth() + 1
+    }/${item.getDate()}`;
     return dateString;
   };
 
@@ -81,7 +83,6 @@ function Home() {
     const hi = pendingMatchList.filter((item) => {
       return e.currentTarget.id === String(item.matchId);
     });
-    console.log("hi");
     setModalData(hi[0]);
     setIsJoinModalOpen(true);
     setJoinMatchId(e.currentTarget.id);
@@ -94,6 +95,29 @@ function Home() {
 
     Swal.fire("경기가 성사되었습니다!");
     console.log("hhii");
+  };
+  const searchTeamName = (teamId) => {
+    let teamName;
+    switch (teamId) {
+      case 1:
+        teamName = "Throwin";
+        break;
+      case 2:
+        teamName = "Jupiter";
+        break;
+      case 3:
+        teamName = "쎄비지";
+        break;
+      case 4:
+        teamName = "LEO";
+        break;
+      case 5:
+        teamName = "PENTA";
+        break;
+      default:
+        break;
+    }
+    return teamName;
   };
 
   const matchContainerList = sortedPendingMatchList.map(
@@ -169,7 +193,7 @@ function Home() {
             <Styled.matchPortalTitle>[ 경기 정보 ]</Styled.matchPortalTitle>
             <Styled.modalMatchInfo>
               <Styled.matchInfo>
-                상대팀 : {modalData.matchId}
+                상대팀 : {searchTeamName(modalData.teamId)}
                 <br />
                 <br />
                 경기 일시 : {returnDate(new Date(modalData.startTime))}{" "}

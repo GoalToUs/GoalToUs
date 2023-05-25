@@ -21,7 +21,9 @@ function MatchPending() {
   });
 
   const returnDate = (item) => {
-    const dateString = `${item.getFullYear()}/${item.getMonth()}/${item.getDate()}`;
+    const dateString = `${item.getFullYear()}/${
+      item.getMonth() + 1
+    }/${item.getDate()}`;
     return dateString;
   };
 
@@ -76,7 +78,9 @@ function MatchPending() {
               <Styled.matchPortalButton onClick={handleDeleteMatch}>
                 예
               </Styled.matchPortalButton>
-              <Styled.matchPortalButton onClick={()=>setIsModalOpen(false)}>아니오</Styled.matchPortalButton>
+              <Styled.matchPortalButton onClick={() => setIsModalOpen(false)}>
+                아니오
+              </Styled.matchPortalButton>
             </Styled.portalButtonContainer>
           </Modal>
         </ModalPortal>

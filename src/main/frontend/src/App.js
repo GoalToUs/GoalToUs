@@ -4,7 +4,7 @@ import Router from "./components/Router";
 import { RecoilRoot } from "recoil";
 
 function App() {
-  localStorage.setItem("userTeam", 2);
+  localStorage.setItem("userTeam", 5);
 
   return (
     <RecoilRoot>
