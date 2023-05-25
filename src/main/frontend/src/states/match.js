@@ -1,12 +1,16 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
-export const matchState = atom({
-    key: 'matchState',
-    default: {
-        teamName: "ABC",
-        oppoName: "ssssssss",
-        place: "서울",
-        startTime : "2023-02-09 11:00",
-        result : "2:0",
-    },
+export const analysisMatchState = atom({
+  key: "analysisMatch",
+  default: {
+    thisTeamId: 0,
+    oppoTeamImg: "0",
+    team1Name: "",
+    team2Name: "",
+    team1Goal: 0,
+    team2Goal: 0,
+    region: "",
+    place: "",
+    startTime: "",
+  },
 });

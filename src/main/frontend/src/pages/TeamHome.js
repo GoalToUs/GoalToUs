@@ -24,7 +24,7 @@ import {
   useFetchAllResultList,
 } from "../hooks/match";
 import { useSetRecoilState } from "recoil";
-import { matchState } from "../states/match";
+import { analysisMatchState } from "../states/match";
 
 function TeamHome() {
   const [showAllPlayers, setShowAllPlayers] = useState(false);
@@ -113,20 +113,18 @@ function TeamHome() {
     });
   }
 
-  const setMatchData = useSetRecoilState(matchState);
-  const handleOnClick = (e) => {
-    const { id } = e.currentTarget;
-    finishedMatchData.filter((item) => {
-      if (item.matchId === id) {
-        setMatchData({
-          teamName: item.teamName,
-          oppoName: item.oppoName,
-          place: item.place,
-          startTime: item.startTime,
-          result: item.result,
-        });
-        return;
-      }
+  const setMatchData = useSetRecoilState(analysisMatchState);
+  const handleOnClick = (item) => {
+    setMatchData({
+      thisTeamId: teamId,
+      oppoTeamImg: item.oppoTeamImg,
+      team1Name: "",
+      team2Name: "",
+      team1Goal: item.thisTimeGoal,
+      team2Goal: item.oppoTeamGoal,
+      region: item.region,
+      place: item.place,
+      startTime: item.startTime,
     });
   };
 
@@ -176,11 +174,17 @@ function TeamHome() {
             </Styled.info>
           </Styled.matchInfoContainer>
           <Styled.recordButton
-            href={`/team/match/analysis/1`}
             id={item.matchId}
-            onClick={handleOnClick}
+            onClick={handleOnClick({
+              ...item,
+              thisTimeGoal,
+              oppoTeamGoal,
+              oppoTeamImg: imgUrl,
+            })}
           >
-            <Link to={`/team/match/analysis/1`}>기록 & 분석 보기</Link>
+            <Link to={`/team/match/analysis/${item.matchId}`}>
+              기록 & 분석 보기
+            </Link>
           </Styled.recordButton>
         </Styled.Match>
       );
