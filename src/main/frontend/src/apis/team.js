@@ -30,3 +30,8 @@ export const fetchTeamInfo = async (teamId) => {
   const { data } = await axios.get(`/team/info/${teamId}`);
   return data;
 };
+
+export const fetchTeamAllInfo = async (teamId) => {
+  const { data } = await axios.get(`/team/info/`);
+  return data;
+};

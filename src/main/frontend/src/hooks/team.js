@@ -4,6 +4,7 @@ import {
   postTeamInfo,
   postJoinTeam,
   fetchTeamInfo,
+  fetchTeamAllInfo,
 } from "../apis/team";
 
 // 팀 등록하기
@@ -35,5 +36,10 @@ export const usePostJoinTeam = () => {
 // 팀 정보 조회하기
 export const useFetchTeamInfo = (teamId) => {
   const { data } = useQuery(["teamInfo"], () => fetchTeamInfo(teamId));
+  return data;
+};
+
+export const useFetchAllTeamInfo = () => {
+  const { data } = useQuery(["teamAllInfo"], fetchTeamAllInfo);
   return data;
 };

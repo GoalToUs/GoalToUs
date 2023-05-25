@@ -9,7 +9,7 @@ import {
   TeamLogo1,
   TeamLogo4,
 } from "../assets";
-import { useFetchTeamInfo } from "../hooks/team";
+import { useFetchAllTeamInfo, useFetchTeamInfo } from "../hooks/team";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 
@@ -67,6 +67,7 @@ function TeamHome() {
   const teamImg = returnImg(teamId);
 
   const matchData = useFetchAllMatchList();
+  console.log(matchData);
   const planMatchData = matchData?.filter(
     ({ matchState, teamId: itemTeamId, team2Id }) => {
       return (
@@ -84,11 +85,37 @@ function TeamHome() {
     }
   );
 
+  const searchTeamName = (teamId) => {
+    let teamName;
+    switch (teamId) {
+      case 1:
+        teamName = "Throwin";
+        break;
+      case 2:
+        teamName = "Jupiter";
+        break;
+      case 3:
+        teamName = "쎄비지";
+        break;
+      case 4:
+        teamName = "LEO";
+        break;
+      case 5:
+        teamName = "PENTA";
+        break;
+      default:
+        break;
+    }
+    return teamName;
+  };
+
   let planMatchList;
   if (planMatchData) {
     planMatchList = planMatchData.map((item) => {
-      const imgUrl = returnImg(String(item.matchId));
-      const oppoName = item.teamId === teamId ? item.team2Id : item.teamId;
+      const oppoId =
+        item.teamId === Number(teamId) ? item.team2Id : item.teamId;
+      const imgUrl = returnImg(String(oppoId));
+      const oppoName = searchTeamName(oppoId);
       return (
         <Styled.Match key={item.matchId}>
           <Styled.opponentTeamContainer>
@@ -135,15 +162,19 @@ function TeamHome() {
     finishedMatchList = finishedMatchData.map((item) => {
       const result = findResult(item.matchId);
       let thisTimeGoal, oppoTeamGoal;
-      if (result[0].teamId === teamId) {
+      if (result[0].teamId === Number(teamId)) {
         thisTimeGoal = result[0].goal;
         oppoTeamGoal = result[1].goal;
       } else {
         thisTimeGoal = result[1].goal;
         oppoTeamGoal = result[0].goal;
       }
-      const imgUrl = returnImg(String(item.matchId));
-      const oppoName = item.teamId === teamId ? item.team2Id : item.teamId;
+      console.log(teamId);
+      const oppoId =
+        item.teamId === Number(teamId) ? item.team2Id : item.teamId;
+      console.log(oppoId);
+      const imgUrl = returnImg(String(oppoId));
+      const oppoName = searchTeamName(oppoId);
       return (
         <Styled.Match>
           <Styled.opponentTeamContainer>
