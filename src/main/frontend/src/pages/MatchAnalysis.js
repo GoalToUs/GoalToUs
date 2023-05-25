@@ -83,7 +83,6 @@ function MatchAnalysis() {
   };
   if (resultData) {
     const result = findResult(Number(matchId));
-    console.log(result);
     if (result[0].teamId === matchInfo.thisTeamId) {
       team1Data = result[0];
       team2Data = result[1];

@@ -138,7 +138,7 @@ function TeamHome() {
   const setMatchData = useSetRecoilState(analysisMatchState);
   const handleOnClick = (item) => {
     setMatchData({
-      thisTeamId: teamId,
+      thisTeamId: Number(teamId),
       oppoTeamImg: item.oppoTeamImg,
       team1Name: "",
       team2Name: "",
@@ -151,7 +151,7 @@ function TeamHome() {
   };
 
   const findResult = (matchId) => {
-    const result = resultData.filter((item) => {
+    const result = resultData?.filter((item) => {
       return item.matchId === matchId;
     });
     return result;
@@ -159,8 +159,9 @@ function TeamHome() {
 
   let finishedMatchList;
   if (finishedMatchData) {
-    finishedMatchList = finishedMatchData.map((item) => {
+    finishedMatchList = finishedMatchData?.map((item) => {
       const result = findResult(item.matchId);
+      if (!result) return;
       let thisTimeGoal, oppoTeamGoal;
       if (result[0].teamId === Number(teamId)) {
         thisTimeGoal = result[0].goal;
@@ -169,7 +170,6 @@ function TeamHome() {
         thisTimeGoal = result[1].goal;
         oppoTeamGoal = result[0].goal;
       }
-      console.log(teamId);
       const oppoId =
         item.teamId === Number(teamId) ? item.team2Id : item.teamId;
       console.log(oppoId);
