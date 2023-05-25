@@ -8,21 +8,12 @@ import {
   TeamLogo4,
   TeamLogo5,
 } from "../assets";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { teamNameState } from "../states/team";
 import { useState } from "react";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
-import {
-  useFetchAllMatchList,
-  useFetchPendingMatchList,
-  usePostJoinMatch,
-} from "../hooks/match";
-import { loginState, userState } from "../states/user";
+import { useFetchAllMatchList, usePostJoinMatch } from "../hooks/match";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useFetchTeamInfo } from "../hooks/team";
-import axios from "axios";
 
 function Home() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
@@ -85,12 +76,12 @@ function Home() {
     const sortedSameDateList = orderSortByTime(sameDateList);
     sortedPendingMatchList.push({ date: uniqueArr[idx], sortedSameDateList });
   });
-  console.log(sortedPendingMatchList);
 
   const handleOnClick = (e) => {
     const hi = pendingMatchList.filter((item) => {
       return e.currentTarget.id === String(item.matchId);
     });
+    console.log("hi");
     setModalData(hi[0]);
     setIsJoinModalOpen(true);
     setJoinMatchId(e.currentTarget.id);
@@ -98,12 +89,11 @@ function Home() {
 
   const handleJoinMatch = (matchId) => {
     setIsJoinModalOpen(false);
-    {
-      joinMatch({ teamId: teamId, matchId: matchId });
-    }
+    joinMatch({ teamId: teamId, matchId: matchId });
     setColor("gray");
 
     Swal.fire("경기가 성사되었습니다!");
+    console.log("hhii");
   };
 
   const matchContainerList = sortedPendingMatchList.map(
@@ -130,6 +120,8 @@ function Home() {
           case 5:
             img = TeamLogo5;
             teamName = "PENTA";
+            break;
+          default:
             break;
         }
         return (
@@ -192,7 +184,7 @@ function Home() {
             </Styled.matchPortalMessage>
             <Styled.portalButtonContainer>
               <Styled.matchPortalButton
-                onClick={handleJoinMatch(modalData.matchId)}
+                onClick={() => handleJoinMatch(modalData.matchId)}
               >
                 예
               </Styled.matchPortalButton>

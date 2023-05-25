@@ -4,11 +4,16 @@ import Header from "../components/Header";
 import SideBar from "../components/Sidebar";
 import { OpponentTeamImg, TeamProfileImg1 } from "../assets";
 import { useDeleteMatch, useFetchAllMatchList } from "../hooks/match";
+import { useState } from "react";
+import ModalPortal from "../components/modal/ModalPortal";
+import Modal from "../components/modal/Modal";
 
 function MatchPending() {
   const { mutate: deleteMatch } = useDeleteMatch();
   const userTeamId = localStorage.getItem("userTeam");
   const matchData = useFetchAllMatchList();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteMatchId, setDeleteMatchId] = useState(0);
 
   // waiting만 거르기
   const pendingMatchList = matchData?.filter(({ matchState, teamId }) => {
@@ -29,7 +34,13 @@ function MatchPending() {
   };
 
   const handleOnClick = (matchId) => {
-    deleteMatch({ matchId: matchId });
+    setIsModalOpen(true);
+    setDeleteMatchId(matchId);
+  };
+
+  const handleDeleteMatch = () => {
+    deleteMatch({ matchId: deleteMatchId });
+    setIsModalOpen(false);
   };
 
   let matchList;
@@ -57,6 +68,19 @@ function MatchPending() {
 
   return (
     <Styled.Root>
+      {isModalOpen && (
+        <ModalPortal>
+          <Modal width={400} height={200}>
+            <Styled.ModalMessage>삭제하시겠습니까?</Styled.ModalMessage>
+            <Styled.portalButtonContainer>
+              <Styled.matchPortalButton onClick={handleDeleteMatch}>
+                예
+              </Styled.matchPortalButton>
+              <Styled.matchPortalButton>아니오</Styled.matchPortalButton>
+            </Styled.portalButtonContainer>
+          </Modal>
+        </ModalPortal>
+      )}
       <SideBar />
       <Header noLogo />
       <Styled.Container>{matchList}</Styled.Container>
@@ -158,5 +182,37 @@ const Styled = {
     margin-left: 20px;
 
     cursor: pointer;
+  `,
+  ModalMessage: styled.h1`
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+
+    margin-top: 50px;
+  `,
+  portalButtonContainer: styled.div`
+    display: flex;
+
+    margin-top: 40px;
+  `,
+  matchPortalButton: styled.button`
+    font-weight: 800;
+    font-size: 15px;
+
+    background-color: #e0e0e0;
+    border: none;
+
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+
+    margin: 0 10px;
+
+    &:hover {
+      background-color: #606060;
+      color: white;
+      cursor: pointer;
+    }
   `,
 };
