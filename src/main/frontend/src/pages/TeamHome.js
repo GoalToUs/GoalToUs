@@ -71,7 +71,9 @@ function TeamHome() {
   const planMatchData = matchData?.filter(
     ({ matchState, teamId: itemTeamId, team2Id }) => {
       return (
-        matchState === "EXPECTED" &&
+        teamId &&
+        team2Id &&
+        matchState !== "FINISH" &&
         (itemTeamId === Number(teamId) || team2Id === Number(teamId))
       );
     }

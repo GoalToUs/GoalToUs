@@ -52,8 +52,8 @@ function Home() {
 
   if (!matchData) return;
   // waiting만 거르기
-  const pendingMatchList = matchData?.filter(({ matchState }) => {
-    return matchState === "WAITING";
+  const pendingMatchList = matchData?.filter(({ matchState, team2Id }) => {
+    return !team2Id;
   });
 
   // 중복 제외 유닉 날짜만 받기
