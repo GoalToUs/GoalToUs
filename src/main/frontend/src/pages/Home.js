@@ -134,9 +134,13 @@ function Home() {
         }
         return (
           <Styled.matchList key={item.matchId}>
-            <img src={img} width={"56px"} height={56} />
+            <Link to={`/team/home/${item.teamId}`}>
+              <img src={img} width={"56px"} height={56} />
+            </Link>
             <div>
-              <Styled.teamName>{teamName}</Styled.teamName>
+              <Link to={`/team/home/${item.teamId}`}>
+                <Styled.teamName>{teamName}</Styled.teamName>
+              </Link>
               <br />
               <Styled.matchInfo>
                 {returnDate(new Date(item.startTime))}{" "}
@@ -150,7 +154,7 @@ function Home() {
               onClick={handleOnClick}
               className={color}
             >
-              {color === "gray" ? "매칭 완료" : "매칭 신청"}
+              매칭 신청
             </Styled.matchButton>
           </Styled.matchList>
         );
