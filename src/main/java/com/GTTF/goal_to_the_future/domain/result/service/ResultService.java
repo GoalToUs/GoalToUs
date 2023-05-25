@@ -80,8 +80,8 @@ public class ResultService {
                 result.getPass());
     }
 
-    public List<ViewRecordResponseDto> viewRecord(Long matchId){//team1의 teamId보내줌
-        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+    public List<ViewRecordResponseDto> viewRecord(){//team1의 teamId보내줌
+//        Match match=matchRepository.findById(matchId).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
         //해당 아이디의 경기를 찾음
         List<ViewRecordResponseDto> records=resultRepository.findALLRecord();
         return records;
