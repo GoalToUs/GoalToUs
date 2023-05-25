@@ -33,8 +33,8 @@ public class TeamService {
 
     //함수 만들기 ctrl+p 로 순서
     public CreateTeamResponseDto create(CreateTeamRequestDto createTeamRequestDto){ //팀생성하기
-        Team newTeam = new Team(createTeamRequestDto.getTeamName(), createTeamRequestDto.getPhoto(), createTeamRequestDto.getRegion(),
-                createTeamRequestDto.getIntro()); //ctrl+alt+v로 변수 선언
+        Team newTeam = new Team(createTeamRequestDto.getTeamName(), createTeamRequestDto.getPhoto(),
+                createTeamRequestDto.getRegion(), createTeamRequestDto.getIntro()); //ctrl+alt+v로 변수 선언
 
         teamRepository.save(newTeam); //insert 쿼리
 
