@@ -26,6 +26,7 @@ import axios from "axios";
 
 function Home() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const [modalData, setModalData] = useState();
   const [joinMatchId, setJoinMatchId] = useState(0);
   const [color, setColor] = useState("");
   const teamId = localStorage.getItem("userTeam");
@@ -87,6 +88,10 @@ function Home() {
   console.log(sortedPendingMatchList);
 
   const handleOnClick = (e) => {
+    const hi = pendingMatchList.filter((item) => {
+      return e.currentTarget.id === String(item.matchId);
+    });
+    setModalData(hi[0]);
     setIsJoinModalOpen(true);
     setJoinMatchId(e.currentTarget.id);
   };
@@ -137,7 +142,7 @@ function Home() {
               </Styled.matchInfo>
             </div>
             <Styled.matchButton
-              id={item.teamName}
+              id={item.matchId}
               onClick={handleOnClick}
               className={color}
             >
@@ -164,11 +169,14 @@ function Home() {
             <Styled.matchPortalTitle>[ 경기 정보 ]</Styled.matchPortalTitle>
             <Styled.modalMatchInfo>
               <Styled.matchInfo>
-                상대팀 : Throwin <br />
+                상대팀 : {modalData.matchId}
                 <br />
-                경기 일시 : 2022년 6월 7일 11:00-12:00 <br />
                 <br />
-                경기 장소 : 서울시 금강 스포츠공원 풋살장
+                경기 일시 : {returnDate(new Date(modalData.startTime))}{" "}
+                {returnTime(new Date(modalData.startTime))}
+                <br />
+                <br />
+                경기 장소 :{` ${modalData.region} ${modalData.place}`}
               </Styled.matchInfo>
             </Styled.modalMatchInfo>
             <Styled.matchPortalMessage>
