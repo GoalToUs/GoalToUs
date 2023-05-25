@@ -76,7 +76,7 @@ function MatchPending() {
               <Styled.matchPortalButton onClick={handleDeleteMatch}>
                 예
               </Styled.matchPortalButton>
-              <Styled.matchPortalButton>아니오</Styled.matchPortalButton>
+              <Styled.matchPortalButton onClick={()=>setIsModalOpen(false)}>아니오</Styled.matchPortalButton>
             </Styled.portalButtonContainer>
           </Modal>
         </ModalPortal>

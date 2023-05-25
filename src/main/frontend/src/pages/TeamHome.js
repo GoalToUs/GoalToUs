@@ -3,13 +3,11 @@ import Header from "../components/Header";
 
 import SideBar from "../components/Sidebar";
 import {
-  OpponentTeamImg,
   TeamLogo2,
   TeamLogo5,
   TeamLogo3,
   TeamLogo1,
   TeamLogo4,
-  TeamProfileImg1,
 } from "../assets";
 import { useFetchTeamInfo } from "../hooks/team";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -17,12 +15,7 @@ import { useState } from "react";
 
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
-import {
-  useFetchPlanMatchList,
-  useFetchFinishedMatchList,
-  useFetchAllMatchList,
-  useFetchAllResultList,
-} from "../hooks/match";
+import { useFetchAllMatchList, useFetchAllResultList } from "../hooks/match";
 import { useSetRecoilState } from "recoil";
 import { analysisMatchState } from "../states/match";
 
@@ -51,6 +44,8 @@ function TeamHome() {
         break;
       case "5":
         teamImg = TeamLogo5;
+        break;
+      default:
         break;
     }
     return teamImg;
@@ -200,6 +195,8 @@ function TeamHome() {
       return `${player} `;
     });
   }
+  const location = useLocation();
+  const nowPath = location.pathname;
 
   return (
     <Styled.Root>
@@ -226,6 +223,11 @@ function TeamHome() {
             />
             <Styled.TeamName>{teamData.teamName}</Styled.TeamName>
             <Styled.TeamRegion>지역 : {teamData.region}</Styled.TeamRegion>
+            {nowPath === "/team/home/5" && (
+              <Styled.TeamVideo>
+                <Link to={"/team/match/video"}>경기 영상 보기</Link>
+              </Styled.TeamVideo>
+            )}
           </Styled.ProfileContainer>
           <Styled.TeamInfoContainer>
             <div>
@@ -285,10 +287,6 @@ const Styled = {
     }
     margin-left: 226px;
     padding: 0 40px;
-    /*     
-    &.match {
-    justify-content : 
-    } */
   `,
   ProfileContainer: styled.div`
     display: flex;
@@ -316,6 +314,30 @@ const Styled = {
     line-height: 0px;
 
     margin-top: 40px;
+  `,
+  TeamVideo: styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 110px;
+    height: 30px;
+
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 0px;
+
+    background-color: lightcoral;
+    border: none;
+    border-radius: 3px;
+
+    margin-top: 25px;
+
+    &:hover {
+      border: 3px solid black;
+    }
   `,
   TeamInfoContainer: styled.div`
     position: relative;

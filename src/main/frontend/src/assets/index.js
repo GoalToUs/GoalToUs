@@ -22,3 +22,4 @@ export { default as TeamLogo5 } from "./teamlogo5.png";
 export { default as ThumbNail1 } from "./thumbnail1.PNG";
 export { default as ThumbNail2 } from "./thumbnail2.PNG";
 export { default as ThumbNail3 } from "./thumbnail3.PNG";
+export { default as ThumbNail4 } from "./test-1.jpg";
