@@ -140,8 +140,8 @@ function TeamHome() {
     setMatchData({
       thisTeamId: Number(teamId),
       oppoTeamImg: item.oppoTeamImg,
-      team1Name: "",
-      team2Name: "",
+      thisTeamName: teamData.teamName,
+      oppoName: item.oppoName,
       team1Goal: item.thisTimeGoal,
       team2Goal: item.oppoTeamGoal,
       region: item.region,
@@ -206,6 +206,7 @@ function TeamHome() {
               thisTimeGoal,
               oppoTeamGoal,
               oppoTeamImg: imgUrl,
+              oppoName,
             })}
           >
             <Link to={`/team/match/analysis/${item.matchId}`}>

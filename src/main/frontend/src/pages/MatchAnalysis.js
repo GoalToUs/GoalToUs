@@ -47,7 +47,7 @@ function MatchAnalysis() {
   };
   const returnImg = (teamId) => {
     let teamImg;
-    switch (teamId) {
+    switch (String(teamId)) {
       case "1":
         teamImg = TeamLogo1;
         break;
@@ -62,6 +62,8 @@ function MatchAnalysis() {
         break;
       case "5":
         teamImg = TeamLogo5;
+        break;
+      default:
         break;
     }
     return teamImg;
@@ -229,7 +231,6 @@ function MatchAnalysis() {
     });
   if (!team1Data) return;
   const thisTemaImg = returnImg(matchInfo.thisTeamId);
-  console.log(thisTemaImg);
   return (
     <Styled.Root>
       <SideBar />
@@ -237,7 +238,7 @@ function MatchAnalysis() {
       <Styled.Container>
         <Styled.Header>
           <Styled.TeamContainer>
-            <Styled.TeamName>{team1Data.teamName}</Styled.TeamName>
+            <Styled.TeamName>{matchInfo.thisTeamName}</Styled.TeamName>
             <img src={thisTemaImg} width={"55"} height={"50"} />
           </Styled.TeamContainer>
           <Styled.Score>{team1Data.goal}</Styled.Score>
@@ -251,7 +252,7 @@ function MatchAnalysis() {
           <Styled.Score>{team2Data.goal}</Styled.Score>
           <Styled.TeamContainer>
             <img src={matchInfo.oppoTeamImg} width={"55"} height={"50"} />
-            <Styled.TeamName>{team2Data.teamName}</Styled.TeamName>
+            <Styled.TeamName>{matchInfo.oppoName}</Styled.TeamName>
           </Styled.TeamContainer>
         </Styled.Header>
 
