@@ -16,4 +16,6 @@ public class MatchListResponseDto {
     private Long teamId; //경기에 참여한 팀 아이디
     private Long team2Id;
 
+
+
 }

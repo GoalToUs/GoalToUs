@@ -11,6 +11,7 @@ public class SearchTeamResponseDto { //팀 검색 결과로 보내주는 거
     private String teamName;
     private String teamPhoto;
     private String teamIntro;
+    private Long teamId;
 
 //    private List<String> teamName;
 //    private List<String> teamPhoto;
