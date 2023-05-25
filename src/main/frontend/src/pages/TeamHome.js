@@ -12,7 +12,7 @@ import {
   TeamProfileImg1,
 } from "../assets";
 import { useFetchTeamInfo } from "../hooks/team";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 
 import ModalPortal from "../components/modal/ModalPortal";

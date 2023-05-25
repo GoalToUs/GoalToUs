@@ -5,32 +5,22 @@ import { useParams } from "react-router-dom";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function SearchTeam() {
   const { searchWord } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const searchData = useFetchSearchTeam(searchWord); // 검색하기
-  if (searchData) console.log(searchData);
-  /* 더미 */
-  // const searchData = [{
-  //     image: TeamLogo5,
-  //     teamName : "PENTA (펜타)",
-  //     captain : "정민준",
-  // }
-  // ];
-
-  const postData = {
-    userId: 8,
-    teamId: 3,
-  };
+  console.log(searchData);
 
   const { mutate: joinTeam, isSuccess } = usePostJoinTeam(); // 팀 가입하기
   const handleOnClick = (e) => {
     // joinTeam(postData);
     // if(isSuccess){
-    setIsModalOpen(true);
+    // setIsModalOpen(true);
     // }
+    Swal.fire("이미 가입된 팀이 있어요!");
   };
 
   let teamList;
@@ -52,7 +42,7 @@ function SearchTeam() {
             소개 : {searchData.teamIntro}
           </Styled.teamInfo>
           <Styled.goTeamHome>
-            <a href={`/team/home/${searchData.teamName}`}>팀홈 보기</a>
+            <a href={`/team/home/${searchData.teamId}`}>팀홈 보기</a>
           </Styled.goTeamHome>
           <Styled.joinButton id={searchData.teamId} onClick={handleOnClick}>
             가입

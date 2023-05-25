@@ -30,32 +30,40 @@ function SideBar() {
               }
               alt={"집 모양 아이콘"}
             />
-            <Link to={`/team/home/${teamId}`}>팀 홈</Link>
+            <Link to={`/team/home/${teamId}`}>My Team</Link>
           </Styled.MenuButton>
-          <Styled.MenuButton
-            href={"/team/match/pending"}
-            className={nowPath === "/team/match/pending" && "clicked"}
-          >
-            <img
-              src={
-                nowPath === "/team/match/pending" ? ClickedArrowIcon : arrowIcon
-              }
-              alt={"매칭 대기 현황 아이콘"}
-            />
-            <Link to={"/team/match/pending"}>매칭 대기 현황</Link>
-          </Styled.MenuButton>
-          <Styled.MenuButton
-            href={"/team/match/video"}
-            className={nowPath === "/team/match/video" && "clicked"}
-          >
-            <img
-              src={
-                nowPath === "/team/match/video" ? ClickedVideoIcon : videoIcon
-              }
-              alt={"경기 영상 보기 아이콘"}
-            />
-            <Link to={"/team/match/video"}>경기 영상 보기</Link>
-          </Styled.MenuButton>
+          {nowPath === `/team/home/${teamId}` && (
+            <>
+              <Styled.MenuButton
+                href={"/team/match/pending"}
+                className={nowPath === "/team/match/pending" && "clicked"}
+              >
+                <img
+                  src={
+                    nowPath === "/team/match/pending"
+                      ? ClickedArrowIcon
+                      : arrowIcon
+                  }
+                  alt={"매칭 대기 현황 아이콘"}
+                />
+                <Link to={"/team/match/pending"}>매칭 대기 현황</Link>
+              </Styled.MenuButton>
+              <Styled.MenuButton
+                href={"/team/match/video"}
+                className={nowPath === "/team/match/video" && "clicked"}
+              >
+                <img
+                  src={
+                    nowPath === "/team/match/video"
+                      ? ClickedVideoIcon
+                      : videoIcon
+                  }
+                  alt={"경기 영상 보기 아이콘"}
+                />
+                <Link to={"/team/match/video"}>경기 영상 보기</Link>
+              </Styled.MenuButton>
+            </>
+          )}
         </Styled.MenuContainer>
       </Styled.Container>
     </Styled.Root>
