@@ -51,18 +51,14 @@ const Styled = {
   `,
   Container: styled.div`
     @media (max-width: 1279px) {
-    width: 1280px;
+      width: 1280px;
     }
     @media (min-width: 1280px) {
-    width: 100vw-226px;
+      width: 100vw-226px;
     }
     margin-left: 226px;
     padding: 0 40px;
-    
-    &.match {
-    justify-content
-    }
-    `,
+  `,
   CenterContainer: styled.div`
     width: 1080px;
     margin: 0 auto;
