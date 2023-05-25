@@ -48,6 +48,10 @@ public class Match {
     }
     //팀 객체를 인자로 받아옴
 
+    public void update(MatchState matchState) {
+        this.matchState = matchState;
+    }
+
     // 경기결과 기록하기
     public void recordResult(Result result){
         this.result = result;

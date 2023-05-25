@@ -4,6 +4,7 @@ import com.GTTF.goal_to_the_future.common.response.BaseResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.DeleteMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.request.UpdateMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.*;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMSListResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.entity.Match;
@@ -55,6 +56,11 @@ public class MatchController {
     @GetMapping("team/{teamId}") //팀 아이디로 경기 결과 넘겨주기
     public BaseResponseDto<List<ViewAllResponseDto>> viewAll(@PathVariable Long teamId){
         return new BaseResponseDto<>(matchService.viewAll(teamId));
+    }
+
+    @PutMapping("match/update")
+    public BaseResponseDto<UpdateMatchResponseDto> updateMatch(@RequestBody UpdateMatchRequestDto updateMatchRequestDto){
+        return new BaseResponseDto<>(matchService.update(updateMatchRequestDto));
     }
 
     @GetMapping("team/waitlist") //매칭 대기 목록 조회

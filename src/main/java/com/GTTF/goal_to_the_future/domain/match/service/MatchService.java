@@ -5,6 +5,7 @@ import com.GTTF.goal_to_the_future.common.exception.custom.BusinessException;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.DeleteMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.JoinMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.request.MakeMatchRequestDto;
+import com.GTTF.goal_to_the_future.domain.match.dto.request.UpdateMatchRequestDto;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.*;
 import com.GTTF.goal_to_the_future.domain.match.dto.response.ViewMSListResponseDto;
 import com.GTTF.goal_to_the_future.domain.match.entity.Match;
@@ -13,6 +14,8 @@ import com.GTTF.goal_to_the_future.domain.match.repository.MatchRepository;
 import com.GTTF.goal_to_the_future.domain.team.entity.Team;
 import com.GTTF.goal_to_the_future.domain.team.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,6 +34,7 @@ public class MatchService {
     private final TeamRepository teamRepository; //클래스명 필드명
     private final MatchRepository matchRepository;
 
+
     public MakeMatchResponseDto createMatch(MakeMatchRequestDto makeMatchRequestDto){ //경기 생성
         // request - teamId로 teamRepository에서 Team 객체를 찾아와야함
         Team team=teamRepository.findById(makeMatchRequestDto.getTeamId()).orElseThrow(()->new BusinessException(NOT_FOUND_TEAM));
@@ -43,6 +47,14 @@ public class MatchService {
 
         return new MakeMatchResponseDto(newMatch.getStartTime(), newMatch.getPlace(),
                 newMatch.getTeam1().getTeamName(), newMatch.getRegion());
+    }
+
+    public UpdateMatchResponseDto update(UpdateMatchRequestDto updateMatchRequestDto){
+        Match match=matchRepository.findById(updateMatchRequestDto.getMatchId()).orElseThrow(()->new BusinessException(NOT_FOUND_MATCH));
+
+        match.update(updateMatchRequestDto.getMatchState());
+
+        return new UpdateMatchResponseDto(match.getMatchId(), match.getMatchState());
     }
 
     public JoinMatchResponseDto joinMatch(JoinMatchRequestDto joinMatchRequestDto){ //경기 참여하기
@@ -63,12 +75,10 @@ public class MatchService {
         //4.해당 match의 matchState를 expected로 변경
 
 
-
         return new JoinMatchResponseDto(team2.getId(), match.getMatchId());
     }
 
-//    public void update(){
-//    }
+
 
     public List<ViewAllResponseDto> viewAll(Long teamId){
         Team team=teamRepository.findById(teamId).orElseThrow(() -> new BusinessException(NOT_FOUND_TEAM));
