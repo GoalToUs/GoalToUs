@@ -31,9 +31,9 @@ public class ResultController {
         return resultService.viewAnalysis(matchId);
     }
 
-    @GetMapping("result/{matchId}") //matchId로 경기 결과 보기 (경기 생성한 팀의 결과 )
-    public List<ViewRecordResponseDto> viewRecord(@PathVariable Long matchId){
-        return resultService.viewRecord(matchId);
+    @GetMapping("result/") //matchId로 경기 결과 보기 (경기 생성한 팀의 결과 )
+    public List<ViewRecordResponseDto> viewRecord(){
+        return resultService.viewRecord();
     }
 
 //    @GetMapping("result/jointeam/{matchId}")//경기에 참여한 팀의 결과 보기
