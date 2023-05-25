@@ -20,6 +20,7 @@ import Modal from "../components/modal/Modal";
 import {
   useFetchPlanMatchList,
   useFetchFinishedMatchList,
+  useFetchAllMatchList,
 } from "../hooks/match";
 import { useSetRecoilState } from "recoil";
 import { matchState } from "../states/match";
@@ -29,117 +30,80 @@ function TeamHome() {
   const { teamId } = useParams();
 
   const teamData = useFetchTeamInfo(teamId);
-  let teamImg = "";
-  switch (teamId) {
-    case "1":
-      teamImg = TeamLogo1;
-      break;
-    case "2":
-      teamImg = TeamLogo2;
-      break;
-    case "3":
-      teamImg = TeamLogo3;
-      break;
-    case "4":
-      teamImg = TeamLogo4;
-      break;
-    case "5":
-      teamImg = TeamLogo5;
-      break;
-  }
-  console.log(teamImg);
-  // const planMatchData  = useFetchPlanMatchList(teamName);
 
-  const planMatchData = [
-    {
-      teamName: "Throwin",
-      oppoName: "Throwin",
-      place: "서울 금강 스포츠공원 풋살장",
-      startTime: "2023.06.09 11:00",
-      image: TeamLogo1,
-    },
-    {
-      teamName: "Jupiter",
-      oppoName: "Jupiter",
-      place: "서울 고척스카이돔 풋살구장",
-      startTime: "2023.05.23 14:00",
-      image: TeamLogo2,
-    },
-    {
-      teamName: "쎄비지",
-      oppoName: "쎄비지",
-      place: "서울 영등포공원 풋살경기장",
-      startTime: "2023.05.28 18:00",
-      image: TeamLogo3,
-    },
-    {
-      teamName: "LEO",
-      oppoName: "LEO",
-      place: "서울 동작구 노들나루공원 풋살장",
-      startTime: "2023.05.19 12:00",
-      image: TeamLogo4,
-    },
-  ];
+  const returnImg = (teamId) => {
+    let teamImg;
+    switch (teamId) {
+      case "1":
+        teamImg = TeamLogo1;
+        break;
+      case "2":
+        teamImg = TeamLogo2;
+        break;
+      case "3":
+        teamImg = TeamLogo3;
+        break;
+      case "4":
+        teamImg = TeamLogo4;
+        break;
+      case "5":
+        teamImg = TeamLogo5;
+        break;
+    }
+    return teamImg;
+  };
 
-  // const finishedMatchData = useFetchFinishedMatchList(teamName);
+  const returnDate = (item) => {
+    const dateString = `${item.getFullYear()}/${item.getMonth()}/${item.getDate()}`;
+    return dateString;
+  };
 
-  const finishedMatchData = [
-    {
-      matchId: 0,
-      teamName: "ABC",
-      oppoName: "LEO",
-      place: "서울",
-      startTime: "2023.02.09 11:00",
-      result: "2 : 1 (승)",
-      image: TeamLogo4,
-    },
-    {
-      matchId: 0,
-      teamName: "ABC",
-      oppoName: "Throwin",
-      place: "서울",
-      startTime: "2023.04.05 13:00",
-      result: "3 : 0 (승)",
-      image: TeamLogo1,
-    },
-    {
-      matchId: 0,
-      teamName: "ABC",
-      oppoName: "Jupiter",
-      place: "서울",
-      startTime: "2023.04.21 19:00",
-      result: "4 : 2 (승)",
-      image: TeamLogo2,
-    },
-    {
-      matchId: 0,
-      teamName: "ABC",
-      oppoName: "쎄비지",
-      place: "서울",
-      startTime: "2023.03.07 10:00",
-      result: " 1 : 3 (패)",
-      image: TeamLogo3,
-    },
-  ];
+  const returnTime = (item) => {
+    const dateString = `${item.getHours()}:${String(item.getMinutes()).padStart(
+      2,
+      "0"
+    )}`;
+    return dateString;
+  };
+
+  const teamImg = returnImg(teamId);
+
+  const matchData = useFetchAllMatchList();
+  const planMatchData = matchData?.filter(
+    ({ matchState, teamId: itemTeamId, team2Id }) => {
+      return (
+        matchState === "EXPECTED" &&
+        (itemTeamId === Number(teamId) || team2Id === Number(teamId))
+      );
+    }
+  );
+  const finishedMatchData = matchData?.filter(
+    ({ matchState, teamId: itemTeamId, team2Id }) => {
+      return (
+        matchState === "FINISH" &&
+        (itemTeamId === Number(teamId) || team2Id === Number(teamId))
+      );
+    }
+  );
 
   let planMatchList;
   if (planMatchData) {
     planMatchList = planMatchData.map((item) => {
+      const imgUrl = returnImg(String(item.matchId));
+      const oppoName = item.teamId === teamId ? item.team2Id : item.teamId;
       return (
         <Styled.Match key={item.matchId}>
           <Styled.opponentTeamContainer>
             <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-            <img
-              src={item.image}
-              alt={"상대팀 프로필"}
-              width={70}
-              height={66}
-            />
-            <Styled.opponentTeamName>{item.oppoName}</Styled.opponentTeamName>
+            <img src={imgUrl} alt={"상대팀 프로필"} width={70} height={66} />
+            <Styled.opponentTeamName>{oppoName}</Styled.opponentTeamName>
           </Styled.opponentTeamContainer>
           <Styled.matchInfoContainer>
             <Styled.info className={"scheduled"}>{item.place}</Styled.info>
-            <Styled.info className={"scheduled"}>{item.startTime}</Styled.info>
+            <Styled.info className={"scheduled"}>
+              {returnDate(new Date(item.startTime))}{" "}
+              {returnTime(new Date(item.startTime))}
+            </Styled.info>
           </Styled.matchInfoContainer>
         </Styled.Match>
       );
@@ -166,22 +130,22 @@ function TeamHome() {
   let finishedMatchList;
   if (finishedMatchData) {
     finishedMatchList = finishedMatchData.map((item) => {
+      const imgUrl = returnImg(String(item.matchId));
+      const oppoName = item.teamId === teamId ? item.team2Id : item.teamId;
       return (
         <Styled.Match>
           <Styled.opponentTeamContainer>
             <Styled.opponentTeam>상대팀</Styled.opponentTeam>
-            <img
-              src={item.image}
-              alt={"상대팀 프로필"}
-              width={70}
-              height={66}
-            />
-            <Styled.opponentTeamName>{item.oppoName}</Styled.opponentTeamName>
+            <img src={imgUrl} alt={"상대팀 프로필"} width={70} height={66} />
+            <Styled.opponentTeamName>{oppoName}</Styled.opponentTeamName>
           </Styled.opponentTeamContainer>
           <Styled.matchInfoContainer>
             <Styled.score>{item.result}</Styled.score>
             <Styled.info className={"finish"}>{item.place}</Styled.info>
-            <Styled.info className={"finish"}>{item.startTime}</Styled.info>
+            <Styled.info className={"finish"}>
+              {returnDate(new Date(item.startTime))}{" "}
+              {returnTime(new Date(item.startTime))}
+            </Styled.info>
           </Styled.matchInfoContainer>
           <Styled.recordButton
             href={`/team/match/analysis/1`}

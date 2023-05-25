@@ -47,7 +47,7 @@ function Home() {
   };
 
   const returnDate = (item) => {
-    const dateString = `${item.getFullYear()}.${item.getMonth()}.${item.getDate()}`;
+    const dateString = `${item.getFullYear()}/${item.getMonth()}/${item.getDate()}`;
     return dateString;
   };
 
