@@ -8,18 +8,19 @@ import {
   TeamProfileImg,
 } from "../assets";
 import { useFetchSearchTeam, usePostJoinTeam } from "../hooks/team";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import ModalPortal from "../components/modal/ModalPortal";
 import Modal from "../components/modal/Modal";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useRecoilValue } from "recoil";
+import { searchWordState } from "../states/team";
 
-function SearchTeam() {
-  const { searchWord } = useParams();
+function SearchTeam({ searchData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const searchData = useFetchSearchTeam(searchWord); // 검색하기
-  console.log(searchData);
+  // const searchData = useFetchSearchTeam(searchWord); // 검색하기
+  // console.log(searchData);
 
   const { mutate: joinTeam, isSuccess } = usePostJoinTeam(); // 팀 가입하기
   const handleOnClick = (e) => {
@@ -63,13 +64,13 @@ function SearchTeam() {
           <img src={imgUrl} width={55} />
           <Styled.teamInfoContainer>
             <Styled.teamInfo>팀명 : {searchData.teamName}</Styled.teamInfo>
-            <Styled.teamInfo className={"captain"}>
+            {/* <Styled.teamInfo className={"captain"}>
               주장 : {searchData.captain}
+            </Styled.teamInfo> */}
+            <Styled.teamInfo className={"intro"}>
+              소개 : {searchData.teamIntro}
             </Styled.teamInfo>
           </Styled.teamInfoContainer>
-          <Styled.teamInfo className={"intro"}>
-            소개 : {searchData.teamIntro}
-          </Styled.teamInfo>
           <Styled.goTeamHome>
             <a href={`/team/home/${searchData.teamId}`}>팀홈 보기</a>
           </Styled.goTeamHome>
@@ -107,7 +108,6 @@ export default SearchTeam;
 const Styled = {
   Root: styled.div`
     width: 100vw;
-    height: 100vh;
     margin: 0 auto;
   `,
   joinTeamSection: styled.div`
@@ -206,19 +206,22 @@ const Styled = {
     display: flex;
     flex-direction: column;
 
+    width: 400px;
+
     margin-left: 20px;
   `,
-  teamInfo: styled.span`
+  teamInfo: styled.div`
     font-family: "Inter";
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
+    overflow: hidden;
 
+    text-overflow: ellipsis;
     &.captain {
       margin-top: 10px;
     }
     &.intro {
-      margin-left: 30px;
     }
   `,
   goTeamHome: styled.a`

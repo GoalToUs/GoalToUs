@@ -20,7 +20,7 @@ function MatchVideo() {
             >
               <img src={ThumbNail1} width={300} height={200} />
             </Styled.Video>
-            <Styled.Info>23.02.09</Styled.Info>
+            <Styled.Info>23.05.17</Styled.Info>
             <Styled.Info className={"opponentTeam"}>LEO</Styled.Info>
           </Styled.VideoContainer>
           <Styled.VideoContainer>
@@ -32,8 +32,8 @@ function MatchVideo() {
             >
               <img src={ThumbNail4} width={300} height={200} />
             </Styled.Video>
-            <Styled.Info>23.04.05</Styled.Info>
-            <Styled.Info className={"opponentTeam"}>Throwin</Styled.Info>
+            <Styled.Info>23.01.08</Styled.Info>
+            <Styled.Info className={"opponentTeam"}>Jupiter</Styled.Info>
           </Styled.VideoContainer>
         </Styled.CenterContainer>
       </Styled.Container>

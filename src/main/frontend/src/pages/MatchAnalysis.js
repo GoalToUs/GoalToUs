@@ -272,7 +272,7 @@ function MatchAnalysis() {
           className={isAllHeatmap ? "all" : "ball"}
         />
         <Styled.analysisContainer>
-          {isInputActive ? (
+          {/* {isInputActive ? (
             <Styled.EditButton onClick={handleOnClick}>
               {" "}
               수정 완료{" "}
@@ -282,7 +282,7 @@ function MatchAnalysis() {
               {" "}
               경기 분석 수정하기
             </Styled.EditButton>
-          )}
+          )} */}
           <Styled.Teams>
             <span>{matchInfo.thisTeamName}</span>
             <span>VS</span>
