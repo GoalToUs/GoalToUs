@@ -47,7 +47,7 @@ function CreateMatch({ history }) {
     }
 
     createMatch(matchData);
-    Swal.fire("경기가 성사되었습니다!");
+    Swal.fire("경기가 생성되었습니다!");
     setInputs(initState);
   };
 

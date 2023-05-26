@@ -83,9 +83,14 @@ function Home() {
     const hi = pendingMatchList.filter((item) => {
       return e.currentTarget.id === String(item.matchId);
     });
-    setModalData(hi[0]);
-    setIsJoinModalOpen(true);
-    setJoinMatchId(e.currentTarget.id);
+    console.log(hi[0].teamId);
+    if (hi[0].teamId === Number(teamId)) {
+      Swal.fire("나의 팀이 생성한 경기입니다!");
+    } else {
+      setModalData(hi[0]);
+      setIsJoinModalOpen(true);
+      setJoinMatchId(e.currentTarget.id);
+    }
   };
 
   const handleJoinMatch = (matchId) => {
