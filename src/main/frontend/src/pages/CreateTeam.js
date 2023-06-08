@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import {usePostUserInfo} from "../hooks/team";
+import {usePostJoinTeam, usePostUserInfo} from "../hooks/team";
 import {useEffect, useRef, useState} from "react";
 import {DefaultImg} from "../assets";
 import ModalPortal from "../components/modal/ModalPortal";
@@ -16,7 +16,8 @@ function CreateTeam() {
     const [imgSrc, setImgSrc] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const {mutate: createTeam} = usePostUserInfo();
+    const {data, mutate: createTeam, isSuccess} = usePostUserInfo();
+    const {mutate: joinTeam} = usePostJoinTeam();
 
     const handleOnChange = (e) => {
         const {value, id}= e.currentTarget;
@@ -69,8 +70,13 @@ function CreateTeam() {
             // "photo": fd,
         }
         createTeam(teamData);
-        setIsModalOpen(true);
+        setTimeout(()=>{
+            const postData = {"userId": 1, "teamId": data.teamId}
+            joinTeam(postData);
+            setIsModalOpen(true);
+        }, 200)
     }
+
 
     return (
         <Styled.Root>
@@ -98,6 +104,7 @@ function CreateTeam() {
                     <Styled.submitButton type={"button"} value={"등록하기"} onClick={handleOnClick}/>
                 </Styled.createTeamContainer>
             </Styled.createTeamSection>
+
             {isModalOpen && <ModalPortal>
                 <Modal width={400} height={200}>
                     <Styled.message>팀 등록을 성공하였습니다!</Styled.message>

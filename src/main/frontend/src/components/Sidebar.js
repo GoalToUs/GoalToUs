@@ -1,113 +1,156 @@
-import styled from 'styled-components';
-import {videoIcon, arrowIcon, homeIcon, ClickedArrowIcon, DefaultHomeIcon, ClickedVideoIcon} from "../assets";
-import {useLocation} from "react-router-dom";
-import {useState} from "react";
+import styled from "styled-components";
+import {
+  videoIcon,
+  arrowIcon,
+  homeIcon,
+  ClickedArrowIcon,
+  DefaultHomeIcon,
+  ClickedVideoIcon,
+} from "../assets";
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 
 function SideBar() {
-    const location = useLocation();
-    const nowPath = location.pathname;
-    const teamName = "ABC";
+  const location = useLocation();
+  const nowPath = location.pathname;
+  const teamId = localStorage.getItem("userTeam");
 
-    return (
+  return (
     <Styled.Root>
-        <Styled.Logo href={"/"}>GoalToUs</Styled.Logo>
-        <Styled.Container>
-            <Styled.MenuTitle>Menu</Styled.MenuTitle>
-            <Styled.MenuContainer>
-                <Styled.MenuButton href={`/team/home/${teamName}`} className={nowPath === `/team/home/${teamName}` && "clicked"}><img src={nowPath === `/team/home/${teamName}` ? homeIcon : DefaultHomeIcon} alt={"집 모양 아이콘"}/>팀 홈</Styled.MenuButton>
-                <Styled.MenuButton href={"/team/match/pending"} className={nowPath === "/team/match/pending" && "clicked"}><img src={nowPath === "/team/match/pending" ? ClickedArrowIcon : arrowIcon} alt={"매칭 대기 현황 아이콘"}/>매칭 대기 현황</Styled.MenuButton>
-                <Styled.MenuButton href={"/team/match/video"} className={nowPath === "/team/match/video" && "clicked"}><img src={nowPath === "/team/match/video" ? ClickedVideoIcon : videoIcon} alt={"경기 영상 보기 아이콘"}/>경기 영상 보기</Styled.MenuButton>
-            </Styled.MenuContainer>
-        </Styled.Container>
+      <Styled.Logo href={"/"}>GoalToUs</Styled.Logo>
+      <Styled.Container>
+        <Styled.MenuTitle>Menu</Styled.MenuTitle>
+        <Styled.MenuContainer>
+          <Styled.MenuButton
+            className={nowPath === `/team/home/${teamId}` && "clicked"}
+          >
+            <img
+              src={
+                nowPath === `/team/home/${teamId}` ? homeIcon : DefaultHomeIcon
+              }
+              alt={"집 모양 아이콘"}
+            />
+            <Link to={`/team/home/${teamId}`}>나의 팀 홈</Link>
+          </Styled.MenuButton>
+
+          <Styled.MenuButton
+            href={"/team/match/pending"}
+            className={nowPath === "/team/match/pending" && "clicked"}
+          >
+            <img
+              src={
+                nowPath === "/team/match/pending" ? ClickedArrowIcon : arrowIcon
+              }
+              alt={"매칭 대기 현황 아이콘"}
+            />
+            <Link to={"/team/match/pending"}>매칭 대기 현황</Link>
+          </Styled.MenuButton>
+          {/*      <Styled.MenuButton*/}
+          {/*        href={"/team/match/video"}*/}
+          {/*        className={nowPath === "/team/match/video" && "clicked"}*/}
+          {/*      >*/}
+          {/*        <img*/}
+          {/*          src={*/}
+          {/*            nowPath === "/team/match/video"*/}
+          {/*              ? ClickedVideoIcon*/}
+          {/*              : videoIcon*/}
+          {/*          }*/}
+          {/*          alt={"경기 영상 보기 아이콘"}*/}
+          {/*        />*/}
+          {/*        <Link to={"/team/match/video"}>경기 영상 보기</Link>*/}
+          {/*      </Styled.MenuButton>*/}
+          {/*    </>*/}
+        </Styled.MenuContainer>
+      </Styled.Container>
     </Styled.Root>
-    );
+  );
 }
 
 export default SideBar;
 
 const Styled = {
-    Root: styled.div`
-    position:fixed;
+  Root: styled.div`
+    position: fixed;
     left: 0;
-    
-    display:flex;
-    flex-direction:column;
-    
-    height: 100%;
-    `,
-    Container : styled.header`
+
     display: flex;
     flex-direction: column;
-    
+
+    height: 100%;
+  `,
+  Container: styled.header`
+    display: flex;
+    flex-direction: column;
+
     width: 230px;
     height: 100%;
-    
+
     background: rgba(217, 217, 217, 0.5);
     border-right: 4px solid rgba(217, 217, 217, 0.7);
-    `,
-    Logo : styled.a`
+  `,
+  Logo: styled.a`
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     font-size: 30px;
     font-weight: bold;
-    
+
     height: 90px;
-    
-    cursor : pointer
-    `,
-    MenuContainer: styled.div`
+
+    cursor: pointer;
+  `,
+  MenuContainer: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     width: 100%;
-    
+
     margin-top: 20px;
-    `,
-    MenuTitle : styled.header`
+  `,
+  MenuTitle: styled.header`
     margin-top: 20px;
     margin-left: 10px;
-    
-    font-family: 'Inter';
+
+    font-family: "Inter";
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 0px;
-    
+
     color: rgba(66, 65, 65, 0.8);
-    `,
-    MenuButton : styled.a`
+  `,
+  MenuButton: styled.a`
     display: flex;
     align-items: center;
-    
+
     width: 190px;
     height: 62px;
-    background : none;
+    background: none;
     border: none;
-    
+
     border-radius: 15px;
-    
+
     padding-left: 5px;
     margin-top: 20px;
-    
-    font-family: 'Inter';
+
+    font-family: "Inter";
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 0px;
-    letter-spacing : -1px;
-    
+    letter-spacing: -1px;
+
     cursor: pointer;
-    
+
     &.clicked {
-    background-color: #013C4D;
-    color: white;
+      background-color: #013c4d;
+      color: white;
     }
-    
+
     & > img {
-    margin: 0 10px;
+      margin: 0 10px;
     }
-    `
-}
+  `,
+};
