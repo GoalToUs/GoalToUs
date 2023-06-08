@@ -20,13 +20,12 @@ function SearchTeam({ searchData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // const searchData = useFetchSearchTeam(searchWord); // 검색하기
-  // console.log(searchData);
 
   const { mutate: joinTeam, isSuccess } = usePostJoinTeam(); // 팀 가입하기
   const handleOnClick = (e) => {
     // joinTeam(postData);
-    // if(isSuccess){
-    // setIsModalOpen(true);
+    // if (isSuccess) {
+    //   setIsModalOpen(true);
     // }
     Swal.fire("이미 가입된 팀이 있어요!");
   };
@@ -64,9 +63,6 @@ function SearchTeam({ searchData }) {
           <img src={imgUrl} width={55} />
           <Styled.teamInfoContainer>
             <Styled.teamInfo>팀명 : {searchData.teamName}</Styled.teamInfo>
-            {/* <Styled.teamInfo className={"captain"}>
-              주장 : {searchData.captain}
-            </Styled.teamInfo> */}
             <Styled.teamInfo className={"intro"}>
               소개 : {searchData.teamIntro}
             </Styled.teamInfo>

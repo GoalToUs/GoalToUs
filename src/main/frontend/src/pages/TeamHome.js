@@ -114,7 +114,7 @@ function TeamHome() {
   };
 
   let planMatchList;
-  if (planMatchData) {
+  if (planMatchData.length !== 0) {
     planMatchList = planMatchData.map((item) => {
       const oppoId =
         item.teamId === Number(teamId) ? item.team2Id : item.teamId;
@@ -123,9 +123,12 @@ function TeamHome() {
       return (
         <Styled.Match key={item.matchId}>
           <Styled.opponentTeamContainer>
+            {" "}
             <Styled.opponentTeam>상대팀</Styled.opponentTeam>
             <img src={imgUrl} alt={"상대팀 프로필"} width={70} height={66} />
-            <Styled.opponentTeamName>{oppoName}</Styled.opponentTeamName>
+            <Styled.opponentTeamName>
+              <Link to={`/team/home/${oppoId}`}>{oppoName}</Link>{" "}
+            </Styled.opponentTeamName>
           </Styled.opponentTeamContainer>
           <Styled.matchInfoContainer>
             <Styled.info className={"scheduled"}>{item.place}</Styled.info>
@@ -162,7 +165,7 @@ function TeamHome() {
   };
 
   let finishedMatchList;
-  if (finishedMatchData) {
+  if (finishedMatchData.length !== 0) {
     finishedMatchList = finishedMatchData?.map((item) => {
       const result = findResult(item.matchId);
       if (!result) return;
@@ -184,7 +187,9 @@ function TeamHome() {
           <Styled.opponentTeamContainer>
             <Styled.opponentTeam>상대팀</Styled.opponentTeam>
             <img src={imgUrl} alt={"상대팀 프로필"} width={70} height={66} />
-            <Styled.opponentTeamName>{oppoName}</Styled.opponentTeamName>
+            <Styled.opponentTeamName>
+              <Link to={`/team/home/${oppoId}`}>{oppoName}</Link>
+            </Styled.opponentTeamName>
           </Styled.opponentTeamContainer>
           <Styled.matchInfoContainer>
             <Styled.score>
@@ -257,7 +262,7 @@ function TeamHome() {
               width={"130"}
               height={"130"}
             />
-            <Styled.TeamName>{teamData.teamName}</Styled.TeamName>
+            <Styled.TeamName>{searchTeamName(Number(teamId))}</Styled.TeamName>
             <Styled.TeamRegion>지역 : {teamData.region}</Styled.TeamRegion>
             {nowPath === "/team/home/5" && (
               <Styled.TeamVideo>
@@ -493,6 +498,7 @@ const Styled = {
     align-items: center;
 
     width: 70px;
+
     & > img {
       margin-top: 20px;
     }
@@ -514,6 +520,10 @@ const Styled = {
     line-height: 0px;
 
     margin-top: 15px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   `,
   matchInfoContainer: styled.div`
     display: flex;
