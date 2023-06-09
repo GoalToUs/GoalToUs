@@ -15,10 +15,11 @@
 드론으로 경기를 촬영한 뒤 경기 영상 및 경기 분석을 웹에 업로드하고, 이를 통해 사용자에게 피드백을 제공합니다.<br/><br/>
 
 ## ✨ OUR TEAM
-| <img src="https://user-images.githubusercontent.com/86764406/210495754-7e4222f9-24bd-4b0b-9a00-c1d406b7dce0.png" width="200" height="200"/> | <img src="https://avatars.githubusercontent.com/u/97084864?v=4" width="200" height="200" /> |
+| ![KakaoTalk_Photo](https://github.com/GoalToUs/GoalToUs/assets/100662232/b40698e8-e64a-4efe-9361-a848f5c0f5f9)
+ width="200" height="200"/> | <img src="https://avatars.githubusercontent.com/u/97084864?v=4" width="200" height="200" /> |
 | :---: | :---: |
 | <div align = "center"><b>다빈</b></div> | <div align = "center"><b>서현</b></div> |
-| [@leeseooo](https://github.com/leeseooo) | [@seobbang](https://github.com/seobbang) |
+| [@binys21](https://github.com/binys21) | [@seobbang](https://github.com/seobbang) |
 
 ## 🛠 Tech Stack
 #### WEB
@@ -40,7 +41,6 @@
 
 ### 3. 팀 정보 열람
 !<img width="581" alt="스크린샷 2023-06-09 오후 2 18 50" src="https://github.com/GoalToUs/GoalToUs/assets/100662232/3175d739-80c2-41e6-9178-518e404570fa">
-8894-9975-4dbb-8548-59a9f57e281c.png)
 
 - 팀 선수 정보와 팀 소개글 확인
 - 다른 팀과의 예정 경기 확인
