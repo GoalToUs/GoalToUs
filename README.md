@@ -1,6 +1,5 @@
 # GOALTOUS
 <p align = "center">
-
 ## ⚽️아마추어 축구인들을 위한 경기 분석 및 매칭 서비스⚽️
 
 </p>
@@ -31,6 +30,7 @@
 
 - 드론으로 촬영한 경기 영상
 - 경기 결과 분석 내용, 볼 소유율, 히트맵 정보 제공
+    
 
 ### 2. 경기 매칭
 <img width="590" alt="스크린샷 2023-06-09 오후 2 22 03" src="https://github.com/GoalToUs/GoalToUs/assets/100662232/8dabbc8f-e7b9-461a-8b49-bcda4bca9f71">
@@ -38,6 +38,7 @@
 - 경기 매칭 대기 중인 팀 목록 
 - 경기를 원하는 팀에 매칭 신청 
 
+    
 ### 3. 팀 정보 열람
 !<img width="581" alt="스크린샷 2023-06-09 오후 2 18 50" src="https://github.com/GoalToUs/GoalToUs/assets/100662232/3175d739-80c2-41e6-9178-518e404570fa">
 
