@@ -19,6 +19,7 @@
 | :---: | :---: |
 | <div align = "center"><b>다빈</b></div> | <div align = "center"><b>서현</b></div> |
 | [@binys21](https://github.com/binys21) | [@seobbang](https://github.com/seobbang) |
+| 백엔드 | 프론트엔드 |
 
 ## 🛠 Tech Stack
 #### FrontEnd
