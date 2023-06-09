@@ -21,8 +21,10 @@
 | [@binys21](https://github.com/binys21) | [@seobbang](https://github.com/seobbang) |
 
 ## 🛠 Tech Stack
-#### WEB
-<img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=Next.js&logoColor=white"/>
+#### FrontEnd
+`React` `React-Query` `JavaScript` `Recoil`
+#### BackEnd
+`SpringBoot` `JAVA` `Quarydsl`
 
     
 ## 서비스 핵심 기능
