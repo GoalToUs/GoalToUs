@@ -15,8 +15,7 @@
 드론으로 경기를 촬영한 뒤 경기 영상 및 경기 분석을 웹에 업로드하고, 이를 통해 사용자에게 피드백을 제공합니다.<br/><br/>
 
 ## ✨ OUR TEAM
-| ![KakaoTalk_Photo](https://github.com/GoalToUs/GoalToUs/assets/100662232/b40698e8-e64a-4efe-9361-a848f5c0f5f9)
- width="200" height="200"/> | <img src="https://avatars.githubusercontent.com/u/97084864?v=4" width="200" height="200" /> |
+| <img src="https://github.com/GoalToUs/GoalToUs/assets/100662232/b40698e8-e64a-4efe-9361-a848f5c0f5f9" width="200" height="200"/> | <img src="https://avatars.githubusercontent.com/u/97084864?v=4" width="200" height="200" /> |
 | :---: | :---: |
 | <div align = "center"><b>다빈</b></div> | <div align = "center"><b>서현</b></div> |
 | [@binys21](https://github.com/binys21) | [@seobbang](https://github.com/seobbang) |
